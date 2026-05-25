@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="rh"><rect x="16" y="0" width="16" height="32"/></clipPath>
+  </defs>
+  <!-- Pill left half — terracotta -->
+  <rect x="2" y="9" width="28" height="14" rx="7" fill="#C4593A"/>
+  <!-- Pill right half — ink -->
+  <rect x="2" y="9" width="28" height="14" rx="7" fill="#1C1A16" clip-path="url(#rh)"/>
+  <!-- Centre divider -->
+  <line x1="16" y1="9" x2="16" y2="23" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+</svg>
