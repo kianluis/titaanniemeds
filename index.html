@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tita Annie — Medicine Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #F5F0E8;
@@ -24,7 +24,7 @@
     --neuro: #6B3A8C;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--ink); font-family: 'DM Mono', monospace; min-height: 100vh; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; min-height: 100vh; }
 
   /* ── HEADER ── */
   .site-header { background: var(--ink); color: #fff; padding: 20px 24px; }
@@ -40,8 +40,8 @@
   }
   .header-title em { font-style: italic; color: var(--accent); }
   .header-sub {
-    font-size: 10px; letter-spacing: 0.12em;
-    text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 4px;
+    font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 5px;
   }
   .header-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
   #live-clock {
@@ -49,12 +49,12 @@
     font-size: clamp(18px, 2.8vw, 28px);
     font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.02em;
   }
-  #live-date { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  #live-date { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
   .appt-badge {
     display: inline-flex; align-items: center; gap: 6px;
     background: var(--accent); color: #fff;
-    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px;
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: none; padding: 5px 12px;
   }
   .appt-badge.today-badge { background: var(--amber); }
   .appt-badge::before {
@@ -73,9 +73,9 @@
   .tab-btn {
     background: none; border: none;
     border-bottom: 3px solid transparent; margin-bottom: -2px;
-    padding: 13px 20px;
-    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 14px 22px;
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.01em; text-transform: none;
     color: var(--ink-faint); cursor: pointer; transition: all 0.15s; white-space: nowrap;
   }
   .tab-btn:hover { color: var(--ink); }
@@ -88,9 +88,9 @@
 
   /* ── SECTION LABEL ── */
   .section-label {
-    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
-    letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-faint);
-    margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
+    font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 12px;
   }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
@@ -113,60 +113,60 @@
     font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800;
     color: var(--ink); min-width: 72px;
   }
-  .slot-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); flex: 1; }
+  .slot-label { font-size: 12px; font-weight: 500; color: var(--ink-muted); flex: 1; }
   .slot-badge {
-    font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; padding: 2px 8px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 3px 10px;
   }
   .slot-badge.b-current { background: var(--accent); color: #fff; }
   .slot-badge.b-upcoming { background: var(--surface-2); color: var(--ink-muted); }
   .slot-badge.b-past { background: var(--green-light); color: var(--green); }
 
-  .slot-meds { padding: 10px 14px; display: flex; flex-direction: column; gap: 7px; }
-  .slot-med { display: flex; align-items: center; gap: 10px; font-size: 12px; }
-  .med-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .slot-meds { padding: 12px 16px; display: flex; flex-direction: column; gap: 9px; }
+  .slot-med { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .med-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
   .med-dot.cardio { background: var(--cardio); }
   .med-dot.neuro { background: var(--neuro); }
   .med-dot.both { background: linear-gradient(135deg, var(--cardio) 50%, var(--neuro) 50%); }
   .slot-med-name { font-weight: 500; }
-  .slot-med-note { font-size: 10px; color: var(--ink-faint); margin-left: auto; white-space: nowrap; }
+  .slot-med-note { font-size: 12px; color: var(--ink-faint); margin-left: auto; white-space: nowrap; }
 
   /* ── TODAY — sidebar ── */
   .today-sidebar { display: flex; flex-direction: column; gap: 16px; }
 
   .stock-card { background: var(--surface); border: 1.5px solid var(--border); padding: 16px; }
   .stock-card-title {
-    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--ink); margin-bottom: 12px;
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 12px;
   }
-  .stock-item { padding: 7px 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+  .stock-item { padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
   .stock-item:last-child { border-bottom: none; padding-bottom: 0; }
-  .stock-item-name { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; }
+  .stock-item-name { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; }
   .stock-bar-row { display: flex; align-items: center; gap: 8px; }
   .bar-bg { flex: 1; height: 5px; background: var(--border); border-radius: 2px; overflow: hidden; }
   .bar-fill { height: 100%; border-radius: 2px; transition: width .5s; }
   .fill-red { background: var(--accent); }
   .fill-amber { background: var(--amber); }
   .fill-green { background: var(--green); }
-  .stock-item-count { font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .stock-item-count { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; white-space: nowrap; }
   .stock-item-count.red { color: var(--accent); }
   .stock-item-count.amber { color: var(--amber); }
   .stock-item-count.green { color: var(--green); }
-  .stock-item-runout { font-size: 9px; color: var(--ink-faint); letter-spacing: .05em; }
+  .stock-item-runout { font-size: 11px; color: var(--ink-faint); }
 
   .sidebar-appt { background: var(--surface); border: 1.5px solid var(--border); padding: 14px; }
   .sidebar-appt.is-today { background: var(--ink); }
   .sidebar-appt + .sidebar-appt { margin-top: 3px; }
   .sa-when {
-    font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 6px;
+    font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--ink-faint); margin-bottom: 6px;
   }
   .is-today .sa-when { color: rgba(255,255,255,.5); }
-  .sa-doctor { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--ink); }
+  .sa-doctor { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--ink); }
   .is-today .sa-doctor { color: #fff; }
-  .sa-detail { font-size: 10px; color: var(--ink-muted); margin-top: 3px; line-height: 1.4; }
+  .sa-detail { font-size: 12px; color: var(--ink-muted); margin-top: 3px; line-height: 1.5; }
   .is-today .sa-detail { color: rgba(255,255,255,.6); }
   .sa-buy {
-    font-size: 9px; color: var(--amber); padding-top: 6px;
-    border-top: 1px solid var(--border); margin-top: 6px; letter-spacing: .03em; line-height: 1.4;
+    font-size: 12px; color: var(--amber); padding-top: 6px;
+    border-top: 1px solid var(--border); margin-top: 6px; line-height: 1.5;
   }
   .is-today .sa-buy { border-top-color: rgba(255,255,255,.2); }
 
@@ -188,37 +188,37 @@
   .med-card.both::before { background: linear-gradient(180deg, var(--cardio) 50%, var(--neuro) 50%); }
 
   .med-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-  .med-card-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; line-height: 1.2; }
-  .med-card-brand { font-size: 10px; color: var(--ink-faint); font-style: italic; margin-top: 2px; }
+  .med-card-name { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; line-height: 1.2; }
+  .med-card-brand { font-size: 12px; color: var(--ink-faint); font-style: italic; margin-top: 3px; }
   .med-card-dose {
-    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
-    background: var(--surface-2); padding: 3px 8px; white-space: nowrap; flex-shrink: 0;
+    font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+    background: var(--surface-2); padding: 4px 10px; white-space: nowrap; flex-shrink: 0;
   }
-  .doctor-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .doctor-tags { display: flex; gap: 5px; flex-wrap: wrap; }
   .dtag {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
-    padding: 2px 6px; border: 1px solid currentColor;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; letter-spacing: .02em;
+    padding: 3px 9px; border: 1.5px solid currentColor;
   }
   .dtag-cardio { color: var(--cardio); }
   .dtag-neuro { color: var(--neuro); }
   .dtag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
   .med-purpose {
-    font-size: 11px; color: var(--ink-muted); line-height: 1.55;
-    padding: 8px 10px; background: var(--bg); border-left: 2px solid var(--border);
+    font-size: 13px; color: var(--ink-muted); line-height: 1.6;
+    padding: 10px 12px; background: var(--bg); border-left: 2px solid var(--border);
   }
-  .med-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .med-details { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .detail-item { display: flex; flex-direction: column; gap: 2px; }
-  .detail-label { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); }
-  .detail-value { font-size: 12px; font-weight: 500; }
+  .detail-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+  .detail-value { font-size: 13px; font-weight: 500; }
 
   .med-stock-row { background: var(--surface-2); padding: 10px 12px; display: flex; flex-direction: column; gap: 5px; }
-  .med-stock-label { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); }
+  .med-stock-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
   .med-stock-bar-row { display: flex; align-items: center; gap: 8px; }
-  .med-stock-bg { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .med-stock-bg { flex: 1; height: 7px; background: var(--border); border-radius: 3px; overflow: hidden; }
   .med-stock-fill { height: 100%; border-radius: 3px; }
-  .med-stock-count { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; white-space: nowrap; }
+  .med-stock-count { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; white-space: nowrap; }
 
   .med-status-row {
     display: flex; align-items: center; justify-content: space-between;
@@ -226,14 +226,14 @@
   }
   .spill {
     display: inline-flex; align-items: center; gap: 5px;
-    padding: 3px 10px; font-size: 10px; font-weight: 500;
-    letter-spacing: .08em; text-transform: uppercase;
+    padding: 4px 11px; font-size: 11px; font-weight: 600;
+    letter-spacing: .03em;
   }
   .spill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
   .spill-active { color: var(--green); background: var(--green-light); }
   .spill-warning { color: var(--amber); background: var(--amber-light); }
   .spill-urgent { color: var(--accent); background: var(--accent-light); }
-  .runs-out-text { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; }
+  .runs-out-text { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; }
 
   /* ── RESTOCK TAB ── */
   .restock-layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
@@ -243,19 +243,19 @@
     display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
     background: var(--ink); padding: 10px 16px; gap: 10px;
   }
-  .rt-thead span { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+  .rt-thead span { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.5); }
   .rt-row {
     display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
-    padding: 11px 16px; gap: 10px;
+    padding: 12px 16px; gap: 10px;
     border-bottom: 1px solid var(--border); align-items: center;
   }
   .rt-row:last-child { border-bottom: none; }
   .rt-row:hover { background: var(--surface-2); }
-  .rt-med { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; }
-  .rt-val { font-size: 11px; color: var(--ink-muted); }
+  .rt-med { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; }
+  .rt-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink-muted); }
   .rt-badge {
-    display: inline-block; padding: 2px 8px;
-    font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    display: inline-block; padding: 3px 9px;
+    font-size: 11px; font-weight: 600; letter-spacing: .02em;
   }
   .badge-green { background: var(--green-light); color: var(--green); }
   .badge-amber { background: var(--amber-light); color: var(--amber); }
@@ -269,46 +269,69 @@
   }
   .tl-item.tl-today { background: var(--ink); border-color: var(--ink); }
   .tl-item.tl-past { opacity: 0.55; }
-  .tl-when { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); }
+  .tl-when { font-size: 11px; font-weight: 600; color: var(--ink-faint); }
   .tl-today .tl-when { color: rgba(255,255,255,.45); }
-  .tl-title { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; }
+  .tl-title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; }
   .tl-today .tl-title { color: #fff; }
-  .tl-desc { font-size: 10px; color: var(--ink-muted); line-height: 1.4; }
+  .tl-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
   .tl-today .tl-desc { color: rgba(255,255,255,.6); }
 
   /* ── COSTS TAB ── */
   .costs-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; background: var(--border); border: 1.5px solid var(--border); }
   .cost-card { background: var(--surface); padding: 24px; }
-  .cost-card-title { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 16px; }
+  .cost-card-title { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 16px; }
   .cost-line {
     display: flex; justify-content: space-between; align-items: baseline;
-    padding: 6px 0; border-bottom: 1px dashed var(--border); gap: 12px;
+    padding: 7px 0; border-bottom: 1px dashed var(--border); gap: 12px;
   }
   .cost-line:last-child { border-bottom: none; }
-  .cost-line-label { font-size: 11px; color: var(--ink-muted); flex: 1; }
-  .cost-line-amount { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; white-space: nowrap; }
+  .cost-line-label { font-size: 13px; color: var(--ink-muted); flex: 1; }
+  .cost-line-amount { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; white-space: nowrap; }
   .cost-total {
     display: flex; justify-content: space-between; align-items: baseline;
     padding-top: 12px; border-top: 2px solid var(--ink); margin-top: 8px;
   }
-  .cost-total-label { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
-  .cost-total-amount { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--accent); }
+  .cost-total-label { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .cost-total-amount { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--accent); }
   .grand-total-card {
     background: var(--ink); color: #fff; padding: 24px 28px;
     grid-column: span 2;
     display: flex; justify-content: space-between; align-items: center;
   }
-  .gt-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); }
-  .gt-sub { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 4px; }
+  .gt-label { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+  .gt-sub { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 4px; }
   .gt-amount { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 46px); color: #fff; }
   .gt-right { text-align: right; }
   .cost-note { margin-top: 12px; font-size: 10px; color: var(--ink-faint); line-height: 1.5; }
+
+  /* ── DOCTOR FILTER ── */
+  .med-filter-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface); border: 1.5px solid var(--border);
+    padding: 8px 18px; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--ink-muted); transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .filter-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .filter-btn.active.f-cardio { background: var(--cardio); border-color: var(--cardio); }
+  .filter-btn.active.f-neuro { background: var(--neuro); border-color: var(--neuro); }
+  .filter-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .filter-dot.cardio { background: var(--cardio); }
+  .filter-dot.neuro { background: var(--neuro); }
+  .filter-btn.active .filter-dot { background: rgba(255,255,255,0.8); }
+  .filter-count {
+    font-size: 11px; font-weight: 400; opacity: 0.6; margin-left: 2px;
+  }
 
   /* ── FOOTER ── */
   .site-footer {
     background: var(--surface); border-top: 1px solid var(--border);
     padding: 14px 24px; text-align: center;
-    font-size: 10px; color: var(--ink-faint); letter-spacing: .08em;
+    font-size: 12px; color: var(--ink-faint); letter-spacing: .04em;
   }
 
   /* ── RESPONSIVE ── */
@@ -372,8 +395,13 @@
 <div id="tab-medicines" class="tab-panel">
   <div class="panel-inner">
     <div class="section-label">Active Medicines · 8 unique · Across 2 doctors</div>
+    <div class="med-filter-row">
+      <button class="filter-btn active" data-filter="all">All medicines <span class="filter-count" id="fc-all"></span></button>
+      <button class="filter-btn f-cardio" data-filter="cardio"><span class="filter-dot cardio"></span>Dr. Reyes <span class="filter-count" id="fc-cardio"></span></button>
+      <button class="filter-btn f-neuro" data-filter="neuro"><span class="filter-dot neuro"></span>Dr. Dela Cruz <span class="filter-count" id="fc-neuro"></span></button>
+    </div>
     <div class="med-grid" id="med-grid"></div>
-    <p style="margin-top:10px;font-size:10px;color:var(--ink-faint);letter-spacing:.04em;">
+    <p style="margin-top:12px;font-size:12px;color:var(--ink-faint);">
       ⚠ Atorvastatin timing conflict: Dr. Reyes says bedtime, Dr. Dela Cruz says after dinner — confirm at June 2 appointment.
     </p>
   </div>
@@ -701,9 +729,30 @@ function renderTodayAppts() {
 
 // ─── MEDICINES ────────────────────────────────────────────────────────────────
 
+let activeFilter = 'all';
+
+function updateFilterCounts() {
+  document.getElementById('fc-all').textContent = `(${MEDICINES.length})`;
+  document.getElementById('fc-cardio').textContent = `(${MEDICINES.filter(m => m.doctors.includes('cardio')).length})`;
+  document.getElementById('fc-neuro').textContent = `(${MEDICINES.filter(m => m.doctors.includes('neuro')).length})`;
+}
+
+function initMedFilter() {
+  updateFilterCounts();
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeFilter = btn.dataset.filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMedicines();
+    });
+  });
+}
+
 function renderMedicines() {
   const doctorName = { cardio: 'Dr. Reyes', neuro: 'Dr. Dela Cruz' };
-  document.getElementById('med-grid').innerHTML = MEDICINES.map(med => {
+  const meds = activeFilter === 'all' ? MEDICINES : MEDICINES.filter(m => m.doctors.includes(activeFilter));
+  document.getElementById('med-grid').innerHTML = meds.map(med => {
     const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med), pct = stockPct(med);
     const pillCls = dl <= 3 ? 'spill-urgent' : dl <= 10 ? 'spill-warning' : 'spill-active';
     const pillTxt = dl <= 3 ? 'Restock now' : dl <= 10 ? `Restock ${fmtShort(runsOutDate(med))}` : '✓ Good stock';
@@ -842,6 +891,7 @@ function init() {
   renderStockSummary();
   renderTodayAppts();
   renderMedicines();
+  initMedFilter();
   renderRestockTable();
   renderTimeline();
   renderCosts();
