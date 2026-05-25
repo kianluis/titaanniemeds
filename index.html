@@ -270,12 +270,10 @@
   }
   .tl-item.tl-today { background: var(--ink); border-color: var(--ink); }
   .tl-item.tl-past { opacity: 0.55; }
-  .tl-when { font-size: 11px; font-weight: 600; color: var(--ink-faint); }
-  .tl-today .tl-when { color: rgba(255,255,255,.45); }
-  .tl-title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; }
+  .tl-when { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 2px; }
+  .tl-today .tl-when { color: rgba(255,255,255,.5); }
+  .tl-title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; line-height: 1.3; }
   .tl-today .tl-title { color: #fff; }
-  .tl-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
-  .tl-today .tl-desc { color: rgba(255,255,255,.6); }
 
   /* ── COSTS TAB ── */
   .costs-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; background: var(--border); border: 1.5px solid var(--border); }
@@ -304,6 +302,60 @@
   .gt-amount { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 46px); color: #fff; }
   .gt-right { text-align: right; }
   .cost-note { margin-top: 12px; font-size: 10px; color: var(--ink-faint); line-height: 1.5; }
+
+  /* ── TODAY BANNER ── */
+  .today-banner-card {
+    border: 1.5px solid var(--accent); border-left: 5px solid var(--accent);
+    background: var(--accent-light); padding: 18px 22px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 24px; margin-bottom: 22px;
+  }
+  .tb-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 6px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .tb-tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: blink 1.5s infinite; }
+  .tb-doctor { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+  .tb-detail { font-size: 13px; color: var(--ink-muted); margin-top: 5px; line-height: 1.5; }
+  .tb-time { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); white-space: nowrap; text-align: right; }
+  .tb-time-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); text-align: right; margin-bottom: 4px; }
+
+  /* ── RESTOCK APPOINTMENTS ── */
+  .appt-main {
+    background: var(--surface); border: 1.5px solid var(--border);
+    padding: 18px 20px; margin-bottom: 3px;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
+  }
+  .appt-main.is-today { border-color: var(--accent); border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .appt-main.is-past { opacity: 0.45; }
+  .appt-main-when {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 5px;
+  }
+  .appt-main.is-today .appt-main-when { color: var(--accent); }
+  .appt-main-doctor { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--ink); }
+  .appt-main-detail { font-size: 12px; color: var(--ink-muted); margin-top: 4px; line-height: 1.5; }
+  .appt-main-buy {
+    flex-shrink: 0; max-width: 280px;
+    background: var(--amber-light); border: 1px solid var(--amber);
+    padding: 10px 14px; font-size: 12px; color: var(--ink-muted); line-height: 1.5;
+  }
+  .appt-main-buy-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 5px;
+  }
+
+  /* ── COLLAPSIBLE TIMELINE ── */
+  .tl-item { cursor: pointer; user-select: none; }
+  .tl-item:hover { background: var(--surface-2); }
+  .tl-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .tl-chevron { font-size: 13px; color: var(--ink-faint); transition: transform 0.22s; flex-shrink: 0; padding-top: 2px; }
+  .tl-item.expanded .tl-chevron { transform: rotate(180deg); }
+  .tl-body { max-height: 0; overflow: hidden; transition: max-height 0.28s ease; }
+  .tl-item.expanded .tl-body { max-height: 300px; }
+  .tl-body-inner { padding: 8px 0 2px; font-size: 12px; color: var(--ink-muted); line-height: 1.55; }
+  .tl-today .tl-body-inner { color: rgba(255,255,255,.65); }
 
   /* ── DOCTOR FILTER ── */
   .med-filter-row {
@@ -378,6 +430,7 @@
 
 <div id="tab-today" class="tab-panel active">
   <div class="panel-inner">
+    <div id="today-banner"></div>
     <div class="today-grid">
       <div>
         <div class="section-label">Today's Dose Schedule</div>
@@ -386,7 +439,6 @@
       <div class="today-sidebar">
         <div class="section-label">Stock Levels</div>
         <div class="stock-card" id="stock-summary"></div>
-        <div class="section-label">Upcoming Appointments</div>
         <div id="today-appts"></div>
       </div>
     </div>
@@ -412,14 +464,16 @@
   <div class="panel-inner">
     <div class="restock-layout">
       <div>
-        <div class="section-label">Restock Plan · Sorted by urgency</div>
+        <div class="section-label">Upcoming Appointments</div>
+        <div id="restock-appts"></div>
+        <div class="section-label" style="margin-top:28px">Restock Plan · Sorted by urgency</div>
         <div class="rt-table">
           <div class="rt-thead">
             <span>Medication</span><span>Left</span><span>Runs Out</span><span>Buy Qty</span><span>When</span>
           </div>
           <div id="rt-rows"></div>
         </div>
-        <p style="margin-top:10px;font-size:10px;color:var(--ink-faint);">
+        <p style="margin-top:10px;font-size:12px;color:var(--ink-faint);">
           ⚠ Always present OSCA Senior Citizen ID at pharmacy — 20% discount applies.
         </p>
       </div>
@@ -505,7 +559,7 @@ const MEDICINES = [
   {
     id: 'atorvastatin', name: 'Atorvastatin', brand: 'Atorvast-Natrapharm', dose: '80mg',
     cat: 'both', doctors: ['cardio', 'neuro'],
-    purpose: 'Lowers high cholesterol. Right artery was 99% clogged — prevents further buildup and reduces clot risk. Prescribed by both cardiologist and neurologist.',
+    purpose: 'Lowers high cholesterol. Small arteries are 99% blocked; the major ascending artery is less than 15% blocked — this prevents further buildup and reduces clot risk. Prescribed by both cardiologist and neurologist.',
     schedule: [{ time: '20:00', note: 'after dinner — confirm timing June 2' }],
     dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
     source: 'Mercury Drug', unitPrice: 28.50, buyQty: '30-day supply', restockId: 'june6',
@@ -554,7 +608,7 @@ const APPOINTMENTS = [
 ];
 
 const TIMELINE = [
-  { date: '2026-05-07', title: 'Admitted — Asian Hospital Medical Center', desc: 'Stroke diagnosis. Right coronary artery 99% blocked.' },
+  { date: '2026-05-07', title: 'Admitted — Asian Hospital Medical Center', desc: 'Stroke diagnosis. Small arteries 99% blocked; major ascending artery less than 15% blocked.' },
   { date: '2026-05-15', title: '✓ Discharged', desc: 'Home care begins. Medicines started May 16.' },
   { date: '2026-05-21', title: '✓ Linezolid course completed', desc: 'Antibiotic for IV site infection finished. Fever cleared.' },
   { date: '2026-05-24', title: '✓ Med check · 11:40 AM', desc: 'Identified 5 critically low meds. Confirmed restock plan for May 25.' },
@@ -713,19 +767,46 @@ function renderStockSummary() {
 
 function renderTodayAppts() {
   const t = todayDate();
-  const upcoming = APPOINTMENTS
+  const withDiff = APPOINTMENTS
     .map(a => ({ ...a, diff: daysBetween(t, parseDate(a.date)) }))
-    .filter(a => a.diff >= 0).sort((a, b) => a.diff - b.diff).slice(0, 2);
-  document.getElementById('today-appts').innerHTML = upcoming.map(appt => {
-    const isToday = appt.diff === 0;
-    return `<div class="sidebar-appt${isToday ? ' is-today' : ''}">
-      <div class="sa-when">${isToday ? '🔴 TODAY' : `In ${appt.diff} day${appt.diff===1?'':'s'} · ${fmtShort(parseDate(appt.date))}`}</div>
-      <div class="sa-doctor">${appt.doctor}</div>
-      <div class="sa-detail">${appt.specialty} · ${appt.time}<br>${appt.location}${appt.contact ? ` · ${appt.contact}` : ''}</div>
-      ${appt.notes ? `<div class="sa-detail" style="margin-top:3px;">${appt.notes}</div>` : ''}
-      ${appt.buy ? `<div class="sa-buy">Buy: ${appt.buy}</div>` : ''}
+    .filter(a => a.diff >= 0).sort((a, b) => a.diff - b.diff);
+
+  const todayAppt = withDiff.find(a => a.diff === 0);
+  const soonAppts = withDiff.filter(a => a.diff > 0).slice(0, 2);
+
+  // Today banner — full width above the grid
+  const bannerEl = document.getElementById('today-banner');
+  if (todayAppt) {
+    bannerEl.innerHTML = `<div class="today-banner-card">
+      <div>
+        <div class="tb-tag">Today's Appointment</div>
+        <div class="tb-doctor">${todayAppt.doctor} — ${todayAppt.specialty}</div>
+        <div class="tb-detail">${todayAppt.location}${todayAppt.contact ? ` · ${todayAppt.contact}` : ''}</div>
+        ${todayAppt.notes ? `<div class="tb-detail" style="margin-top:4px;">${todayAppt.notes}</div>` : ''}
+      </div>
+      <div>
+        <div class="tb-time-label">Time</div>
+        <div class="tb-time">${todayAppt.time}</div>
+      </div>
     </div>`;
-  }).join('');
+  } else {
+    bannerEl.innerHTML = '';
+  }
+
+  // Sidebar — upcoming (non-today) appointments only
+  const sidebarEl = document.getElementById('today-appts');
+  if (soonAppts.length > 0) {
+    sidebarEl.innerHTML =
+      `<div class="section-label" style="margin-top:16px">Upcoming Appointments</div>` +
+      soonAppts.map(appt => `<div class="sidebar-appt">
+        <div class="sa-when">In ${appt.diff} day${appt.diff===1?'':'s'} · ${fmtShort(parseDate(appt.date))}</div>
+        <div class="sa-doctor">${appt.doctor}</div>
+        <div class="sa-detail">${appt.specialty} · ${appt.time}<br>${appt.location}${appt.contact ? ` · ${appt.contact}` : ''}</div>
+        ${appt.buy ? `<div class="sa-buy">Buy: ${appt.buy}</div>` : ''}
+      </div>`).join('');
+  } else {
+    sidebarEl.innerHTML = '';
+  }
 }
 
 // ─── MEDICINES ────────────────────────────────────────────────────────────────
@@ -811,16 +892,50 @@ function renderRestockTable() {
   }).join('');
 }
 
+function renderRestockAppts() {
+  const t = todayDate();
+  const upcoming = APPOINTMENTS
+    .map(a => ({ ...a, diff: daysBetween(t, parseDate(a.date)) }))
+    .sort((a, b) => a.diff - b.diff);
+  document.getElementById('restock-appts').innerHTML = upcoming.map(appt => {
+    const isPast = appt.diff < 0, isToday = appt.diff === 0;
+    const whenText = isPast
+      ? `${fmtShort(parseDate(appt.date))} · Done`
+      : isToday ? 'Today'
+      : `${fmtShort(parseDate(appt.date))} · in ${appt.diff} day${appt.diff===1?'':'s'}`;
+    return `<div class="appt-main${isToday?' is-today':isPast?' is-past':''}">
+      <div>
+        <div class="appt-main-when">${whenText}</div>
+        <div class="appt-main-doctor">${appt.doctor}</div>
+        <div class="appt-main-detail">${appt.specialty} · ${appt.time} · ${appt.location}${appt.contact?` · ${appt.contact}`:''}</div>
+        ${appt.notes?`<div class="appt-main-detail" style="margin-top:3px">${appt.notes}</div>`:''}
+      </div>
+      ${appt.buy?`<div class="appt-main-buy"><div class="appt-main-buy-label">Buy at this appointment</div>${appt.buy}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
 function renderTimeline() {
   const t = todayDate();
   document.getElementById('timeline-list').innerHTML = TIMELINE.map(ev => {
     const eDate = parseDate(ev.date);
     const diff = daysBetween(t, eDate);
     const isPast = diff < 0, isToday = diff === 0;
-    return `<div class="tl-item${isPast?' tl-past':isToday?' tl-today':''}">
-      <div class="tl-when">${fmtShort(eDate)}${isPast?' · Done':isToday?' · TODAY':(` · in ${diff}d`)}</div>
-      <div class="tl-title">${ev.title}</div>
-      <div class="tl-desc">${ev.desc}</div>
+    const whenText = isPast
+      ? `${fmtShort(eDate)} · Done`
+      : isToday ? `${fmtShort(eDate)} · TODAY`
+      : `${fmtShort(eDate)} · in ${diff}d`;
+    return `<div class="tl-item${isPast?' tl-past':isToday?' tl-today':''}" onclick="this.classList.toggle('expanded')">
+      <div class="tl-header">
+        <div>
+          <div class="tl-when">${whenText}</div>
+          <div class="tl-title">${ev.title}</div>
+        </div>
+        <span class="tl-chevron">▾</span>
+      </div>
+      <div class="tl-body">
+        <div class="tl-body-inner">${ev.desc}</div>
+      </div>
     </div>`;
   }).join('');
 }
@@ -893,6 +1008,7 @@ function init() {
   renderTodayAppts();
   renderMedicines();
   initMedFilter();
+  renderRestockAppts();
   renderRestockTable();
   renderTimeline();
   renderCosts();
