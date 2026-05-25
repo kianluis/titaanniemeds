@@ -23,6 +23,7 @@
     --border: #D8D2C4;
     --cardio: #3A5A8C;
     --neuro: #6B3A8C;
+    --infect: #5C7A3A;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; min-height: 100vh; }
@@ -129,6 +130,7 @@
   .med-dot.cardio { background: var(--cardio); }
   .med-dot.neuro { background: var(--neuro); }
   .med-dot.both { background: linear-gradient(135deg, var(--cardio) 50%, var(--neuro) 50%); }
+  .med-dot.infect { background: var(--infect); }
   .slot-med-name { font-weight: 500; }
   .slot-med-note { font-size: 12px; color: var(--ink-faint); margin-left: auto; white-space: nowrap; }
 
@@ -187,6 +189,8 @@
   .med-card.cardio::before { background: var(--cardio); }
   .med-card.neuro::before { background: var(--neuro); }
   .med-card.both::before { background: linear-gradient(180deg, var(--cardio) 50%, var(--neuro) 50%); }
+  .med-card.infect::before { background: var(--infect); }
+  .med-card.completed { opacity: 0.55; }
 
   .med-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
   .med-card-name { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; line-height: 1.2; }
@@ -203,6 +207,7 @@
   }
   .dtag-cardio { color: var(--cardio); }
   .dtag-neuro { color: var(--neuro); }
+  .dtag-infect { color: var(--infect); }
   .dtag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
   .med-purpose {
@@ -372,9 +377,12 @@
   .filter-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
   .filter-btn.active.f-cardio { background: var(--cardio); border-color: var(--cardio); }
   .filter-btn.active.f-neuro { background: var(--neuro); border-color: var(--neuro); }
+  .filter-btn.active.f-infect { background: var(--infect); border-color: var(--infect); }
   .filter-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
   .filter-dot.cardio { background: var(--cardio); }
   .filter-dot.neuro { background: var(--neuro); }
+  .filter-dot.infect { background: var(--infect); }
+  .spill-done { color: var(--ink-faint); background: var(--surface-2); }
   .filter-btn.active .filter-dot { background: rgba(255,255,255,0.8); }
   .filter-count {
     font-size: 11px; font-weight: 400; opacity: 0.6; margin-left: 2px;
@@ -452,6 +460,7 @@
       <button class="filter-btn active" data-filter="all">All medicines <span class="filter-count" id="fc-all"></span></button>
       <button class="filter-btn f-cardio" data-filter="cardio"><span class="filter-dot cardio"></span>Dr. Reyes <span class="filter-count" id="fc-cardio"></span></button>
       <button class="filter-btn f-neuro" data-filter="neuro"><span class="filter-dot neuro"></span>Dr. Dela Cruz <span class="filter-count" id="fc-neuro"></span></button>
+      <button class="filter-btn f-infect" data-filter="infect"><span class="filter-dot infect"></span>Dr. Garcia <span class="filter-count" id="fc-infect"></span></button>
     </div>
     <div class="med-grid" id="med-grid"></div>
     <p style="margin-top:12px;font-size:12px;color:var(--ink-faint);">
@@ -563,6 +572,15 @@ const MEDICINES = [
     schedule: [{ time: '20:00', note: 'after dinner — confirm timing June 2' }],
     dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
     source: 'Mercury Drug', unitPrice: 28.50, buyQty: '30-day supply', restockId: 'june6',
+  },
+  {
+    id: 'linezolid', name: 'Linezolid', brand: 'Nizolec-600', dose: '600mg',
+    cat: 'infect', doctors: ['infect'],
+    purpose: 'Antibiotic for IV site infection. A recurring 4PM fever turned out to be an infection at the IV insertion point after days of high-dose medication. Full 6-day course completed May 21.',
+    schedule: [{ time: '08:00', note: '1st dose' }, { time: '20:00', note: '2nd dose' }],
+    dailyTablets: 2, stockRemaining: 12, stockAsOf: '2026-05-16', stockMax: 12,
+    source: 'Mercury Drug', unitPrice: 1300.00, buyQty: 'No refill needed', restockId: null,
+    completed: true, completedDate: '2026-05-21',
   },
 ];
 
@@ -817,6 +835,7 @@ function updateFilterCounts() {
   document.getElementById('fc-all').textContent = `(${MEDICINES.length})`;
   document.getElementById('fc-cardio').textContent = `(${MEDICINES.filter(m => m.doctors.includes('cardio')).length})`;
   document.getElementById('fc-neuro').textContent = `(${MEDICINES.filter(m => m.doctors.includes('neuro')).length})`;
+  document.getElementById('fc-infect').textContent = `(${MEDICINES.filter(m => m.doctors.includes('infect')).length})`;
 }
 
 function initMedFilter() {
@@ -832,16 +851,33 @@ function initMedFilter() {
 }
 
 function renderMedicines() {
-  const doctorName = { cardio: 'Dr. Reyes', neuro: 'Dr. Dela Cruz' };
+  const doctorName = { cardio: 'Dr. Reyes', neuro: 'Dr. Dela Cruz', infect: 'Dr. Garcia' };
   const meds = activeFilter === 'all' ? MEDICINES : MEDICINES.filter(m => m.doctors.includes(activeFilter));
   document.getElementById('med-grid').innerHTML = meds.map(med => {
-    const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med), pct = stockPct(med);
-    const pillCls = dl <= 3 ? 'spill-urgent' : dl <= 10 ? 'spill-warning' : 'spill-active';
-    const pillTxt = dl <= 3 ? 'Restock now' : dl <= 10 ? `Restock ${fmtShort(runsOutDate(med))}` : '✓ Good stock';
     const dtags = med.doctors.map(d =>
       `<span class="dtag dtag-${d}"><span class="dtag-dot"></span>${doctorName[d]}</span>`).join('');
     const sched = med.schedule.map(s => `${fmt12(s.time)}${s.note?` (${s.note})`:''}`).join(' · ');
-    return `<div class="med-card ${med.cat}">
+
+    let stockLabel, stockBarHtml, pillCls, pillTxt, runsOutHtml;
+
+    if (med.completed) {
+      stockLabel = `Course completed ${fmtShort(parseDate(med.completedDate))}`;
+      stockBarHtml = `<div class="med-stock-bg"><div class="med-stock-fill fill-green" style="width:100%"></div></div>
+        <span class="med-stock-count green">All ${med.stockMax} tabs taken</span>`;
+      pillCls = 'spill-done';
+      pillTxt = `✓ Completed ${fmtShort(parseDate(med.completedDate))}`;
+      runsOutHtml = `<span style="font-size:12px;color:var(--ink-faint)">No refill needed</span>`;
+    } else {
+      const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med), pct = stockPct(med);
+      stockLabel = 'Current Stock';
+      stockBarHtml = `<div class="med-stock-bg"><div class="med-stock-fill fill-${color}" style="width:${pct}%"></div></div>
+        <span class="med-stock-count ${color}">${sc} tabs · ${dl} days left</span>`;
+      pillCls = dl <= 3 ? 'spill-urgent' : dl <= 10 ? 'spill-warning' : 'spill-active';
+      pillTxt = dl <= 3 ? 'Restock now' : dl <= 10 ? `Restock ${fmtShort(runsOutDate(med))}` : '✓ Good stock';
+      runsOutHtml = `<span class="runs-out-text">→ ${fmtShort(runsOutDate(med))}</span>`;
+    }
+
+    return `<div class="med-card ${med.cat}${med.completed?' completed':''}">
       <div class="med-card-top">
         <div>
           <div class="med-card-name">${med.name}</div>
@@ -853,20 +889,17 @@ function renderMedicines() {
       <div class="med-purpose">${med.purpose}</div>
       <div class="med-details">
         <div class="detail-item"><span class="detail-label">Schedule</span><span class="detail-value">${sched}</span></div>
-        <div class="detail-item"><span class="detail-label">Daily Dose</span><span class="detail-value">${med.dailyTablets} tab${med.dailyTablets>1?'s':''}/day</span></div>
+        <div class="detail-item"><span class="detail-label">Daily Dose</span><span class="detail-value">${med.dailyTablets} tabs/day</span></div>
         <div class="detail-item"><span class="detail-label">Source</span><span class="detail-value">${med.source}</span></div>
         <div class="detail-item"><span class="detail-label">Unit Price</span><span class="detail-value">${fmtMoney(med.unitPrice)}</span></div>
       </div>
       <div class="med-stock-row">
-        <span class="med-stock-label">Current Stock</span>
-        <div class="med-stock-bar-row">
-          <div class="med-stock-bg"><div class="med-stock-fill fill-${color}" style="width:${pct}%"></div></div>
-          <span class="med-stock-count ${color}">${sc} tabs · ${dl} days left</span>
-        </div>
+        <span class="med-stock-label">${stockLabel}</span>
+        <div class="med-stock-bar-row">${stockBarHtml}</div>
       </div>
       <div class="med-status-row">
         <span class="spill ${pillCls}">${pillTxt}</span>
-        <span class="runs-out-text">→ ${fmtShort(runsOutDate(med))}</span>
+        ${runsOutHtml}
       </div>
     </div>`;
   }).join('');
