@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tita Annie — Medicine Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F0E8;
+    --surface: #FDFAF4;
+    --surface-2: #EDE8DC;
+    --ink: #1C1A16;
+    --ink-muted: #6B6558;
+    --ink-faint: #A09890;
+    --accent: #C4593A;
+    --accent-light: #F0E4DF;
+    --green: #3A7D5C;
+    --green-light: #DFF0E8;
+    --amber: #B8860B;
+    --amber-light: #FDF3D0;
+    --border: #D8D2C4;
+    --cardio: #3A5A8C;
+    --neuro: #6B3A8C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: 'DM Mono', monospace; min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .site-header { background: var(--ink); color: #fff; padding: 20px 24px; }
+  .header-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 20px; align-items: center;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(20px, 3.5vw, 34px);
+    line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .header-title em { font-style: italic; color: var(--accent); }
+  .header-sub {
+    font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 4px;
+  }
+  .header-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+  #live-clock {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(18px, 2.8vw, 28px);
+    font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.02em;
+  }
+  #live-date { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .appt-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent); color: #fff;
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px;
+  }
+  .appt-badge.today-badge { background: var(--amber); }
+  .appt-badge::before {
+    content: ''; width: 6px; height: 6px;
+    border-radius: 50%; background: #fff;
+    animation: blink 1.5s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    background: var(--surface); border-bottom: 2px solid var(--ink);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .tab-nav-inner { max-width: 1100px; margin: 0 auto; display: flex; }
+  .tab-btn {
+    background: none; border: none;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+    padding: 13px 20px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-faint); cursor: pointer; transition: all 0.15s; white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active { color: var(--ink); border-bottom-color: var(--accent); }
+
+  /* ── PANELS ── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .panel-inner { max-width: 1100px; margin: 0 auto; padding: 28px 24px 60px; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-faint);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── TODAY — dose slots ── */
+  .today-grid { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+  .dose-slots { display: flex; flex-direction: column; gap: 3px; }
+
+  .dose-slot {
+    background: var(--surface); border: 1.5px solid var(--border); overflow: hidden;
+  }
+  .dose-slot.s-current { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .dose-slot.s-past { opacity: 0.5; }
+
+  .slot-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+  }
+  .slot-header.s-current { background: var(--accent-light); }
+  .slot-time {
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800;
+    color: var(--ink); min-width: 72px;
+  }
+  .slot-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); flex: 1; }
+  .slot-badge {
+    font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 2px 8px;
+  }
+  .slot-badge.b-current { background: var(--accent); color: #fff; }
+  .slot-badge.b-upcoming { background: var(--surface-2); color: var(--ink-muted); }
+  .slot-badge.b-past { background: var(--green-light); color: var(--green); }
+
+  .slot-meds { padding: 10px 14px; display: flex; flex-direction: column; gap: 7px; }
+  .slot-med { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+  .med-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .med-dot.cardio { background: var(--cardio); }
+  .med-dot.neuro { background: var(--neuro); }
+  .med-dot.both { background: linear-gradient(135deg, var(--cardio) 50%, var(--neuro) 50%); }
+  .slot-med-name { font-weight: 500; }
+  .slot-med-note { font-size: 10px; color: var(--ink-faint); margin-left: auto; white-space: nowrap; }
+
+  /* ── TODAY — sidebar ── */
+  .today-sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+  .stock-card { background: var(--surface); border: 1.5px solid var(--border); padding: 16px; }
+  .stock-card-title {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--ink); margin-bottom: 12px;
+  }
+  .stock-item { padding: 7px 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+  .stock-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .stock-item-name { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; }
+  .stock-bar-row { display: flex; align-items: center; gap: 8px; }
+  .bar-bg { flex: 1; height: 5px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 2px; transition: width .5s; }
+  .fill-red { background: var(--accent); }
+  .fill-amber { background: var(--amber); }
+  .fill-green { background: var(--green); }
+  .stock-item-count { font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .stock-item-count.red { color: var(--accent); }
+  .stock-item-count.amber { color: var(--amber); }
+  .stock-item-count.green { color: var(--green); }
+  .stock-item-runout { font-size: 9px; color: var(--ink-faint); letter-spacing: .05em; }
+
+  .sidebar-appt { background: var(--surface); border: 1.5px solid var(--border); padding: 14px; }
+  .sidebar-appt.is-today { background: var(--ink); }
+  .sidebar-appt + .sidebar-appt { margin-top: 3px; }
+  .sa-when {
+    font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 6px;
+  }
+  .is-today .sa-when { color: rgba(255,255,255,.5); }
+  .sa-doctor { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--ink); }
+  .is-today .sa-doctor { color: #fff; }
+  .sa-detail { font-size: 10px; color: var(--ink-muted); margin-top: 3px; line-height: 1.4; }
+  .is-today .sa-detail { color: rgba(255,255,255,.6); }
+  .sa-buy {
+    font-size: 9px; color: var(--amber); padding-top: 6px;
+    border-top: 1px solid var(--border); margin-top: 6px; letter-spacing: .03em; line-height: 1.4;
+  }
+  .is-today .sa-buy { border-top-color: rgba(255,255,255,.2); }
+
+  /* ── MEDICINES TAB ── */
+  .med-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 3px; background: var(--border); border: 1.5px solid var(--border);
+  }
+  .med-card {
+    background: var(--surface); padding: 20px 22px;
+    display: flex; flex-direction: column; gap: 12px;
+    position: relative; overflow: hidden;
+  }
+  .med-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  }
+  .med-card.cardio::before { background: var(--cardio); }
+  .med-card.neuro::before { background: var(--neuro); }
+  .med-card.both::before { background: linear-gradient(180deg, var(--cardio) 50%, var(--neuro) 50%); }
+
+  .med-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .med-card-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; line-height: 1.2; }
+  .med-card-brand { font-size: 10px; color: var(--ink-faint); font-style: italic; margin-top: 2px; }
+  .med-card-dose {
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+    background: var(--surface-2); padding: 3px 8px; white-space: nowrap; flex-shrink: 0;
+  }
+  .doctor-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .dtag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    padding: 2px 6px; border: 1px solid currentColor;
+  }
+  .dtag-cardio { color: var(--cardio); }
+  .dtag-neuro { color: var(--neuro); }
+  .dtag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+  .med-purpose {
+    font-size: 11px; color: var(--ink-muted); line-height: 1.55;
+    padding: 8px 10px; background: var(--bg); border-left: 2px solid var(--border);
+  }
+  .med-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .detail-item { display: flex; flex-direction: column; gap: 2px; }
+  .detail-label { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); }
+  .detail-value { font-size: 12px; font-weight: 500; }
+
+  .med-stock-row { background: var(--surface-2); padding: 10px 12px; display: flex; flex-direction: column; gap: 5px; }
+  .med-stock-label { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); }
+  .med-stock-bar-row { display: flex; align-items: center; gap: 8px; }
+  .med-stock-bg { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .med-stock-fill { height: 100%; border-radius: 3px; }
+  .med-stock-count { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; white-space: nowrap; }
+
+  .med-status-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 10px; border-top: 1px solid var(--border);
+  }
+  .spill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; font-size: 10px; font-weight: 500;
+    letter-spacing: .08em; text-transform: uppercase;
+  }
+  .spill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .spill-active { color: var(--green); background: var(--green-light); }
+  .spill-warning { color: var(--amber); background: var(--amber-light); }
+  .spill-urgent { color: var(--accent); background: var(--accent-light); }
+  .runs-out-text { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; }
+
+  /* ── RESTOCK TAB ── */
+  .restock-layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
+
+  .rt-table { background: var(--surface); border: 1.5px solid var(--border); }
+  .rt-thead {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+    background: var(--ink); padding: 10px 16px; gap: 10px;
+  }
+  .rt-thead span { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+  .rt-row {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+    padding: 11px 16px; gap: 10px;
+    border-bottom: 1px solid var(--border); align-items: center;
+  }
+  .rt-row:last-child { border-bottom: none; }
+  .rt-row:hover { background: var(--surface-2); }
+  .rt-med { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; }
+  .rt-val { font-size: 11px; color: var(--ink-muted); }
+  .rt-badge {
+    display: inline-block; padding: 2px 8px;
+    font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+  .badge-red { background: var(--accent-light); color: var(--accent); }
+  .badge-gray { background: var(--surface-2); color: var(--ink-faint); }
+
+  .timeline-list { display: flex; flex-direction: column; gap: 2px; }
+  .tl-item {
+    background: var(--surface); border: 1.5px solid var(--border);
+    padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .tl-item.tl-today { background: var(--ink); border-color: var(--ink); }
+  .tl-item.tl-past { opacity: 0.55; }
+  .tl-when { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); }
+  .tl-today .tl-when { color: rgba(255,255,255,.45); }
+  .tl-title { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; }
+  .tl-today .tl-title { color: #fff; }
+  .tl-desc { font-size: 10px; color: var(--ink-muted); line-height: 1.4; }
+  .tl-today .tl-desc { color: rgba(255,255,255,.6); }
+
+  /* ── COSTS TAB ── */
+  .costs-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; background: var(--border); border: 1.5px solid var(--border); }
+  .cost-card { background: var(--surface); padding: 24px; }
+  .cost-card-title { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 16px; }
+  .cost-line {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 6px 0; border-bottom: 1px dashed var(--border); gap: 12px;
+  }
+  .cost-line:last-child { border-bottom: none; }
+  .cost-line-label { font-size: 11px; color: var(--ink-muted); flex: 1; }
+  .cost-line-amount { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; white-space: nowrap; }
+  .cost-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 12px; border-top: 2px solid var(--ink); margin-top: 8px;
+  }
+  .cost-total-label { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .cost-total-amount { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--accent); }
+  .grand-total-card {
+    background: var(--ink); color: #fff; padding: 24px 28px;
+    grid-column: span 2;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .gt-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+  .gt-sub { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 4px; }
+  .gt-amount { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 46px); color: #fff; }
+  .gt-right { text-align: right; }
+  .cost-note { margin-top: 12px; font-size: 10px; color: var(--ink-faint); line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 14px 24px; text-align: center;
+    font-size: 10px; color: var(--ink-faint); letter-spacing: .08em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 780px) {
+    .today-grid { grid-template-columns: 1fr; }
+    .restock-layout { grid-template-columns: 1fr; }
+    .costs-layout { grid-template-columns: 1fr; }
+    .grand-total-card { grid-column: span 1; flex-direction: column; gap: 10px; }
+    .gt-right { text-align: left; }
+    .rt-thead, .rt-row { grid-template-columns: 2fr 1fr 1fr; }
+    .rt-thead span:nth-child(4), .rt-thead span:nth-child(5),
+    .rt-row > *:nth-child(4), .rt-row > *:nth-child(5) { display: none; }
+    .header-inner { grid-template-columns: 1fr; }
+    .header-right { align-items: flex-start; text-align: left; }
+    .tab-btn { padding: 12px 14px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div>
+      <div class="header-title">Tita <em>Annie's</em> Medicine Tracker</div>
+      <div class="header-sub">Lapuz, Anita Balagtas · 61F · HN 00827030 · Discharged May 15, 2026</div>
+    </div>
+    <div class="header-right">
+      <div id="live-clock">--:-- --</div>
+      <div id="live-date"></div>
+      <div id="next-appt-badge" class="appt-badge"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" data-tab="today">◎ Today</button>
+    <button class="tab-btn" data-tab="medicines">⊞ Medicines</button>
+    <button class="tab-btn" data-tab="restock">↻ Restock &amp; Appts</button>
+    <button class="tab-btn" data-tab="costs">₱ Costs</button>
+  </div>
+</nav>
+
+<div id="tab-today" class="tab-panel active">
+  <div class="panel-inner">
+    <div class="today-grid">
+      <div>
+        <div class="section-label">Today's Dose Schedule</div>
+        <div class="dose-slots" id="dose-slots"></div>
+      </div>
+      <div class="today-sidebar">
+        <div class="section-label">Stock Levels</div>
+        <div class="stock-card" id="stock-summary"></div>
+        <div class="section-label">Upcoming Appointments</div>
+        <div id="today-appts"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-medicines" class="tab-panel">
+  <div class="panel-inner">
+    <div class="section-label">Active Medicines · 8 unique · Across 2 doctors</div>
+    <div class="med-grid" id="med-grid"></div>
+    <p style="margin-top:10px;font-size:10px;color:var(--ink-faint);letter-spacing:.04em;">
+      ⚠ Atorvastatin timing conflict: Dr. Reyes says bedtime, Dr. Dela Cruz says after dinner — confirm at June 2 appointment.
+    </p>
+  </div>
+</div>
+
+<div id="tab-restock" class="tab-panel">
+  <div class="panel-inner">
+    <div class="restock-layout">
+      <div>
+        <div class="section-label">Restock Plan · Sorted by urgency</div>
+        <div class="rt-table">
+          <div class="rt-thead">
+            <span>Medication</span><span>Left</span><span>Runs Out</span><span>Buy Qty</span><span>When</span>
+          </div>
+          <div id="rt-rows"></div>
+        </div>
+        <p style="margin-top:10px;font-size:10px;color:var(--ink-faint);">
+          ⚠ Always present OSCA Senior Citizen ID at pharmacy — 20% discount applies.
+        </p>
+      </div>
+      <div>
+        <div class="section-label">Timeline</div>
+        <div class="timeline-list" id="timeline-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-costs" class="tab-panel">
+  <div class="panel-inner">
+    <div class="section-label">Financial Summary</div>
+    <div class="costs-layout" id="costs-grid"></div>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer">
+  LAPUZ, ANITA BALAGTAS · HN 00827030 · Stock counts auto-calculated daily from last recorded supply
+</footer>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+const MEDICINES = [
+  {
+    id: 'pantoprazole', name: 'Pantoprazole', brand: 'Pantopraz', dose: '40mg',
+    cat: 'neuro', doctors: ['neuro'],
+    purpose: 'Stomach acid reducer. Protects the stomach lining from all the heavy blood thinners and high-dose medications she\'s taking.',
+    schedule: [{ time: '07:00', note: '30 min before eating' }],
+    dailyTablets: 1, stockRemaining: 9, stockAsOf: '2026-05-24', stockMax: 20,
+    source: 'Hospital Pharmacy', unitPrice: 54.60, buyQty: '30 tabs', restockId: 'june2',
+  },
+  {
+    id: 'nebivolol', name: 'Nebivolol', brand: '2 × 5mg (10mg unavailable)', dose: '5mg ×2',
+    cat: 'cardio', doctors: ['cardio'],
+    purpose: 'Beta-blocker for high blood pressure. Heart has thick walls — this reduces the force needed to pump and lowers BP.',
+    schedule: [{ time: '08:00', note: '2 tabs at once' }],
+    dailyTablets: 2, stockRemaining: 24, stockAsOf: '2026-05-25', stockMax: 24,
+    source: 'Mercury Drug', unitPrice: 21.50, buyQty: '30-day supply', restockId: 'june6',
+  },
+  {
+    id: 'telmisartan', name: 'Telmisartan', brand: 'Micardis', dose: '80mg',
+    cat: 'cardio', doctors: ['cardio'],
+    purpose: 'ARB blood pressure med. Relaxes blood vessels to reduce BP — works alongside Nebivolol from a different mechanism.',
+    schedule: [{ time: '08:00', note: '' }],
+    dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
+    source: 'Mercury Drug', unitPrice: 45.75, buyQty: '30-day supply', restockId: 'june6',
+  },
+  {
+    id: 'cilostazol', name: 'Cilostazol', brand: 'Vaxol', dose: '50mg',
+    cat: 'neuro', doctors: ['neuro'],
+    purpose: 'Improves blood flow to the brain. Prevents stroke recurrence by stopping platelets from clumping and widening blood vessels.',
+    schedule: [{ time: '08:00', note: '1st dose' }, { time: '20:00', note: '2nd dose' }],
+    dailyTablets: 2, stockRemaining: 19, stockAsOf: '2026-05-24', stockMax: 36,
+    source: 'Mercury Drug', unitPrice: 23.75, buyQty: '60 tabs', restockId: 'june2',
+  },
+  {
+    id: 'citicoline', name: 'Citicoline', brand: 'Zynapse', dose: '500mg',
+    cat: 'neuro', doctors: ['neuro'],
+    purpose: 'Brain recovery support. Helps repair and regenerate nerve cells damaged by the stroke. Supports cognitive function and memory recovery.',
+    schedule: [{ time: '08:00', note: '1st dose' }, { time: '20:00', note: '2nd dose' }],
+    dailyTablets: 2, stockRemaining: 23, stockAsOf: '2026-05-24', stockMax: 40,
+    source: 'Hospital Pharmacy', unitPrice: 70.49, buyQty: '60 caps', restockId: 'june2',
+  },
+  {
+    id: 'amlodipine', name: 'Amlodipine', brand: 'Norvasc', dose: '10mg',
+    cat: 'cardio', doctors: ['cardio'],
+    purpose: 'Calcium channel blocker for BP. Widens arteries to ease blood flow — third layer of BP control alongside Nebivolol and Telmisartan.',
+    schedule: [{ time: '10:00', note: '' }],
+    dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
+    source: 'Mercury Drug', unitPrice: 38.25, buyQty: '30-day supply', restockId: 'june6',
+  },
+  {
+    id: 'clopidogrel', name: 'Clopidogrel', brand: 'Plotron', dose: '75mg',
+    cat: 'both', doctors: ['cardio', 'neuro'],
+    purpose: 'Anti-platelet blood thinner. Prevents new clots forming — critical for both stroke prevention and heart protection. Prescribed by both doctors.',
+    schedule: [{ time: '12:30', note: 'after lunch' }],
+    dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
+    source: 'Mercury Drug', unitPrice: 30.25, buyQty: '30 tabs', restockId: 'june2',
+  },
+  {
+    id: 'atorvastatin', name: 'Atorvastatin', brand: 'Atorvast-Natrapharm', dose: '80mg',
+    cat: 'both', doctors: ['cardio', 'neuro'],
+    purpose: 'Lowers high cholesterol. Right artery was 99% clogged — prevents further buildup and reduces clot risk. Prescribed by both cardiologist and neurologist.',
+    schedule: [{ time: '20:00', note: 'after dinner — confirm timing June 2' }],
+    dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
+    source: 'Mercury Drug', unitPrice: 28.50, buyQty: '30-day supply', restockId: 'june6',
+  },
+];
+
+const SCHEDULE_SLOTS = [
+  { time: '07:00', label: 'Before Breakfast', meds: [{ id: 'pantoprazole', note: '30 min before eating' }] },
+  { time: '08:00', label: 'With or After Breakfast', meds: [
+    { id: 'nebivolol', note: '2 tabs' },
+    { id: 'telmisartan', note: '' },
+    { id: 'cilostazol', note: '1st dose' },
+    { id: 'citicoline', note: '1st dose' },
+  ]},
+  { time: '10:00', label: 'Mid-Morning', meds: [{ id: 'amlodipine', note: '' }] },
+  { time: '12:30', label: 'After Lunch', meds: [{ id: 'clopidogrel', note: '' }] },
+  { time: '20:00', label: 'After Dinner', meds: [
+    { id: 'cilostazol', note: '2nd dose' },
+    { id: 'citicoline', note: '2nd dose' },
+    { id: 'atorvastatin', note: 'confirm timing at June 2 appt' },
+  ]},
+];
+
+const APPOINTMENTS = [
+  {
+    id: 'may26', date: '2026-05-26',
+    doctor: 'Dr. Michael Reyes', specialty: 'Cardiology',
+    location: 'MOB Rm 101', time: '1:00 PM', contact: 'Clarisee 0985-410-9679',
+    buy: null,
+    notes: 'Review heart meds and BP management. May affect which cardio meds continue long-term.',
+  },
+  {
+    id: 'june2', date: '2026-06-02',
+    doctor: 'Dr. Fionna Karisse Dela Cruz-Decena', specialty: 'Adult Neurology',
+    location: 'South City Hospital, Bacoor', time: '9:00 AM', contact: '0916-3400873',
+    buy: 'Cilostazol 60 tabs · Citicoline 60 caps · Pantoprazole 30 tabs · Clopidogrel 30 tabs',
+    notes: 'Finish work 7–8AM — factor in travel to Bacoor. Buy meds after appointment.',
+  },
+  {
+    id: 'june6', date: '2026-06-06',
+    doctor: 'Dr. Reyes meds restock', specialty: 'All cardio meds run out',
+    location: 'Mercury Drug (any branch)', time: 'Before this date', contact: null,
+    buy: '30-day supply: Atorvastatin · Nebivolol · Telmisartan · Amlodipine · Clopidogrel. Est. ₱3,672.72 after senior discount.',
+    notes: 'Present OSCA Senior Citizen ID — 20% discount applies.',
+  },
+];
+
+const TIMELINE = [
+  { date: '2026-05-07', title: 'Admitted — Asian Hospital Medical Center', desc: 'Stroke diagnosis. Right coronary artery 99% blocked.' },
+  { date: '2026-05-15', title: '✓ Discharged', desc: 'Home care begins. Medicines started May 16.' },
+  { date: '2026-05-21', title: '✓ Linezolid course completed', desc: 'Antibiotic for IV site infection finished. Fever cleared.' },
+  { date: '2026-05-24', title: '✓ Med check · 11:40 AM', desc: 'Identified 5 critically low meds. Confirmed restock plan for May 25.' },
+  { date: '2026-05-25', title: '✓ Dr. Reyes meds restocked — Mercury Drug Alabang', desc: 'Atorvastatin 12t · Nebivolol 24t · Telmisartan 12t · Amlodipine 12t · Clopidogrel 12t · Paid ₱1,752.09 (after 20% senior discount).' },
+  { date: '2026-05-26', title: 'Dr. Reyes — Cardiology · 1:00 PM', desc: 'MOB Rm 101 · Review heart meds and BP management.' },
+  { date: '2026-06-02', title: 'Dr. Dela Cruz — Neurology + restock neuro meds', desc: 'South City Hospital, Bacoor · 9AM · Buy Cilostazol, Citicoline, Pantoprazole, Clopidogrel after appt.' },
+  { date: '2026-06-06', title: 'Restock Dr. Reyes meds (all cardio meds run out)', desc: 'Buy 30-day supply from Mercury Drug. Est. ₱3,672.72 after senior discount.' },
+];
+
+const COSTS_SPENT = [
+  { label: 'Asian Hospital IPD (May 7–15)', amount: 253808.90 },
+  { label: 'Hospital Pharmacy — discharge meds', amount: 4161.50 },
+  { label: 'Mercury Drug May 18 — Linezolid + Cilostazol', amount: 11753.57 },
+  { label: 'Nebivolol 5mg × 20 tabs (separate purchase)', amount: 240.00 },
+  { label: 'Mercury Drug May 25 — Dr. Reyes restock', amount: 1752.09 },
+];
+
+const COSTS_WEEKLY = [
+  { label: 'Pantoprazole 40mg (1/day)', amount: 382.20 },
+  { label: 'Nebivolol 5mg × 2 (2 tabs/day)', amount: 168.00 },
+  { label: 'Telmisartan 80mg (1/day)', amount: 286.86 },
+  { label: 'Amlodipine 10mg (1/day)', amount: 240.66 },
+  { label: 'Clopidogrel 75mg (1/day)', amount: 191.66 },
+  { label: 'Cilostazol 50mg (2/day)', amount: 332.50 },
+  { label: 'Citicoline 500mg (2/day)', amount: 986.86 },
+  { label: 'Atorvastatin 80mg (1/day)', amount: 184.03 },
+];
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+
+function parseDate(s) { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); }
+function todayDate() { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
+function fmtShort(d) { return d.toLocaleDateString('en-PH', { month: 'short', day: 'numeric' }); }
+function fmtFull(d) { return d.toLocaleDateString('en-PH', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); }
+function fmtMoney(n) { return '₱' + n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function getMed(id) { return MEDICINES.find(m => m.id === id); }
+
+function currentStock(med) {
+  const elapsed = daysBetween(parseDate(med.stockAsOf), todayDate());
+  return Math.max(0, med.stockRemaining - elapsed * med.dailyTablets);
+}
+
+function daysLeft(med) {
+  const s = currentStock(med);
+  return s === 0 ? 0 : Math.floor(s / med.dailyTablets);
+}
+
+function runsOutDate(med) {
+  const d = daysLeft(med);
+  return new Date(todayDate().getTime() + d * 86400000);
+}
+
+function stockColor(med) {
+  const d = daysLeft(med);
+  if (d <= 3) return 'red';
+  if (d <= 10) return 'amber';
+  return 'green';
+}
+
+function stockPct(med) {
+  return Math.min(100, Math.round((currentStock(med) / med.stockMax) * 100));
+}
+
+function slotStatus(timeStr) {
+  const [h, m] = timeStr.split(':').map(Number);
+  const now = new Date();
+  const slotMin = h * 60 + m;
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const diff = slotMin - nowMin;
+  if (diff > 30) return 'upcoming';
+  if (diff >= -90) return 'current';
+  return 'past';
+}
+
+function fmt12(timeStr) {
+  const [h, m] = timeStr.split(':').map(Number);
+  const period = h >= 12 ? 'PM' : 'AM';
+  return `${h % 12 || 12}:${String(m).padStart(2, '0')} ${period}`;
+}
+
+function apptStatus(dateStr) {
+  const diff = daysBetween(todayDate(), parseDate(dateStr));
+  if (diff < 0) return 'past';
+  if (diff === 0) return 'today';
+  return 'future';
+}
+
+// ─── CLOCK ───────────────────────────────────────────────────────────────────
+
+function updateClock() {
+  const now = new Date();
+  const h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+  const period = h >= 12 ? 'PM' : 'AM';
+  document.getElementById('live-clock').textContent =
+    `${h % 12 || 12}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')} ${period}`;
+  document.getElementById('live-date').textContent = fmtFull(now);
+}
+
+function updateApptBadge() {
+  const t = todayDate();
+  const next = APPOINTMENTS
+    .map(a => ({ ...a, diff: daysBetween(t, parseDate(a.date)) }))
+    .filter(a => a.diff >= 0)
+    .sort((a, b) => a.diff - b.diff)[0];
+  const el = document.getElementById('next-appt-badge');
+  if (!next) { el.textContent = 'No upcoming appointments'; return; }
+  el.className = 'appt-badge' + (next.diff === 0 ? ' today-badge' : '');
+  el.textContent = next.diff === 0
+    ? `${next.doctor} — TODAY ${next.time}`
+    : `${next.doctor.split(' ').slice(0,2).join(' ')} in ${next.diff} day${next.diff===1?'':'s'} · ${fmtShort(parseDate(next.date))}`;
+}
+
+// ─── TODAY ────────────────────────────────────────────────────────────────────
+
+function renderDoseSlots() {
+  document.getElementById('dose-slots').innerHTML = SCHEDULE_SLOTS.map(slot => {
+    const st = slotStatus(slot.time);
+    const badge = st === 'current' ? 'b-current' : st === 'past' ? 'b-past' : 'b-upcoming';
+    const badgeText = st === 'current' ? 'Due now' : st === 'past' ? 'Done' : 'Upcoming';
+    const meds = slot.meds.map(sm => {
+      const med = getMed(sm.id);
+      return `<div class="slot-med">
+        <span class="med-dot ${med.cat}"></span>
+        <span class="slot-med-name">${med.name} ${med.dose}</span>
+        ${sm.note ? `<span class="slot-med-note">${sm.note}</span>` : ''}
+      </div>`;
+    }).join('');
+    return `<div class="dose-slot s-${st}">
+      <div class="slot-header${st === 'current' ? ' s-current' : ''}">
+        <span class="slot-time">${fmt12(slot.time)}</span>
+        <span class="slot-label">${slot.label}</span>
+        <span class="slot-badge ${badge}">${badgeText}</span>
+      </div>
+      <div class="slot-meds">${meds}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderStockSummary() {
+  const sorted = [...MEDICINES].sort((a, b) => daysLeft(a) - daysLeft(b));
+  document.getElementById('stock-summary').innerHTML =
+    `<div class="stock-card-title">Live Stock · ${fmtShort(todayDate())}</div>` +
+    sorted.map(med => {
+      const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med), pct = stockPct(med);
+      return `<div class="stock-item">
+        <div class="stock-item-name">${med.name} ${med.dose}</div>
+        <div class="stock-bar-row">
+          <div class="bar-bg"><div class="bar-fill fill-${color}" style="width:${pct}%"></div></div>
+          <span class="stock-item-count ${color}">${sc}t · ${dl}d</span>
+        </div>
+        <div class="stock-item-runout">→ runs out ${fmtShort(runsOutDate(med))}</div>
+      </div>`;
+    }).join('');
+}
+
+function renderTodayAppts() {
+  const t = todayDate();
+  const upcoming = APPOINTMENTS
+    .map(a => ({ ...a, diff: daysBetween(t, parseDate(a.date)) }))
+    .filter(a => a.diff >= 0).sort((a, b) => a.diff - b.diff).slice(0, 2);
+  document.getElementById('today-appts').innerHTML = upcoming.map(appt => {
+    const isToday = appt.diff === 0;
+    return `<div class="sidebar-appt${isToday ? ' is-today' : ''}">
+      <div class="sa-when">${isToday ? '🔴 TODAY' : `In ${appt.diff} day${appt.diff===1?'':'s'} · ${fmtShort(parseDate(appt.date))}`}</div>
+      <div class="sa-doctor">${appt.doctor}</div>
+      <div class="sa-detail">${appt.specialty} · ${appt.time}<br>${appt.location}${appt.contact ? ` · ${appt.contact}` : ''}</div>
+      ${appt.notes ? `<div class="sa-detail" style="margin-top:3px;">${appt.notes}</div>` : ''}
+      ${appt.buy ? `<div class="sa-buy">Buy: ${appt.buy}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// ─── MEDICINES ────────────────────────────────────────────────────────────────
+
+function renderMedicines() {
+  const doctorName = { cardio: 'Dr. Reyes', neuro: 'Dr. Dela Cruz' };
+  document.getElementById('med-grid').innerHTML = MEDICINES.map(med => {
+    const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med), pct = stockPct(med);
+    const pillCls = dl <= 3 ? 'spill-urgent' : dl <= 10 ? 'spill-warning' : 'spill-active';
+    const pillTxt = dl <= 3 ? 'Restock now' : dl <= 10 ? `Restock ${fmtShort(runsOutDate(med))}` : '✓ Good stock';
+    const dtags = med.doctors.map(d =>
+      `<span class="dtag dtag-${d}"><span class="dtag-dot"></span>${doctorName[d]}</span>`).join('');
+    const sched = med.schedule.map(s => `${fmt12(s.time)}${s.note?` (${s.note})`:''}`).join(' · ');
+    return `<div class="med-card ${med.cat}">
+      <div class="med-card-top">
+        <div>
+          <div class="med-card-name">${med.name}</div>
+          <div class="med-card-brand">${med.brand}</div>
+        </div>
+        <div class="med-card-dose">${med.dose}</div>
+      </div>
+      <div class="doctor-tags">${dtags}</div>
+      <div class="med-purpose">${med.purpose}</div>
+      <div class="med-details">
+        <div class="detail-item"><span class="detail-label">Schedule</span><span class="detail-value">${sched}</span></div>
+        <div class="detail-item"><span class="detail-label">Daily Dose</span><span class="detail-value">${med.dailyTablets} tab${med.dailyTablets>1?'s':''}/day</span></div>
+        <div class="detail-item"><span class="detail-label">Source</span><span class="detail-value">${med.source}</span></div>
+        <div class="detail-item"><span class="detail-label">Unit Price</span><span class="detail-value">${fmtMoney(med.unitPrice)}</span></div>
+      </div>
+      <div class="med-stock-row">
+        <span class="med-stock-label">Current Stock</span>
+        <div class="med-stock-bar-row">
+          <div class="med-stock-bg"><div class="med-stock-fill fill-${color}" style="width:${pct}%"></div></div>
+          <span class="med-stock-count ${color}">${sc} tabs · ${dl} days left</span>
+        </div>
+      </div>
+      <div class="med-status-row">
+        <span class="spill ${pillCls}">${pillTxt}</span>
+        <span class="runs-out-text">→ ${fmtShort(runsOutDate(med))}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── RESTOCK ──────────────────────────────────────────────────────────────────
+
+function renderRestockTable() {
+  const apptMap = Object.fromEntries(APPOINTMENTS.map(a => [a.id, a]));
+  const sorted = [...MEDICINES].sort((a, b) => daysLeft(a) - daysLeft(b));
+  document.getElementById('rt-rows').innerHTML = sorted.map(med => {
+    const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med);
+    const appt = apptMap[med.restockId];
+    const whenText = appt ? fmtShort(parseDate(appt.date)) : '—';
+    const badgeCls = color === 'green' ? 'badge-green' : color === 'amber' ? 'badge-amber' : 'badge-red';
+    return `<div class="rt-row">
+      <div class="rt-med">${med.name} ${med.dose}</div>
+      <div class="rt-val" style="color:var(--${color==='green'?'green':color==='amber'?'amber':'accent'})">${sc}t · ${dl}d</div>
+      <div class="rt-val">${fmtShort(runsOutDate(med))}</div>
+      <div class="rt-val">${med.buyQty}</div>
+      <div><span class="rt-badge ${badgeCls}">${whenText}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function renderTimeline() {
+  const t = todayDate();
+  document.getElementById('timeline-list').innerHTML = TIMELINE.map(ev => {
+    const eDate = parseDate(ev.date);
+    const diff = daysBetween(t, eDate);
+    const isPast = diff < 0, isToday = diff === 0;
+    return `<div class="tl-item${isPast?' tl-past':isToday?' tl-today':''}">
+      <div class="tl-when">${fmtShort(eDate)}${isPast?' · Done':isToday?' · TODAY':(` · in ${diff}d`)}</div>
+      <div class="tl-title">${ev.title}</div>
+      <div class="tl-desc">${ev.desc}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── COSTS ────────────────────────────────────────────────────────────────────
+
+function renderCosts() {
+  const totalSpent = COSTS_SPENT.reduce((s, c) => s + c.amount, 0);
+  const weeklyTotal = COSTS_WEEKLY.reduce((s, c) => s + c.amount, 0);
+  const monthlyEst = weeklyTotal * (365 / 12 / 7);
+
+  const spentRows = COSTS_SPENT.map(c =>
+    `<div class="cost-line"><span class="cost-line-label">${c.label}</span><span class="cost-line-amount">${fmtMoney(c.amount)}</span></div>`
+  ).join('');
+  const weeklyRows = COSTS_WEEKLY.map(c =>
+    `<div class="cost-line"><span class="cost-line-label">${c.label}</span><span class="cost-line-amount">${fmtMoney(c.amount)}</span></div>`
+  ).join('');
+
+  document.getElementById('costs-grid').innerHTML = `
+    <div class="cost-card">
+      <div class="cost-card-title">Total Spent to Date</div>
+      ${spentRows}
+      <div class="cost-total">
+        <span class="cost-total-label">Grand Total</span>
+        <span class="cost-total-amount">${fmtMoney(totalSpent)}</span>
+      </div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-card-title">Ongoing Medicine Cost</div>
+      ${weeklyRows}
+      <div class="cost-total">
+        <span class="cost-total-label">Weekly Total</span>
+        <span class="cost-total-amount">${fmtMoney(weeklyTotal)}</span>
+      </div>
+      <div class="cost-note">
+        Monthly est. ${fmtMoney(monthlyEst)} · Annual est. ${fmtMoney(weeklyTotal * 52)}<br>
+        ⚠ Present OSCA Senior Citizen ID at all pharmacies — 20% discount applies.
+      </div>
+    </div>
+    <div class="grand-total-card">
+      <div>
+        <div class="gt-label">Hospital + All Medicines</div>
+        <div class="gt-sub">Admission May 7 through present</div>
+      </div>
+      <div class="gt-right">
+        <div class="gt-amount">${fmtMoney(totalSpent)}</div>
+        <div class="gt-sub">+ ${fmtMoney(weeklyTotal)}/week ongoing</div>
+      </div>
+    </div>`;
+}
+
+// ─── TABS ────────────────────────────────────────────────────────────────────
+
+function initTabs() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+
+function init() {
+  renderDoseSlots();
+  renderStockSummary();
+  renderTodayAppts();
+  renderMedicines();
+  renderRestockTable();
+  renderTimeline();
+  renderCosts();
+  initTabs();
+  updateClock();
+  updateApptBadge();
+  setInterval(updateClock, 1000);
+  setInterval(() => { renderDoseSlots(); updateApptBadge(); }, 60000);
+  // Recalculate stock daily (handles midnight rollover if page stays open)
+  setInterval(() => { renderStockSummary(); renderRestockTable(); renderMedicines(); }, 3600000);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
