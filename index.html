@@ -395,6 +395,60 @@
     font-size: 12px; color: var(--ink-faint); letter-spacing: .04em;
   }
 
+  /* ── BP TAB ── */
+  .bp-summary-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 3px; background: var(--border); border: 1.5px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .bp-stat-card {
+    background: var(--surface); padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .bp-stat-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+  .bp-stat-value { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; line-height: 1; }
+  .bp-stat-sub { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+
+  .bp-days { display: flex; flex-direction: column; gap: 3px; }
+  .bp-day { background: var(--surface); border: 1.5px solid var(--border); overflow: hidden; }
+  .bp-day.bp-today { border-color: var(--accent); }
+
+  .bp-day-header {
+    padding: 10px 16px; background: var(--surface-2);
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .bp-today .bp-day-header { background: var(--accent-light); border-bottom-color: var(--accent); }
+  .bp-day-date { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); }
+  .bp-day-avg { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; }
+  .bp-day-event {
+    font-size: 11px; font-weight: 600; color: var(--accent);
+    background: var(--accent-light); padding: 2px 9px; border: 1px solid var(--accent);
+  }
+  .bp-day-event.ev-green { color: var(--green); background: var(--green-light); border-color: var(--green); }
+  .bp-day-event.ev-amber { color: var(--amber); background: var(--amber-light); border-color: var(--amber); }
+
+  .bp-readings-list { display: flex; flex-direction: column; }
+  .bp-reading {
+    display: grid; grid-template-columns: 90px 1fr auto;
+    padding: 9px 16px; gap: 12px; align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .bp-reading:last-child { border-bottom: none; }
+  .bp-reading-time { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink-muted); }
+  .bp-nums { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .bp-value { font-family: 'DM Mono', monospace; font-size: 17px; font-weight: 500; letter-spacing: -0.01em; }
+  .bp-bpm { font-size: 12px; color: var(--ink-muted); }
+  .bp-reading-note { font-size: 11px; color: var(--ink-faint); font-style: italic; }
+  .bp-badge {
+    font-size: 10px; font-weight: 600; letter-spacing: .05em;
+    padding: 3px 9px; white-space: nowrap;
+  }
+  .bp-normal  { color: var(--green);  background: var(--green-light); }
+  .bp-elev    { color: var(--amber);  background: var(--amber-light); }
+  .bp-high    { color: #8C3A00;       background: #FDE8D4; }
+  .bp-vhigh   { color: var(--accent); background: var(--accent-light); }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 780px) {
     .today-grid { grid-template-columns: 1fr; }
@@ -408,6 +462,9 @@
     .header-inner { grid-template-columns: 1fr; }
     .header-right { align-items: flex-start; text-align: left; }
     .tab-btn { padding: 12px 14px; font-size: 10px; }
+    .bp-summary-strip { grid-template-columns: 1fr 1fr; }
+    .bp-reading { grid-template-columns: 80px 1fr; }
+    .bp-reading > .bp-badge { display: none; }
   }
 </style>
 </head>
@@ -433,6 +490,7 @@
     <button class="tab-btn" data-tab="medicines">⊞ Medicines</button>
     <button class="tab-btn" data-tab="restock">↻ Restock &amp; Appts</button>
     <button class="tab-btn" data-tab="costs">₱ Costs</button>
+    <button class="tab-btn" data-tab="bp">♥ BP</button>
   </div>
 </nav>
 
@@ -498,6 +556,14 @@
   <div class="panel-inner">
     <div class="section-label">Financial Summary</div>
     <div class="costs-layout" id="costs-grid"></div>
+  </div>
+</div>
+
+<div id="tab-bp" class="tab-panel">
+  <div class="panel-inner">
+    <div class="section-label">Blood Pressure Log · May 16 – June 7, 2026</div>
+    <div class="bp-summary-strip" id="bp-summary-strip"></div>
+    <div class="bp-days" id="bp-days"></div>
   </div>
 </div>
 
@@ -715,6 +781,110 @@ const COSTS_WEEKLY = [
   { label: 'Telmisartan 80mg (1/day · permanent)', amount: 286.86, unitPrice: 40.98 },
   { label: 'Nebivolol 5mg (1/day · permanent)', amount: 134.05, unitPrice: 19.15 },
   { label: 'Lercanidipine 10mg (1/day · permanent)', amount: 215.60, unitPrice: 30.80 },
+];
+
+const BP_READINGS = [
+  { date: '2026-05-16', readings: [
+    { time: '08:53', sys: 126, dia: 65, bpm: 63 },
+  ]},
+  { date: '2026-05-17', readings: [
+    { time: '06:25', sys: 134, dia: 76, bpm: 85 },
+    { time: '18:13', sys: 115, dia: 64, bpm: 66 },
+  ]},
+  { date: '2026-05-18', readings: [
+    { time: '06:54', sys: 131, dia: 65, bpm: 62 },
+    { time: '12:17', sys: 119, dia: 61, bpm: 64 },
+  ]},
+  { date: '2026-05-19', readings: [
+    { time: '06:24', sys: 125, dia: 66, bpm: 63 },
+  ]},
+  { date: '2026-05-20', readings: [
+    { time: '04:51', sys: 135, dia: 68, bpm: 62 },
+  ]},
+  { date: '2026-05-21', readings: [
+    { time: '04:30', sys: 126, dia: 69, bpm: 73 },
+    { time: '12:30', sys: 118, dia: 56, bpm: 64 },
+    { time: '21:00', sys: 130, dia: 60, bpm: 64 },
+  ]},
+  { date: '2026-05-22', readings: [
+    { time: '04:30', sys: 123, dia: 55, bpm: 65 },
+    { time: '12:30', sys: 129, dia: 62, bpm: 64 },
+    { time: '21:00', sys: 122, dia: 58, bpm: 64 },
+  ]},
+  { date: '2026-05-23', readings: [
+    { time: '04:30', sys: 129, dia: 59, bpm: 66 },
+    { time: '12:30', sys: 115, dia: 54, bpm: 66 },
+    { time: '21:00', sys: 129, dia: 64, bpm: 65 },
+  ]},
+  { date: '2026-05-24', readings: [
+    { time: '04:30', sys: 136, dia: 66, bpm: 71 },
+    { time: '12:30', sys: 113, dia: 53, bpm: 67 },
+    { time: '21:00', sys: 117, dia: 57, bpm: 63 },
+  ]},
+  { date: '2026-05-25', readings: [
+    { time: '04:30', sys: 127, dia: 57, bpm: 65 },
+    { time: '21:00', sys: 130, dia: 60, bpm: 66 },
+  ], events: [{ label: '12:30 PM — went out, no reading taken', cls: '' }]},
+  { date: '2026-05-26', readings: [
+    { time: '04:30', sys: 129, dia: 58, bpm: 65 },
+    { time: '12:30', sys: 121, dia: 57, bpm: 65 },
+  ], events: [{ label: 'Dr. Reyes Follow-up #1 · Nebivolol reduced from 2×5mg to 1×5mg', cls: 'ev-amber' }]},
+  { date: '2026-05-27', readings: [
+    { time: '04:30', sys: 137, dia: 59, bpm: 70 },
+    { time: '12:30', sys: 120, dia: 57, bpm: 69 },
+    { time: '20:30', sys: 122, dia: 59, bpm: 65 },
+  ]},
+  { date: '2026-05-28', readings: [
+    { time: '04:30', sys: 128, dia: 60, bpm: 65 },
+    { time: '12:30', sys: 119, dia: 55, bpm: 71 },
+    { time: '20:30', sys: 128, dia: 56, bpm: 68 },
+  ]},
+  { date: '2026-05-29', readings: [
+    { time: '04:30', sys: 139, dia: 62, bpm: 83 },
+  ]},
+  { date: '2026-05-31', readings: [
+    { time: '04:30', sys: 118, dia: 57, bpm: 77 },
+    { time: '12:30', sys: 105, dia: 53, bpm: 77 },
+    { time: '20:30', sys: 115, dia: 53, bpm: 64 },
+  ]},
+  { date: '2026-06-01', readings: [
+    { time: '04:30', sys: 120, dia: 58, bpm: 66 },
+    { time: '12:30', sys: 119, dia: 56, bpm: 70 },
+    { time: '20:30', sys: 131, dia: 61, bpm: 77 },
+  ]},
+  { date: '2026-06-02', readings: [
+    { time: '04:30', sys: 134, dia: 64, bpm: 79 },
+    { time: '11:57', sys: 128, dia: 61, bpm: 68 },
+    { time: '20:30', sys: 125, dia: 65, bpm: 67 },
+  ], events: [{ label: 'Dr. Dela Cruz Follow-up #1 · Last Cilostazol tab', cls: 'ev-amber' }]},
+  { date: '2026-06-03', readings: [
+    { time: '04:30', sys: 135, dia: 64, bpm: 63 },
+    { time: '12:30', sys: 123, dia: 59, bpm: 61 },
+    { time: '20:30', sys: 127, dia: 62, bpm: 61 },
+  ]},
+  { date: '2026-06-04', readings: [
+    { time: '04:30', sys: 141, dia: 72, bpm: 72 },
+    { time: '05:00', sys: 144, dia: 74, bpm: 75 },
+    { time: '07:55', sys: 153, dia: 73, bpm: 76, note: 'Took Cilostazol — emergency buy' },
+    { time: '09:18', sys: 159, dia: 73, bpm: 75 },
+    { time: '12:52', sys: 138, dia: 65, bpm: 64 },
+    { time: '20:30', sys: 138, dia: 60, bpm: 64 },
+  ], events: [{ label: '⚠ BP spike — Cilostazol gap · Emergency buy + resumed', cls: '' }]},
+  { date: '2026-06-05', readings: [
+    { time: '04:30', sys: 144, dia: 67, bpm: 64 },
+    { time: '09:30', sys: 116, dia: 58, bpm: 62 },
+    { time: '12:30', sys: 127, dia: 62, bpm: 70 },
+    { time: '20:30', sys: 136, dia: 65, bpm: 65 },
+  ]},
+  { date: '2026-06-06', readings: [
+    { time: '04:30', sys: 135, dia: 64, bpm: 64 },
+    { time: '12:30', sys: 116, dia: 57, bpm: 74 },
+    { time: '20:30', sys: 145, dia: 63, bpm: 68 },
+  ], events: [{ label: 'Last Amlodipine · Lercanidipine starts tomorrow', cls: 'ev-amber' }]},
+  { date: '2026-06-07', readings: [
+    { time: '04:30', sys: 143, dia: 67, bpm: 66 },
+    { time: '12:30', sys: 125, dia: 60, bpm: 71 },
+  ], events: [{ label: 'Lercanidipine 10mg — first dose at 8PM tonight', cls: 'ev-green' }]},
 ];
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
@@ -1158,6 +1328,87 @@ function renderCosts() {
     </div>`;
 }
 
+// ─── BP ──────────────────────────────────────────────────────────────────────
+
+function bpClass(sys, dia) {
+  if (sys >= 140 || dia >= 90) return { cls: 'bp-vhigh', label: 'High ▲', color: 'var(--accent)' };
+  if (sys >= 130 || dia >= 80) return { cls: 'bp-high',  label: 'High',    color: '#8C3A00' };
+  if (sys >= 120)              return { cls: 'bp-elev',  label: 'Elevated', color: 'var(--amber)' };
+  return                              { cls: 'bp-normal', label: 'Normal',  color: 'var(--green)' };
+}
+
+function renderBP() {
+  const allReadings = BP_READINGS.flatMap(d => d.readings);
+  const avgSys = Math.round(allReadings.reduce((s, r) => s + r.sys, 0) / allReadings.length);
+  const avgDia = Math.round(allReadings.reduce((s, r) => s + r.dia, 0) / allReadings.length);
+  const avgBpm = Math.round(allReadings.reduce((s, r) => s + r.bpm, 0) / allReadings.length);
+
+  let peakReading = allReadings[0], peakDateStr = BP_READINGS[0].date;
+  BP_READINGS.forEach(d => d.readings.forEach(r => {
+    if (r.sys > peakReading.sys) { peakReading = r; peakDateStr = d.date; }
+  }));
+
+  const lastDay = BP_READINGS[BP_READINGS.length - 1];
+  const lastR = lastDay.readings[lastDay.readings.length - 1];
+  const lastBc = bpClass(lastR.sys, lastR.dia);
+
+  document.getElementById('bp-summary-strip').innerHTML = `
+    <div class="bp-stat-card">
+      <span class="bp-stat-label">Latest Reading</span>
+      <span class="bp-stat-value" style="color:${lastBc.color}">${lastR.sys}/${lastR.dia}</span>
+      <span class="bp-stat-sub">${fmt12(lastR.time)} · ${lastR.bpm} bpm · ${fmtShort(parseDate(lastDay.date))}</span>
+    </div>
+    <div class="bp-stat-card">
+      <span class="bp-stat-label">Overall Average</span>
+      <span class="bp-stat-value" style="color:${bpClass(avgSys, avgDia).color}">${avgSys}/${avgDia}</span>
+      <span class="bp-stat-sub">avg ${avgBpm} bpm · ${allReadings.length} readings · ${BP_READINGS.length} days</span>
+    </div>
+    <div class="bp-stat-card">
+      <span class="bp-stat-label">Peak Recorded</span>
+      <span class="bp-stat-value" style="color:var(--accent)">${peakReading.sys}/${peakReading.dia}</span>
+      <span class="bp-stat-sub">${fmt12(peakReading.time)} · ${fmtShort(parseDate(peakDateStr))} · Cilostazol gap</span>
+    </div>
+    <div class="bp-stat-card">
+      <span class="bp-stat-label">Target BP</span>
+      <span class="bp-stat-value" style="color:var(--green)">120/80</span>
+      <span class="bp-stat-sub">or lower · per Dr. Reyes guidance</span>
+    </div>`;
+
+  document.getElementById('bp-days').innerHTML = [...BP_READINGS].reverse().map(day => {
+    const dDate = parseDate(day.date);
+    const isToday = daysBetween(todayDate(), dDate) === 0;
+    const dayAvgSys = Math.round(day.readings.reduce((s, r) => s + r.sys, 0) / day.readings.length);
+    const dayAvgDia = Math.round(day.readings.reduce((s, r) => s + r.dia, 0) / day.readings.length);
+    const dayBc = bpClass(dayAvgSys, dayAvgDia);
+
+    const eventsHtml = (day.events || []).map(e =>
+      `<span class="bp-day-event ${e.cls}">${e.label}</span>`
+    ).join('');
+
+    const readingsHtml = day.readings.map(r => {
+      const bc = bpClass(r.sys, r.dia);
+      return `<div class="bp-reading">
+        <span class="bp-reading-time">${fmt12(r.time)}</span>
+        <div class="bp-nums">
+          <span class="bp-value" style="color:${bc.color}">${r.sys}/${r.dia}</span>
+          <span class="bp-bpm">${r.bpm} bpm</span>
+          ${r.note ? `<span class="bp-reading-note">· ${r.note}</span>` : ''}
+        </div>
+        <span class="bp-badge ${bc.cls}">${bc.label}</span>
+      </div>`;
+    }).join('');
+
+    return `<div class="bp-day${isToday ? ' bp-today' : ''}">
+      <div class="bp-day-header">
+        <span class="bp-day-date">${fmtFull(dDate)}${isToday ? ' · Today' : ''}</span>
+        <span class="bp-day-avg" style="color:${dayBc.color}">avg ${dayAvgSys}/${dayAvgDia}</span>
+        ${eventsHtml}
+      </div>
+      <div class="bp-readings-list">${readingsHtml}</div>
+    </div>`;
+  }).join('');
+}
+
 // ─── TABS ────────────────────────────────────────────────────────────────────
 
 function initTabs() {
@@ -1183,6 +1434,7 @@ function init() {
   renderRestockTable();
   renderTimeline();
   renderCosts();
+  renderBP();
   initTabs();
   updateClock();
   updateApptBadge();
