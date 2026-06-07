@@ -1130,8 +1130,12 @@ function renderCosts() {
         <span class="cost-total-label">Weekly Total</span>
         <span class="cost-total-amount">${fmtMoney(weeklyTotal)}</span>
       </div>
+      <div class="cost-total" style="margin-top:6px;padding-top:10px;border-top:1px dashed var(--border);">
+        <span class="cost-total-label" style="font-size:11px;">Monthly (4 weeks)</span>
+        <span class="cost-total-amount">${fmtMoney(weeklyTotal * 4)}</span>
+      </div>
       <div class="cost-note">
-        Permanent maintenance after July 14 — Monthly est. ${fmtMoney(monthlyEst)} · Annual est. ${fmtMoney(weeklyTotal * 52)}<br>
+        Permanent maintenance after July 14<br>
         Winding down: Citicoline until July 14 (+₱1,034/wk) · Cilostazol until June 15 (+₱332/wk)<br>
         ⚠ Present OSCA Senior Citizen ID at all pharmacies — 20% senior discount applies.
       </div>
