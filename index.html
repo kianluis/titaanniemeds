@@ -455,7 +455,7 @@
 
 <div id="tab-medicines" class="tab-panel">
   <div class="panel-inner">
-    <div class="section-label">Active Medicines · 8 unique · Across 2 doctors</div>
+    <div class="section-label">Medicines · 12 total · Across 3 doctors · Updated June 7, 2026</div>
     <div class="med-filter-row">
       <button class="filter-btn active" data-filter="all">All medicines <span class="filter-count" id="fc-all"></span></button>
       <button class="filter-btn f-cardio" data-filter="cardio"><span class="filter-dot cardio"></span>Dr. Reyes <span class="filter-count" id="fc-cardio"></span></button>
@@ -464,7 +464,7 @@
     </div>
     <div class="med-grid" id="med-grid"></div>
     <p style="margin-top:12px;font-size:12px;color:var(--ink-faint);">
-      ⚠ Atorvastatin timing conflict: Dr. Reyes says bedtime, Dr. Dela Cruz says after dinner — confirm at June 2 appointment.
+      ⚠ Pantoprazole prescribed as-needed — but consider taking daily since she's on Clopidogrel (blood thinner). Clarify with Dr. Dela Cruz at July 8 appointment. · Lercanidipine (Zanidip): take with or after evening meal — do not take on an empty stomach.
     </p>
   </div>
 </div>
@@ -510,68 +510,98 @@
 
 const MEDICINES = [
   {
-    id: 'pantoprazole', name: 'Pantoprazole', brand: 'Pantopraz', dose: '40mg',
-    cat: 'neuro', doctors: ['neuro'],
-    purpose: 'Stomach acid reducer. Protects the stomach lining from all the heavy blood thinners and high-dose medications she\'s taking.',
-    schedule: [{ time: '07:00', note: '30 min before eating' }],
-    dailyTablets: 1, stockRemaining: 9, stockAsOf: '2026-05-24', stockMax: 20,
-    source: 'Hospital Pharmacy', unitPrice: 54.60, buyQty: '30 tabs', restockId: 'june2',
+    id: 'pantoprazole', name: 'Pantoprazole', brand: 'Pantopraz · As needed',
+    dose: '40mg', cat: 'neuro', doctors: ['neuro'],
+    purpose: 'Stomach acid reducer. Protects the stomach lining from blood thinners. Prescribed as-needed by Dr. Dela Cruz — but consider taking daily since she\'s on Clopidogrel and other blood thinners. Clarify at July 8 appointment.',
+    schedule: [{ time: '07:00', note: '30 min before eating · as needed' }],
+    dailyTablets: 1, stockRemaining: 40, stockAsOf: '2026-06-07', stockMax: 40,
+    source: 'Hospital Pharmacy + Mercury Drug', unitPrice: 58.00, buyQty: 'As needed', restockId: null,
+    asNeeded: true,
   },
   {
-    id: 'nebivolol', name: 'Nebivolol', brand: '2 × 5mg (10mg unavailable)', dose: '5mg ×2',
+    id: 'nebivolol', name: 'Nebivolol', brand: 'Nebilet 5mg · Dose reduced May 27', dose: '5mg ×1',
     cat: 'cardio', doctors: ['cardio'],
-    purpose: 'Beta-blocker for high blood pressure. Heart has thick walls — this reduces the force needed to pump and lowers BP.',
-    schedule: [{ time: '08:00', note: '2 tabs at once' }],
-    dailyTablets: 2, stockRemaining: 24, stockAsOf: '2026-05-25', stockMax: 24,
-    source: 'Mercury Drug', unitPrice: 21.50, buyQty: '30-day supply', restockId: 'june6',
+    purpose: 'Beta-blocker for high blood pressure. Reduced from 2×5mg to 1×5mg on May 27 — heart rate was too low at 50s–60s bpm. 1 tab per day going forward.',
+    schedule: [{ time: '08:00', note: '1 tab (reduced May 27)' }],
+    dailyTablets: 1, stockRemaining: 29, stockAsOf: '2026-06-07', stockMax: 30,
+    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 19.15, buyQty: '30-day supply', restockId: 'july6',
   },
   {
     id: 'telmisartan', name: 'Telmisartan', brand: 'Micardis', dose: '80mg',
     cat: 'cardio', doctors: ['cardio'],
     purpose: 'ARB blood pressure med. Relaxes blood vessels to reduce BP — works alongside Nebivolol from a different mechanism.',
     schedule: [{ time: '08:00', note: '' }],
-    dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
-    source: 'Mercury Drug', unitPrice: 45.75, buyQty: '30-day supply', restockId: 'june6',
+    dailyTablets: 1, stockRemaining: 29, stockAsOf: '2026-06-07', stockMax: 30,
+    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 40.98, buyQty: '30-day supply', restockId: 'july6',
   },
   {
-    id: 'cilostazol', name: 'Cilostazol', brand: 'Vaxol', dose: '50mg',
+    id: 'cilostazol', name: 'Cilostazol', brand: 'Vaxol · Dropped from Rx June 2', dose: '50mg',
     cat: 'neuro', doctors: ['neuro'],
-    purpose: 'Improves blood flow to the brain. Prevents stroke recurrence by stopping platelets from clumping and widening blood vessels.',
-    schedule: [{ time: '08:00', note: '1st dose' }, { time: '20:00', note: '2nd dose' }],
-    dailyTablets: 2, stockRemaining: 19, stockAsOf: '2026-05-24', stockMax: 36,
-    source: 'Mercury Drug', unitPrice: 23.75, buyQty: '60 tabs', restockId: 'june2',
+    purpose: 'Improves blood flow to the brain. Dropped from Dr. Dela Cruz\'s prescription on June 2 — no longer needed going forward. Completing final course June 7–15 as advised. Permanently stopped after June 15.',
+    schedule: [{ time: '08:00', note: '1st dose · until June 15' }, { time: '20:00', note: '2nd dose · until June 15' }],
+    dailyTablets: 2, stockRemaining: 16, stockAsOf: '2026-06-07', stockMax: 18,
+    source: 'Mercury Drug', unitPrice: 23.75, buyQty: 'No refill needed', restockId: null,
+    windingDown: true, stopDate: '2026-06-15',
   },
   {
-    id: 'citicoline', name: 'Citicoline', brand: 'Zynapse', dose: '500mg',
+    id: 'citicoline', name: 'Citicoline', brand: 'Zynapse · Final month', dose: '500mg',
     cat: 'neuro', doctors: ['neuro'],
-    purpose: 'Brain recovery support. Helps repair and regenerate nerve cells damaged by the stroke. Supports cognitive function and memory recovery.',
+    purpose: 'Brain recovery support. Dr. Dela Cruz prescribed final 60 tabs on June 2 — last month of recovery meds. 20 additional tabs start July 5. Permanently stops July 14.',
     schedule: [{ time: '08:00', note: '1st dose' }, { time: '20:00', note: '2nd dose' }],
-    dailyTablets: 2, stockRemaining: 23, stockAsOf: '2026-05-24', stockMax: 40,
-    source: 'Hospital Pharmacy', unitPrice: 70.49, buyQty: '60 caps', restockId: 'june2',
+    dailyTablets: 2, stockRemaining: 54, stockAsOf: '2026-06-07', stockMax: 60,
+    source: 'Hospital Pharmacy + Mercury Drug', unitPrice: 73.25, buyQty: 'No refill needed', restockId: null,
+    windingDown: true, stopDate: '2026-07-14',
   },
   {
-    id: 'amlodipine', name: 'Amlodipine', brand: 'Norvasc', dose: '10mg',
+    id: 'amlodipine', name: 'Amlodipine', brand: 'Norvasc · Replaced by Lercanidipine', dose: '10mg',
     cat: 'cardio', doctors: ['cardio'],
-    purpose: 'Calcium channel blocker for BP. Widens arteries to ease blood flow — third layer of BP control alongside Nebivolol and Telmisartan.',
-    schedule: [{ time: '10:00', note: '' }],
-    dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
-    source: 'Mercury Drug', unitPrice: 38.25, buyQty: '30-day supply', restockId: 'june6',
+    purpose: 'Calcium channel blocker for BP. Discontinued June 6 — was causing ankle swelling. Permanently replaced by Lercanidipine (Zanidip) starting June 7.',
+    schedule: [],
+    dailyTablets: 1, stockRemaining: 0, stockAsOf: '2026-06-06', stockMax: 12,
+    source: 'Mercury Drug', unitPrice: 38.25, buyQty: 'No refill needed', restockId: null,
+    discontinued: true, discontinuedDate: '2026-06-06',
   },
   {
     id: 'clopidogrel', name: 'Clopidogrel', brand: 'Plotron', dose: '75mg',
     cat: 'both', doctors: ['cardio', 'neuro'],
     purpose: 'Anti-platelet blood thinner. Prevents new clots forming — critical for both stroke prevention and heart protection. Prescribed by both doctors.',
     schedule: [{ time: '12:30', note: 'after lunch' }],
-    dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
-    source: 'Mercury Drug', unitPrice: 30.25, buyQty: '30 tabs', restockId: 'june2',
+    dailyTablets: 1, stockRemaining: 29, stockAsOf: '2026-06-07', stockMax: 30,
+    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 22.46, buyQty: '30-day supply', restockId: 'july6',
   },
   {
     id: 'atorvastatin', name: 'Atorvastatin', brand: 'Atorvast-Natrapharm', dose: '80mg',
     cat: 'both', doctors: ['cardio', 'neuro'],
-    purpose: 'Lowers high cholesterol. Small arteries are 99% blocked; the major ascending artery is less than 15% blocked — this prevents further buildup and reduces clot risk. Prescribed by both cardiologist and neurologist.',
-    schedule: [{ time: '20:00', note: 'after dinner — confirm timing June 2' }],
-    dailyTablets: 1, stockRemaining: 12, stockAsOf: '2026-05-25', stockMax: 12,
-    source: 'Mercury Drug', unitPrice: 28.50, buyQty: '30-day supply', restockId: 'june6',
+    purpose: 'Lowers high cholesterol. Small arteries are 99% blocked; the major ascending artery is less than 15% blocked — prevents further buildup and reduces clot risk. Prescribed by both doctors.',
+    schedule: [{ time: '20:00', note: 'after dinner' }],
+    dailyTablets: 1, stockRemaining: 30, stockAsOf: '2026-06-07', stockMax: 30,
+    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 26.29, buyQty: '30-day supply', restockId: 'july6',
+  },
+  {
+    id: 'lercanidipine', name: 'Lercanidipine', brand: 'Zanidip · Replaces Amlodipine', dose: '10mg',
+    cat: 'cardio', doctors: ['cardio'],
+    purpose: 'Calcium channel blocker replacing Amlodipine. Switched by Dr. Reyes on May 26 because Amlodipine was causing ankle swelling. Same BP-lowering function with better side effect profile. First dose June 7.',
+    schedule: [{ time: '20:00', note: 'with or after dinner · new Jun 7' }],
+    dailyTablets: 1, stockRemaining: 30, stockAsOf: '2026-06-07', stockMax: 30,
+    source: 'Asian Hosp. Pharmacy', unitPrice: 27.50, buyQty: '30-day supply', restockId: 'july6',
+  },
+  {
+    id: 'paracetamol_orphenadrine', name: 'Paracetamol + Orphenadrine', brand: 'Norgesic 650/50mg · Added June 2', dose: '650/50mg',
+    cat: 'neuro', doctors: ['neuro'],
+    purpose: 'Pain reliever for mild to moderate pain (Pain Score 1–6). For neck/back pain from cervical and lumbar spondylosis found on X-rays during hospitalization. Take as needed every 6 hours.',
+    schedule: [{ time: '00:00', note: 'every 6hrs as needed · pain score 1–6' }],
+    dailyTablets: 0, stockRemaining: 20, stockAsOf: '2026-06-02', stockMax: 20,
+    source: 'Mercury Drug', unitPrice: 41.50, buyQty: 'As needed', restockId: null,
+    asNeeded: true,
+  },
+  {
+    id: 'celecoxib', name: 'Celecoxib', brand: 'Celcoxx · Added June 2', dose: '200mg',
+    cat: 'neuro', doctors: ['neuro'],
+    purpose: 'Stronger pain reliever for severe pain (Pain Score 7–10). COX-2 inhibitor — safer on the stomach than regular NSAIDs. Take only when pain is severe, every 12 hours.',
+    schedule: [{ time: '00:00', note: 'every 12hrs as needed · pain score 7–10' }],
+    dailyTablets: 0, stockRemaining: 15, stockAsOf: '2026-06-02', stockMax: 15,
+    source: 'Mercury Drug', unitPrice: 42.75, buyQty: 'As needed', restockId: null,
+    asNeeded: true,
   },
   {
     id: 'linezolid', name: 'Linezolid', brand: 'Nizolec-600', dose: '600mg',
@@ -585,55 +615,85 @@ const MEDICINES = [
 ];
 
 const SCHEDULE_SLOTS = [
-  { time: '07:00', label: 'Before Breakfast', meds: [{ id: 'pantoprazole', note: '30 min before eating' }] },
+  { time: '07:00', label: 'Before Breakfast', meds: [{ id: 'pantoprazole', note: '30 min before eating (as needed)' }] },
   { time: '08:00', label: 'With or After Breakfast', meds: [
-    { id: 'nebivolol', note: '2 tabs' },
+    { id: 'nebivolol', note: '1 tab' },
     { id: 'telmisartan', note: '' },
-    { id: 'cilostazol', note: '1st dose' },
+    { id: 'cilostazol', note: '1st dose · until Jun 15' },
     { id: 'citicoline', note: '1st dose' },
   ]},
-  { time: '10:00', label: 'Mid-Morning', meds: [{ id: 'amlodipine', note: '' }] },
   { time: '12:30', label: 'After Lunch', meds: [{ id: 'clopidogrel', note: '' }] },
-  { time: '20:00', label: 'After Dinner', meds: [
-    { id: 'cilostazol', note: '2nd dose' },
+  { time: '20:00', label: 'After Dinner / Evening', meds: [
+    { id: 'cilostazol', note: '2nd dose · until Jun 15' },
     { id: 'citicoline', note: '2nd dose' },
-    { id: 'atorvastatin', note: 'confirm timing at June 2 appt' },
+    { id: 'atorvastatin', note: 'after dinner' },
+    { id: 'lercanidipine', note: '⭐ first dose Jun 7' },
   ]},
 ];
 
 const APPOINTMENTS = [
   {
     id: 'may26', date: '2026-05-26',
-    doctor: 'Dr. Michael Reyes', specialty: 'Cardiology',
+    doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #1',
     location: 'MOB Rm 101', time: '1:00 PM', contact: 'Clarisse 09854109679',
     buy: null,
-    notes: 'Review heart meds and BP management. May affect which cardio meds continue long-term.',
+    notes: '✓ Done — Switched Amlodipine → Lercanidipine (ankle swelling). Nebivolol reduced to 1×5mg. Bought new Rx ₱2,943.21.',
   },
   {
     id: 'june2', date: '2026-06-02',
-    doctor: 'Dr. Fionna Karisse Dela Cruz-Decena', specialty: 'Adult Neurology',
+    doctor: 'Dr. Fionna Karisse Dela Cruz-Decena', specialty: 'Adult Neurology Follow-up #1',
     location: 'South City Hospital, Bacoor', time: '9:00 AM', contact: '09163400873',
-    buy: '30-day supply: Cilostazol 60 tabs · Citicoline 60 caps · Pantoprazole 30 tabs · Clopidogrel 30 tabs. Est. ₱6,559.92 after senior discount.',
-    notes: 'Finish work 7–8AM — factor in travel to Bacoor. Buy meds after appointment.',
+    buy: null,
+    notes: '✓ Done — Cilostazol dropped from Rx. Citicoline final 60-tab course. Pain meds added. Restock ₱5,809.75.',
   },
   {
     id: 'june6', date: '2026-06-06',
-    doctor: 'Dr. Reyes meds restock', specialty: 'All cardio meds run out',
+    doctor: 'Cardio + Neuro Restock', specialty: 'All remaining Rx filled',
+    location: 'Asian Hosp. Pharmacy', time: 'Done', contact: null,
+    buy: null,
+    notes: '✓ Done — Lercanidipine 15t + Citicoline 20t + Cilostazol 18t + Pantoprazole 10t. Last day of Amlodipine.',
+  },
+  {
+    id: 'july4', date: '2026-07-04',
+    doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #2',
+    location: 'MOB Rm 101', time: '(TBA — call Clarisse)', contact: 'Clarisse 09854109679',
+    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. All run out July 6 — get new Rx today.',
+    notes: 'Citicoline 60-tab supply ends today. All cardio meds run out July 6. If BP and heart rate stable, may extend appointment intervals.',
+  },
+  {
+    id: 'july6', date: '2026-07-06',
+    doctor: 'Cardio meds restock', specialty: 'All cardio meds run out',
     location: 'Mercury Drug (any branch)', time: 'Before this date', contact: null,
-    buy: '30-day supply: Atorvastatin · Nebivolol · Telmisartan · Amlodipine · Clopidogrel. Est. ₱3,672.72 after senior discount.',
+    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. Use new Rx from July 4 Dr. Reyes appointment.',
     notes: 'Present OSCA Senior Citizen ID — 20% discount applies.',
+  },
+  {
+    id: 'july8', date: '2026-07-08',
+    doctor: 'Dr. Fionna Karisse Dela Cruz-Decena', specialty: 'Adult Neurology Follow-up #2',
+    location: 'South City Hospital, Bacoor', time: '9:00 AM', contact: '09163400873',
+    buy: null,
+    notes: 'Clarify Pantoprazole: daily vs as-needed. Ask about Citicoline ending July 14. Next neuro assessment.',
   },
 ];
 
 const TIMELINE = [
-  { date: '2026-05-07', title: 'Admitted — Asian Hospital Medical Center', desc: 'Stroke diagnosis. Small arteries 99% blocked; major ascending artery less than 15% blocked.' },
-  { date: '2026-05-15', title: '✓ Discharged', desc: 'Home care begins. Medicines started May 16.' },
-  { date: '2026-05-21', title: '✓ Linezolid course completed', desc: 'Antibiotic for IV site infection finished. Fever cleared.' },
+  { date: '2026-05-07', title: '✓ Admitted — Asian Hospital Medical Center', desc: 'Stroke diagnosis. Small arteries 99% blocked; major ascending artery less than 15% blocked. 9 days in-patient.' },
+  { date: '2026-05-15', title: '✓ Discharged', desc: 'Home care begins. Medicines started May 16. Hospital pharmacy initial supply.' },
+  { date: '2026-05-21', title: '✓ Linezolid course completed', desc: 'Antibiotic for IV site infection finished. Fever cleared. Dr. Garcia follow-up done.' },
   { date: '2026-05-24', title: '✓ Med check · 11:40 AM', desc: 'Identified 5 critically low meds. Confirmed restock plan for May 25.' },
-  { date: '2026-05-25', title: '✓ Dr. Reyes meds restocked — Mercury Drug Alabang', desc: 'Atorvastatin 12t · Nebivolol 24t · Telmisartan 12t · Amlodipine 12t · Clopidogrel 12t · Paid ₱1,752.09 (after 20% senior discount).' },
-  { date: '2026-05-26', title: 'Dr. Reyes — Cardiology · 1:00 PM', desc: 'MOB Rm 101 · Review heart meds and BP management.' },
-  { date: '2026-06-02', title: 'Dr. Dela Cruz — Neurology + restock neuro meds', desc: 'South City Hospital, Bacoor · 9AM · Buy Cilostazol, Citicoline, Pantoprazole, Clopidogrel after appt.' },
-  { date: '2026-06-06', title: 'Restock Dr. Reyes meds (all cardio meds run out)', desc: 'Buy 30-day supply from Mercury Drug. Est. ₱3,672.72 after senior discount.' },
+  { date: '2026-05-25', title: '✓ Cardio meds restocked — Mercury Drug Alabang', desc: 'Atorvastatin · Nebivolol 24t · Telmisartan · Amlodipine · Clopidogrel. Paid ₱1,752.09 after senior discount.' },
+  { date: '2026-05-26', title: '✓ Dr. Reyes — Cardiology Follow-up #1', desc: 'Amlodipine → Lercanidipine (ankle swelling). Nebivolol reduced to 1×5mg (heart rate 50s–60s bpm). Bought new 30-day Rx ₱2,943.21. 15 Lercanidipine tabs bought; restock June 6.' },
+  { date: '2026-06-02', title: '✓ Dr. Dela Cruz — Neurology Follow-up #1', desc: 'Cilostazol dropped from Rx. Citicoline final 60-tab course prescribed. Pain meds added: Norgesic + Celecoxib. Mercury Drug restock ₱5,809.75. Next appt July 8.' },
+  { date: '2026-06-03', title: '✓ Cilostazol gap', desc: 'June 3: no Cilostazol in stock — only missed day of the full course.' },
+  { date: '2026-06-04', title: '✓ Cilostazol emergency buy', desc: 'BP spiked — bought 6 emergency tabs at local pharmacy. Cost ₱114.00.' },
+  { date: '2026-06-06', title: '✓ All remaining Rx filled · Amlodipine last day', desc: 'Lercanidipine 15t + Citicoline 20t = ₱1,552.00 · Cilostazol 18t + Pantoprazole 10t = ₱1,490.64 · Last dose of Amlodipine.' },
+  { date: '2026-06-07', title: '🟢 New Rx begins · Lercanidipine first dose tonight', desc: 'All new 30-tab cardio supplies active. Lercanidipine replaces Amlodipine. Nebivolol 1×5mg. Lercanidipine very first dose at 8PM tonight.' },
+  { date: '2026-06-15', title: 'Cilostazol — final stop', desc: 'Last of the 18 tabs taken. 60 tabs total across full course. Permanently stopped.' },
+  { date: '2026-07-04', title: 'Dr. Reyes — Cardiology Follow-up #2', desc: 'Citicoline 60-tab supply ends today. Get new Rx for all cardio meds — they run out July 6. May extend to 4–6 month intervals if BP and heart rate stable.' },
+  { date: '2026-07-05', title: 'Citicoline — final 20 tabs begin', desc: '20 tabs bought June 6 start today. 10 days × 2/day. Last ever Citicoline doses — ends July 14.' },
+  { date: '2026-07-06', title: '⚠ All cardio meds run out — restock needed', desc: 'Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine all run out. Use new Rx from July 4 appointment.' },
+  { date: '2026-07-08', title: 'Dr. Dela Cruz — Neurology Follow-up #2', desc: 'South City Hospital, Bacoor · 9AM. Clarify Pantoprazole: daily vs as-needed. Ask about Citicoline end. Next neuro assessment.' },
+  { date: '2026-07-14', title: '✅ Citicoline done — all recovery meds complete', desc: 'From July 15: 5 permanent maintenance meds only. Monthly cost drops to ~₱4,190/month.' },
 ];
 
 const COSTS_SPENT = [
@@ -642,17 +702,19 @@ const COSTS_SPENT = [
   { label: 'Mercury Drug May 18 — Linezolid + Cilostazol', amount: 11753.57 },
   { label: 'Nebivolol 5mg × 20 tabs (separate purchase)', amount: 240.00 },
   { label: 'Mercury Drug May 25 — Dr. Reyes restock', amount: 1752.09 },
+  { label: 'Asian Hosp. Pharmacy May 26 — new Dr. Reyes Rx', amount: 2943.21 },
+  { label: 'Mercury Drug June 2 — Dr. Dela Cruz restock', amount: 5809.75 },
+  { label: 'Generic pharmacy June 4 — Cilostazol emergency', amount: 114.00 },
+  { label: 'Asian Hosp. Pharmacy June 6 — Lercanidipine + Citicoline', amount: 1552.00 },
+  { label: 'Asian Hosp. Pharmacy June 6 — Cilostazol + Pantoprazole', amount: 1490.64 },
 ];
 
 const COSTS_WEEKLY = [
-  { label: 'Pantoprazole 40mg (1/day)', amount: 382.20 },
-  { label: 'Nebivolol 5mg × 2 (2 tabs/day)', amount: 168.00 },
-  { label: 'Telmisartan 80mg (1/day)', amount: 286.86 },
-  { label: 'Amlodipine 10mg (1/day)', amount: 240.66 },
-  { label: 'Clopidogrel 75mg (1/day)', amount: 191.66 },
-  { label: 'Cilostazol 50mg (2/day)', amount: 332.50 },
-  { label: 'Citicoline 500mg (2/day)', amount: 986.86 },
-  { label: 'Atorvastatin 80mg (1/day)', amount: 184.03 },
+  { label: 'Clopidogrel 75mg (1/day · permanent)', amount: 157.22 },
+  { label: 'Atorvastatin 80mg (1/day · permanent)', amount: 184.03 },
+  { label: 'Telmisartan 80mg (1/day · permanent)', amount: 286.86 },
+  { label: 'Nebivolol 5mg (1/day · permanent)', amount: 134.05 },
+  { label: 'Lercanidipine 10mg (1/day · permanent)', amount: 215.60 },
 ];
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
@@ -767,18 +829,22 @@ function renderDoseSlots() {
 }
 
 function renderStockSummary() {
-  const sorted = [...MEDICINES].sort((a, b) => daysLeft(a) - daysLeft(b));
+  const tracked = MEDICINES.filter(m => !m.completed && !m.discontinued && !m.asNeeded);
+  const sorted = [...tracked].sort((a, b) => daysLeft(a) - daysLeft(b));
   document.getElementById('stock-summary').innerHTML =
     `<div class="stock-card-title">Live Stock · ${fmtShort(todayDate())}</div>` +
     sorted.map(med => {
       const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med), pct = stockPct(med);
+      const outLabel = med.windingDown
+        ? `stops ${fmtShort(parseDate(med.stopDate))}`
+        : `runs out ${fmtShort(runsOutDate(med))}`;
       return `<div class="stock-item">
         <div class="stock-item-name">${med.name} ${med.dose}</div>
         <div class="stock-bar-row">
           <div class="bar-bg"><div class="bar-fill fill-${color}" style="width:${pct}%"></div></div>
           <span class="stock-item-count ${color}">${sc}t · ${dl}d</span>
         </div>
-        <div class="stock-item-runout">→ runs out ${fmtShort(runsOutDate(med))}</div>
+        <div class="stock-item-runout">→ ${outLabel}</div>
       </div>`;
     }).join('');
 }
@@ -856,9 +922,14 @@ function renderMedicines() {
   document.getElementById('med-grid').innerHTML = meds.map(med => {
     const dtags = med.doctors.map(d =>
       `<span class="dtag dtag-${d}"><span class="dtag-dot"></span>${doctorName[d]}</span>`).join('');
-    const sched = med.schedule.map(s => `${fmt12(s.time)}${s.note?` (${s.note})`:''}`).join(' · ');
+    const sched = med.asNeeded
+      ? (med.schedule.length > 0 ? med.schedule[0].note : 'As needed')
+      : med.schedule.length > 0
+        ? med.schedule.map(s => `${fmt12(s.time)}${s.note?` (${s.note})`:''}`).join(' · ')
+        : '—';
 
     let stockLabel, stockBarHtml, pillCls, pillTxt, runsOutHtml;
+    const dimCls = (med.completed || med.discontinued) ? ' completed' : '';
 
     if (med.completed) {
       stockLabel = `Course completed ${fmtShort(parseDate(med.completedDate))}`;
@@ -867,6 +938,29 @@ function renderMedicines() {
       pillCls = 'spill-done';
       pillTxt = `✓ Completed ${fmtShort(parseDate(med.completedDate))}`;
       runsOutHtml = `<span style="font-size:12px;color:var(--ink-faint)">No refill needed</span>`;
+    } else if (med.discontinued) {
+      stockLabel = `Discontinued ${fmtShort(parseDate(med.discontinuedDate))}`;
+      stockBarHtml = `<div class="med-stock-bg"><div class="med-stock-fill" style="width:0%;background:var(--border)"></div></div>
+        <span class="med-stock-count" style="color:var(--ink-faint)">0 tabs — stopped</span>`;
+      pillCls = 'spill-done';
+      pillTxt = `⛔ Discontinued ${fmtShort(parseDate(med.discontinuedDate))}`;
+      runsOutHtml = `<span style="font-size:12px;color:var(--ink-faint)">Replaced by Lercanidipine</span>`;
+    } else if (med.asNeeded) {
+      const pct = Math.round((med.stockRemaining / med.stockMax) * 100);
+      stockLabel = 'As-needed supply';
+      stockBarHtml = `<div class="med-stock-bg"><div class="med-stock-fill fill-green" style="width:${pct}%"></div></div>
+        <span class="med-stock-count green">${med.stockRemaining} ${med.id === 'celecoxib' ? 'caps' : 'tabs'} available</span>`;
+      pillCls = 'spill-active';
+      pillTxt = '✓ Stocked';
+      runsOutHtml = `<span style="font-size:12px;color:var(--ink-faint)">As needed only</span>`;
+    } else if (med.windingDown) {
+      const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med), pct = stockPct(med);
+      stockLabel = `Current Stock · stops ${fmtShort(parseDate(med.stopDate))}`;
+      stockBarHtml = `<div class="med-stock-bg"><div class="med-stock-fill fill-${color}" style="width:${pct}%"></div></div>
+        <span class="med-stock-count ${color}">${sc} tabs · ${dl} days left</span>`;
+      pillCls = 'spill-warning';
+      pillTxt = `⚠ Stops ${fmtShort(parseDate(med.stopDate))}`;
+      runsOutHtml = `<span class="runs-out-text">→ stops ${fmtShort(parseDate(med.stopDate))}</span>`;
     } else {
       const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med), pct = stockPct(med);
       stockLabel = 'Current Stock';
@@ -877,7 +971,7 @@ function renderMedicines() {
       runsOutHtml = `<span class="runs-out-text">→ ${fmtShort(runsOutDate(med))}</span>`;
     }
 
-    return `<div class="med-card ${med.cat}${med.completed?' completed':''}">
+    return `<div class="med-card ${med.cat}${dimCls}">
       <div class="med-card-top">
         <div>
           <div class="med-card-name">${med.name}</div>
@@ -889,7 +983,7 @@ function renderMedicines() {
       <div class="med-purpose">${med.purpose}</div>
       <div class="med-details">
         <div class="detail-item"><span class="detail-label">Schedule</span><span class="detail-value">${sched}</span></div>
-        <div class="detail-item"><span class="detail-label">Daily Dose</span><span class="detail-value">${med.dailyTablets} tabs/day</span></div>
+        <div class="detail-item"><span class="detail-label">Daily Dose</span><span class="detail-value">${med.dailyTablets > 0 ? med.dailyTablets + ' tabs/day' : 'As needed'}</span></div>
         <div class="detail-item"><span class="detail-label">Source</span><span class="detail-value">${med.source}</span></div>
         <div class="detail-item"><span class="detail-label">Unit Price</span><span class="detail-value">${fmtMoney(med.unitPrice)}</span></div>
       </div>
@@ -909,16 +1003,50 @@ function renderMedicines() {
 
 function renderRestockTable() {
   const apptMap = Object.fromEntries(APPOINTMENTS.map(a => [a.id, a]));
-  const sorted = [...MEDICINES].sort((a, b) => daysLeft(a) - daysLeft(b));
+  const sorted = [...MEDICINES].sort((a, b) => {
+    const aInactive = a.completed || a.discontinued;
+    const bInactive = b.completed || b.discontinued;
+    if (aInactive !== bInactive) return aInactive ? 1 : -1;
+    if (a.asNeeded !== b.asNeeded) return a.asNeeded ? 1 : -1;
+    return daysLeft(a) - daysLeft(b);
+  });
   document.getElementById('rt-rows').innerHTML = sorted.map(med => {
-    const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med);
-    const appt = apptMap[med.restockId];
-    const whenText = appt ? fmtShort(parseDate(appt.date)) : '—';
-    const badgeCls = color === 'green' ? 'badge-green' : color === 'amber' ? 'badge-amber' : 'badge-red';
+    let leftText, runsOutText, badgeCls, whenText;
+
+    if (med.completed) {
+      leftText = '0 tabs · done';
+      runsOutText = 'Completed';
+      badgeCls = 'badge-gray';
+      whenText = `✓ Done ${fmtShort(parseDate(med.completedDate))}`;
+    } else if (med.discontinued) {
+      leftText = '0 tabs · stopped';
+      runsOutText = 'Discontinued';
+      badgeCls = 'badge-gray';
+      whenText = `⛔ Stopped ${fmtShort(parseDate(med.discontinuedDate))}`;
+    } else if (med.asNeeded) {
+      leftText = `${med.stockRemaining} tabs`;
+      runsOutText = 'As needed';
+      badgeCls = 'badge-green';
+      whenText = 'As needed';
+    } else if (med.windingDown) {
+      const dl = daysLeft(med), sc = currentStock(med);
+      leftText = `${sc}t · ${dl}d`;
+      runsOutText = fmtShort(parseDate(med.stopDate));
+      badgeCls = 'badge-amber';
+      whenText = `Stops ${fmtShort(parseDate(med.stopDate))}`;
+    } else {
+      const dl = daysLeft(med), sc = currentStock(med), color = stockColor(med);
+      const appt = apptMap[med.restockId];
+      leftText = `${sc}t · ${dl}d`;
+      runsOutText = fmtShort(runsOutDate(med));
+      badgeCls = color === 'green' ? 'badge-green' : color === 'amber' ? 'badge-amber' : 'badge-red';
+      whenText = appt ? fmtShort(parseDate(appt.date)) : '—';
+    }
+
     return `<div class="rt-row">
       <div class="rt-med">${med.name} ${med.dose}</div>
-      <div class="rt-val" style="color:var(--${color==='green'?'green':color==='amber'?'amber':'accent'})">${sc}t · ${dl}d</div>
-      <div class="rt-val">${fmtShort(runsOutDate(med))}</div>
+      <div class="rt-val">${leftText}</div>
+      <div class="rt-val">${runsOutText}</div>
       <div class="rt-val">${med.buyQty}</div>
       <div><span class="rt-badge ${badgeCls}">${whenText}</span></div>
     </div>`;
@@ -978,7 +1106,7 @@ function renderTimeline() {
 function renderCosts() {
   const totalSpent = COSTS_SPENT.reduce((s, c) => s + c.amount, 0);
   const weeklyTotal = COSTS_WEEKLY.reduce((s, c) => s + c.amount, 0);
-  const monthlyEst = weeklyTotal * (365 / 12 / 7);
+  const monthlyEst = weeklyTotal * (30 / 7);
 
   const spentRows = COSTS_SPENT.map(c =>
     `<div class="cost-line"><span class="cost-line-label">${c.label}</span><span class="cost-line-amount">${fmtMoney(c.amount)}</span></div>`
@@ -1004,14 +1132,15 @@ function renderCosts() {
         <span class="cost-total-amount">${fmtMoney(weeklyTotal)}</span>
       </div>
       <div class="cost-note">
-        Monthly est. ${fmtMoney(monthlyEst)} · Annual est. ${fmtMoney(weeklyTotal * 52)}<br>
-        ⚠ Present OSCA Senior Citizen ID at all pharmacies — 20% discount applies.
+        Permanent maintenance after July 14 — Monthly est. ${fmtMoney(monthlyEst)} · Annual est. ${fmtMoney(weeklyTotal * 52)}<br>
+        Winding down: Citicoline until July 14 (+₱1,034/wk) · Cilostazol until June 15 (+₱332/wk)<br>
+        ⚠ Present OSCA Senior Citizen ID at all pharmacies — 20% senior discount applies.
       </div>
     </div>
     <div class="grand-total-card">
       <div>
         <div class="gt-label">Hospital + All Medicines</div>
-        <div class="gt-sub">Admission May 7 through present</div>
+        <div class="gt-sub">Admission May 7 through June 7, 2026</div>
       </div>
       <div class="gt-right">
         <div class="gt-amount">${fmtMoney(totalSpent)}</div>
