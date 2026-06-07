@@ -710,11 +710,11 @@ const COSTS_SPENT = [
 ];
 
 const COSTS_WEEKLY = [
-  { label: 'Clopidogrel 75mg (1/day · permanent)', amount: 157.22 },
-  { label: 'Atorvastatin 80mg (1/day · permanent)', amount: 184.03 },
-  { label: 'Telmisartan 80mg (1/day · permanent)', amount: 286.86 },
-  { label: 'Nebivolol 5mg (1/day · permanent)', amount: 134.05 },
-  { label: 'Lercanidipine 10mg (1/day · permanent)', amount: 215.60 },
+  { label: 'Clopidogrel 75mg (1/day · permanent)', amount: 157.22, unitPrice: 22.46 },
+  { label: 'Atorvastatin 80mg (1/day · permanent)', amount: 184.03, unitPrice: 26.29 },
+  { label: 'Telmisartan 80mg (1/day · permanent)', amount: 286.86, unitPrice: 40.98 },
+  { label: 'Nebivolol 5mg (1/day · permanent)', amount: 134.05, unitPrice: 19.15 },
+  { label: 'Lercanidipine 10mg (1/day · permanent)', amount: 215.60, unitPrice: 30.80 },
 ];
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
@@ -1111,7 +1111,13 @@ function renderCosts() {
     `<div class="cost-line"><span class="cost-line-label">${c.label}</span><span class="cost-line-amount">${fmtMoney(c.amount)}</span></div>`
   ).join('');
   const weeklyRows = COSTS_WEEKLY.map(c =>
-    `<div class="cost-line"><span class="cost-line-label">${c.label}</span><span class="cost-line-amount">${fmtMoney(c.amount)}</span></div>`
+    `<div class="cost-line">
+      <span class="cost-line-label">${c.label}</span>
+      <span class="cost-line-amount" style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;">
+        <span style="font-size:11px;color:var(--ink-faint)">${fmtMoney(c.unitPrice)}/tab</span>
+        <span>${fmtMoney(c.amount)}/wk</span>
+      </span>
+    </div>`
   ).join('');
 
   document.getElementById('costs-grid').innerHTML = `
