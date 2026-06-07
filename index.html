@@ -1057,14 +1057,13 @@ function renderRestockAppts() {
   const t = todayDate();
   const upcoming = APPOINTMENTS
     .map(a => ({ ...a, diff: daysBetween(t, parseDate(a.date)) }))
+    .filter(a => a.diff >= 0)
     .sort((a, b) => a.diff - b.diff);
   document.getElementById('restock-appts').innerHTML = upcoming.map(appt => {
-    const isPast = appt.diff < 0, isToday = appt.diff === 0;
-    const whenText = isPast
-      ? `${fmtShort(parseDate(appt.date))} · Done`
-      : isToday ? 'Today'
+    const isToday = appt.diff === 0;
+    const whenText = isToday ? 'Today'
       : `${fmtShort(parseDate(appt.date))} · in ${appt.diff} day${appt.diff===1?'':'s'}`;
-    return `<div class="appt-main${isToday?' is-today':isPast?' is-past':''}">
+    return `<div class="appt-main${isToday?' is-today':''}">
       <div>
         <div class="appt-main-when">${whenText}</div>
         <div class="appt-main-doctor">${appt.doctor}</div>
