@@ -561,7 +561,7 @@
 
 <div id="tab-bp" class="tab-panel">
   <div class="panel-inner">
-    <div class="section-label">Blood Pressure Log · May 16 – June 13, 2026</div>
+    <div class="section-label">Blood Pressure Log · May 16 – June 14, 2026</div>
     <div class="bp-summary-strip" id="bp-summary-strip"></div>
     <div class="bp-days" id="bp-days"></div>
   </div>
@@ -720,17 +720,17 @@ const APPOINTMENTS = [
     notes: '✓ Done — Lercanidipine 15t + Citicoline 20t + Cilostazol 18t + Pantoprazole 10t. Last day of Amlodipine.',
   },
   {
-    id: 'july4', date: '2026-07-04',
+    id: 'june18', date: '2026-06-18',
     doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #2',
     location: 'MOB Rm 101', time: '(TBA — call Clarisse)', contact: 'Clarisse 09854109679',
-    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. All run out July 6 — get new Rx today.',
-    notes: 'Citicoline 60-tab supply ends today. All cardio meds run out July 6. If BP and heart rate stable, may extend appointment intervals.',
+    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. Meds run out ~July 6 — get new Rx at this appointment.',
+    notes: 'Rescheduled from July 4. BP review — discuss elevated readings in June. Meds still have ~18 days remaining.',
   },
   {
     id: 'july6', date: '2026-07-06',
     doctor: 'Cardio meds restock', specialty: 'All cardio meds run out',
     location: 'Mercury Drug (any branch)', time: 'Before this date', contact: null,
-    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. Use new Rx from July 4 Dr. Reyes appointment.',
+    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. Use new Rx from June 18 Dr. Reyes appointment.',
     notes: 'Present OSCA Senior Citizen ID — 20% discount applies.',
   },
   {
@@ -755,9 +755,9 @@ const TIMELINE = [
   { date: '2026-06-06', title: '✓ All remaining Rx filled · Amlodipine last day', desc: 'Lercanidipine 15t + Citicoline 20t = ₱1,552.00 · Cilostazol 18t + Pantoprazole 10t = ₱1,490.64 · Last dose of Amlodipine.' },
   { date: '2026-06-07', title: '🟢 New Rx begins · Lercanidipine first dose · Store reopened', desc: 'All new 30-tab cardio supplies active. Lercanidipine replaces Amlodipine. Nebivolol 1×5mg. Lercanidipine first ever dose at 8PM. 🛍️ Store reopened — open 6AM–12NN and 4PM–7PM daily.' },
   { date: '2026-06-15', title: 'Cilostazol — final stop', desc: 'Last of the 18 tabs taken. 60 tabs total across full course. Permanently stopped.' },
-  { date: '2026-07-04', title: 'Dr. Reyes — Cardiology Follow-up #2', desc: 'Citicoline 60-tab supply ends today. Get new Rx for all cardio meds — they run out July 6. May extend to 4–6 month intervals if BP and heart rate stable.' },
+  { date: '2026-06-18', title: 'Dr. Reyes — Cardiology Follow-up #2', desc: 'Rescheduled from July 4. BP review — discuss elevated readings in June. Get new Rx for cardio meds running out July 6. May extend to 4–6 month intervals if BP and heart rate stable.' },
   { date: '2026-07-05', title: 'Citicoline — final 20 tabs begin', desc: '20 tabs bought June 6 start today. 10 days × 2/day. Last ever Citicoline doses — ends July 14.' },
-  { date: '2026-07-06', title: '⚠ All cardio meds run out — restock needed', desc: 'Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine all run out. Use new Rx from July 4 appointment.' },
+  { date: '2026-07-06', title: '⚠ All cardio meds run out — restock needed', desc: 'Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine all run out. Use new Rx from June 18 appointment.' },
   { date: '2026-07-08', title: 'Dr. Dela Cruz — Neurology Follow-up #2', desc: 'South City Hospital, Bacoor · 9AM. Clarify Pantoprazole: daily vs as-needed. Ask about Citicoline end. Next neuro assessment.' },
   { date: '2026-07-14', title: '✅ Citicoline done — all recovery meds complete', desc: 'From July 15: 5 permanent maintenance meds only. Monthly cost drops to ~₱4,190/month.' },
 ];
@@ -917,6 +917,12 @@ const BP_READINGS = [
   { date: '2026-06-13', readings: [
     { time: '04:22', sys: 140, dia: 60, bpm: 77 },
     { time: '07:59', sys: 155, dia: 64, bpm: 78 },
+    { time: '12:30', sys: 137, dia: 62, bpm: 69 },
+    { time: '20:30', sys: 143, dia: 71, bpm: 67 },
+  ]},
+  { date: '2026-06-14', readings: [
+    { time: '04:30', sys: 129, dia: 62, bpm: 75 },
+    { time: '12:30', sys: 132, dia: 60, bpm: 65 },
   ]},
 ];
 
