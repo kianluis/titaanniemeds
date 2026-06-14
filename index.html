@@ -750,10 +750,10 @@ const TIMELINE = [
   { date: '2026-05-25', title: '✓ Cardio meds restocked — Mercury Drug Alabang', desc: 'Atorvastatin · Nebivolol 24t · Telmisartan · Amlodipine · Clopidogrel. Paid ₱1,752.09 after senior discount.' },
   { date: '2026-05-26', title: '✓ Dr. Reyes — Cardiology Follow-up #1', desc: 'Amlodipine → Lercanidipine (ankle swelling). Nebivolol reduced to 1×5mg (heart rate 50s–60s bpm). Bought new 30-day Rx ₱2,943.21. 15 Lercanidipine tabs bought; restock June 6.' },
   { date: '2026-06-02', title: '✓ Dr. Dela Cruz — Neurology Follow-up #1', desc: 'Cilostazol dropped from Rx. Citicoline final 60-tab course prescribed. Pain meds added: Norgesic + Celecoxib. Mercury Drug restock ₱5,809.75. Next appt July 8.' },
-  { date: '2026-06-03', title: '✓ Cilostazol gap · Store opened · Started Paracetamol + Orphenadrine daily', desc: 'No Cilostazol in stock — only missed day of the full course. Started taking Paracetamol + Orphenadrine daily. 🛍️ Store opened — 6AM–12NN and 4PM–7PM daily.' },
+  { date: '2026-06-03', title: '✓ Cilostazol gap · Started Paracetamol + Orphenadrine daily', desc: 'No Cilostazol in stock — only missed day of the full course. Started taking Paracetamol + Orphenadrine daily.' },
   { date: '2026-06-04', title: '✓ Cilostazol emergency buy', desc: 'BP spiked — bought 6 emergency tabs at local pharmacy. Cost ₱114.00.' },
   { date: '2026-06-06', title: '✓ All remaining Rx filled · Amlodipine last day', desc: 'Lercanidipine 15t + Citicoline 20t = ₱1,552.00 · Cilostazol 18t + Pantoprazole 10t = ₱1,490.64 · Last dose of Amlodipine.' },
-  { date: '2026-06-07', title: '🟢 New Rx begins · Lercanidipine first dose', desc: 'All new 30-tab cardio supplies active. Lercanidipine replaces Amlodipine. Nebivolol 1×5mg. First ever Lercanidipine dose at 8PM.' },
+  { date: '2026-06-07', title: '🟢 New Rx begins · Lercanidipine first dose · Store opened', desc: 'All new 30-tab cardio supplies active. Lercanidipine replaces Amlodipine. Nebivolol 1×5mg. First ever Lercanidipine dose at 8PM. 🛍️ Store opened — 6AM–12NN and 4PM–7PM daily.' },
   { date: '2026-06-15', title: 'Cilostazol — final stop', desc: 'Last of the 18 tabs taken. 60 tabs total across full course. Permanently stopped.' },
   { date: '2026-06-18', title: 'Dr. Reyes — Cardiology Follow-up #2', desc: 'Rescheduled from July 4. BP review — discuss elevated readings in June. Get new Rx for cardio meds running out July 6. May extend to 4–6 month intervals if BP and heart rate stable.' },
   { date: '2026-07-05', title: 'Citicoline — final 20 tabs begin', desc: '20 tabs bought June 6 start today. 10 days × 2/day. Last ever Citicoline doses — ends July 14.' },
@@ -866,7 +866,6 @@ const BP_READINGS = [
     { time: '12:30', sys: 123, dia: 59, bpm: 61 },
     { time: '20:30', sys: 127, dia: 62, bpm: 61 },
   ], events: [
-    { label: '🛍️ Store opened · 6AM–12NN and 4PM–7PM daily', cls: 'ev-green' },
     { label: 'Started Paracetamol + Orphenadrine daily · First day without Cilostazol', cls: 'ev-amber' },
   ]},
   { date: '2026-06-04', readings: [
@@ -895,7 +894,10 @@ const BP_READINGS = [
     { time: '04:30', sys: 143, dia: 67, bpm: 66 },
     { time: '12:30', sys: 129, dia: 60, bpm: 66 },
     { time: '20:30', sys: 139, dia: 66, bpm: 72 },
-  ], events: [{ label: 'Lercanidipine 10mg — first dose taken at 8PM', cls: 'ev-green' }]},
+  ], events: [
+    { label: 'Lercanidipine 10mg — first dose taken at 8PM', cls: 'ev-green' },
+    { label: '🛍️ Store opened · 6AM–12NN and 4PM–7PM daily', cls: 'ev-green' },
+  ]},
   { date: '2026-06-08', readings: [
     { time: '04:30', sys: 128, dia: 57, bpm: 79 },
     { time: '12:30', sys: 133, dia: 69, bpm: 76 },
