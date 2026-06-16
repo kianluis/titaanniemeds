@@ -561,7 +561,7 @@
 
 <div id="tab-bp" class="tab-panel">
   <div class="panel-inner">
-    <div class="section-label">Blood Pressure Log · May 16 – June 15, 2026</div>
+    <div class="section-label">Blood Pressure Log · May 16 – June 16, 2026</div>
     <div class="bp-summary-strip" id="bp-summary-strip"></div>
     <div class="bp-days" id="bp-days"></div>
   </div>
@@ -644,11 +644,11 @@ const MEDICINES = [
     source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 26.29, buyQty: '30-day supply', restockId: 'july6',
   },
   {
-    id: 'lercanidipine', name: 'Lercanidipine', brand: 'Zanidip · Replaces Amlodipine', dose: '10mg',
+    id: 'lercanidipine', name: 'Lercanidipine', brand: 'Zanidip · Dose upped to 20mg Jun 16', dose: '20mg (2×10mg)',
     cat: 'cardio', doctors: ['cardio'],
-    purpose: 'Calcium channel blocker replacing Amlodipine. Switched by Dr. Reyes on May 26 because Amlodipine was causing ankle swelling. Same BP-lowering function with better side effect profile. First dose June 7.',
-    schedule: [{ time: '20:00', note: 'with or after dinner · new Jun 7' }],
-    dailyTablets: 1, stockRemaining: 30, stockAsOf: '2026-06-07', stockMax: 30,
+    purpose: 'Calcium channel blocker replacing Amlodipine. Switched by Dr. Reyes on May 26 because Amlodipine was causing ankle swelling. Dose increased from 10mg to 20mg/day on June 16 due to elevated BP readings.',
+    schedule: [{ time: '13:00', note: 'midday dose · started Jun 16' }, { time: '20:00', note: 'evening dose' }],
+    dailyTablets: 2, stockRemaining: 19, stockAsOf: '2026-06-16', stockMax: 30,
     source: 'Asian Hosp. Pharmacy', unitPrice: 27.50, buyQty: '30-day supply', restockId: 'july6',
   },
   {
@@ -688,12 +688,15 @@ const SCHEDULE_SLOTS = [
     { id: 'cilostazol', note: '1st dose · until Jun 15' },
     { id: 'citicoline', note: '1st dose' },
   ]},
-  { time: '12:30', label: 'After Lunch', meds: [{ id: 'clopidogrel', note: '' }] },
+  { time: '12:30', label: 'After Lunch', meds: [
+    { id: 'clopidogrel', note: '' },
+    { id: 'lercanidipine', note: '1st dose · started Jun 16' },
+  ]},
   { time: '20:00', label: 'After Dinner / Evening', meds: [
     { id: 'cilostazol', note: '2nd dose · until Jun 15' },
     { id: 'citicoline', note: '2nd dose' },
     { id: 'atorvastatin', note: 'after dinner' },
-    { id: 'lercanidipine', note: '⭐ first dose Jun 7' },
+    { id: 'lercanidipine', note: '2nd dose · 20mg/day total' },
   ]},
 ];
 
@@ -720,17 +723,17 @@ const APPOINTMENTS = [
     notes: '✓ Done — Lercanidipine 15t + Citicoline 20t + Cilostazol 18t + Pantoprazole 10t. Last day of Amlodipine.',
   },
   {
-    id: 'june18', date: '2026-06-18',
+    id: 'june17', date: '2026-06-17',
     doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #2',
-    location: 'MOB Rm 101', time: '(TBA — call Clarisse)', contact: 'Clarisse 09854109679',
+    location: 'MOB Rm 101', time: '9:30 AM', contact: 'Clarisse 09854109679',
     buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. Meds run out ~July 6 — get new Rx at this appointment.',
-    notes: 'Rescheduled from July 4. BP review — discuss elevated readings in June. Meds still have ~18 days remaining.',
+    notes: 'Moved to June 17 (was June 18). BP elevated — Dr. Reyes upped Lercanidipine to 20mg/day (Jun 16). Discuss BP trend and confirm new cardio Rx.',
   },
   {
     id: 'july6', date: '2026-07-06',
     doctor: 'Cardio meds restock', specialty: 'All cardio meds run out',
     location: 'Mercury Drug (any branch)', time: 'Before this date', contact: null,
-    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. Use new Rx from June 18 Dr. Reyes appointment.',
+    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. Use new Rx from June 17 Dr. Reyes appointment.',
     notes: 'Present OSCA Senior Citizen ID — 20% discount applies.',
   },
   {
@@ -755,7 +758,8 @@ const TIMELINE = [
   { date: '2026-06-06', title: '✓ All remaining Rx filled · Amlodipine last day', desc: 'Lercanidipine 15t + Citicoline 20t = ₱1,552.00 · Cilostazol 18t + Pantoprazole 10t = ₱1,490.64 · Last dose of Amlodipine.' },
   { date: '2026-06-07', title: '🟢 New Rx begins · Lercanidipine first dose · Store opened', desc: 'All new 30-tab cardio supplies active. Lercanidipine replaces Amlodipine. Nebivolol 1×5mg. First ever Lercanidipine dose at 8PM. 🛍️ Store opened — 6AM–12NN and 4PM–7PM daily.' },
   { date: '2026-06-15', title: 'Cilostazol — final stop', desc: 'Last of the 18 tabs taken. 60 tabs total across full course. Permanently stopped.' },
-  { date: '2026-06-18', title: 'Dr. Reyes — Cardiology Follow-up #2', desc: 'Rescheduled from July 4. BP review — discuss elevated readings in June. Get new Rx for cardio meds running out July 6. May extend to 4–6 month intervals if BP and heart rate stable.' },
+  { date: '2026-06-16', title: '⚠ Lercanidipine dose upped to 20mg · Appointment moved to Jun 17', desc: 'Called Clarisse — Dr. Reyes advised increasing Lercanidipine from 10mg to 20mg/day due to elevated BP readings. Follow-up appointment moved from June 18 to June 17 at 9:30 AM.' },
+  { date: '2026-06-17', title: 'Dr. Reyes — Cardiology Follow-up #2', desc: 'MOB Rm 101 · 9:30 AM. BP review — discuss elevated June readings and Lercanidipine dose increase to 20mg. Get new Rx for cardio meds running out July 6. May extend to 4–6 month intervals if BP and heart rate stable.' },
   { date: '2026-07-05', title: 'Citicoline — final 20 tabs begin', desc: '20 tabs bought June 6 start today. 10 days × 2/day. Last ever Citicoline doses — ends July 14.' },
   { date: '2026-07-06', title: '⚠ All cardio meds run out — restock needed', desc: 'Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine all run out. Use new Rx from June 18 appointment.' },
   { date: '2026-07-08', title: 'Dr. Dela Cruz — Neurology Follow-up #2', desc: 'South City Hospital, Bacoor · 9AM. Clarify Pantoprazole: daily vs as-needed. Ask about Citicoline end. Next neuro assessment.' },
@@ -780,7 +784,7 @@ const COSTS_WEEKLY = [
   { label: 'Atorvastatin 80mg (1/day · permanent)', amount: 184.03, unitPrice: 26.29 },
   { label: 'Telmisartan 80mg (1/day · permanent)', amount: 286.86, unitPrice: 40.98 },
   { label: 'Nebivolol 5mg (1/day · permanent)', amount: 134.05, unitPrice: 19.15 },
-  { label: 'Lercanidipine 10mg (1/day · permanent)', amount: 215.60, unitPrice: 30.80 },
+  { label: 'Lercanidipine 20mg (2/day · dose upped Jun 16)', amount: 431.20, unitPrice: 30.80 },
 ];
 
 const BP_READINGS = [
@@ -937,9 +941,20 @@ const BP_READINGS = [
     { time: '12:30', sys: 132, dia: 60, bpm: 65 },
     { time: '20:30', sys: 149, dia: 63, bpm: 70 },
   ]},
+  { date: '2026-06-16', readings: [
+    { time: '05:25', sys: 144, dia: 65, bpm: 73 },
+    { time: '12:13', sys: 157, dia: 76, bpm: 78, note: 'face felt hot' },
+    { time: '13:58', sys: 152, dia: 71, bpm: 60, note: 'drank Lercanidipine 20mg' },
+    { time: '20:30', sys: 136, dia: 58, bpm: 75 },
+  ], events: [
+    { label: 'Dr. Reyes: Lercanidipine upped to 20mg/day', cls: 'ev-amber' },
+    { label: 'Appointment rescheduled — June 17 at 9:30 AM', cls: 'ev-amber' },
+  ]},
   { date: '2026-06-15', readings: [
     { time: '04:30', sys: 153, dia: 68, bpm: 77, note: 'face felt hot' },
     { time: '05:54', sys: 163, dia: 75, bpm: 76, note: 'left side of face felt hot' },
+    { time: '13:15', sys: 151, dia: 65, bpm: 67 },
+    { time: '20:30', sys: 154, dia: 65, bpm: 69 },
   ], events: [
     { label: 'Did not open store', cls: '' },
     { label: '⚠ Last day for Cilostazol', cls: 'ev-amber' },
