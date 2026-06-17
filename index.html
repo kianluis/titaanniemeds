@@ -513,7 +513,7 @@
 
 <div id="tab-medicines" class="tab-panel">
   <div class="panel-inner">
-    <div class="section-label">Medicines · 12 total · Across 3 doctors · Updated June 7, 2026</div>
+    <div class="section-label">Medicines · 13 total · Across 3 doctors · Updated June 17, 2026</div>
     <div class="med-filter-row">
       <button class="filter-btn active" data-filter="all">All medicines <span class="filter-count" id="fc-all"></span></button>
       <button class="filter-btn f-cardio" data-filter="cardio"><span class="filter-dot cardio"></span>Dr. Reyes <span class="filter-count" id="fc-cardio"></span></button>
@@ -522,7 +522,7 @@
     </div>
     <div class="med-grid" id="med-grid"></div>
     <p style="margin-top:12px;font-size:12px;color:var(--ink-faint);">
-      ⚠ Pantoprazole prescribed as-needed — but consider taking daily since she's on Clopidogrel (blood thinner). Clarify with Dr. Dela Cruz at July 8 appointment. · Lercanidipine (Zanidip): take with or after evening meal — do not take on an empty stomach.
+      ⚠ Pantoprazole prescribed as-needed — but consider taking daily since she's on Clopidogrel (blood thinner). Clarify with Dr. Dela Cruz at July 8 appointment. · Spironolactone (Aldactone): recheck labs (BUN/Creatinine/Na/K) June 26 after 1 week. Bring results to Dr. Reyes June 27. · Nebivolol: check BPM before EACH dose — only take if heart rate is MORE THAN 65 BPM.
     </p>
   </div>
 </div>
@@ -585,71 +585,79 @@ const MEDICINES = [
     asNeeded: true,
   },
   {
-    id: 'nebivolol', name: 'Nebivolol', brand: 'Nebilet 5mg · Dose reduced May 27', dose: '5mg ×1',
+    id: 'nebivolol', name: 'Nebivolol', brand: 'Nebilet 5mg · Split to 2×/day Jun 17', dose: '5mg ×2/day',
     cat: 'cardio', doctors: ['cardio'],
-    purpose: 'Beta-blocker for high blood pressure. Reduced from 2×5mg to 1×5mg on May 27 — heart rate was too low at 50s–60s bpm. 1 tab per day going forward.',
-    schedule: [{ time: '08:00', note: '1 tab (reduced May 27)' }],
-    dailyTablets: 1, stockRemaining: 29, stockAsOf: '2026-06-07', stockMax: 30,
-    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 19.15, buyQty: '30-day supply', restockId: 'july6',
+    purpose: 'Beta-blocker for high blood pressure. Restored to 2×5mg/day on June 17 by Dr. Reyes. ⚠ Check BPM before each dose — only take if heart rate is MORE THAN 65 beats per minute. Hold dose if BPM ≤65.',
+    schedule: [{ time: '08:00', note: '1st tab (check BPM >65 first)' }, { time: '20:30', note: '2nd tab (check BPM >65 first)' }],
+    dailyTablets: 2, stockRemaining: 19, stockAsOf: '2026-06-17', stockMax: 30,
+    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 19.15, buyQty: '30-day supply', restockId: 'june27',
   },
   {
     id: 'telmisartan', name: 'Telmisartan', brand: 'Micardis', dose: '80mg',
     cat: 'cardio', doctors: ['cardio'],
     purpose: 'ARB blood pressure med. Relaxes blood vessels to reduce BP — works alongside Nebivolol from a different mechanism.',
     schedule: [{ time: '08:00', note: '' }],
-    dailyTablets: 1, stockRemaining: 29, stockAsOf: '2026-06-07', stockMax: 30,
-    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 40.98, buyQty: '30-day supply', restockId: 'july6',
+    dailyTablets: 1, stockRemaining: 19, stockAsOf: '2026-06-17', stockMax: 30,
+    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 40.98, buyQty: '30-day supply', restockId: 'june27',
   },
   {
-    id: 'cilostazol', name: 'Cilostazol', brand: 'Vaxol · Dropped from Rx June 2', dose: '50mg',
+    id: 'cilostazol', name: 'Cilostazol', brand: 'Vaxol · Permanently stopped Jun 15', dose: '50mg',
     cat: 'neuro', doctors: ['neuro'],
-    purpose: 'Improves blood flow to the brain. Dropped from Dr. Dela Cruz\'s prescription on June 2 — no longer needed going forward. Completing final course June 7–15 as advised. Permanently stopped after June 15.',
-    schedule: [{ time: '08:00', note: '1st dose · until June 15' }, { time: '20:00', note: '2nd dose · until June 15' }],
-    dailyTablets: 2, stockRemaining: 16, stockAsOf: '2026-06-07', stockMax: 18,
+    purpose: 'Improved blood flow to the brain. Dropped from Dr. Dela Cruz\'s prescription on June 2 — no longer needed. Completed final course June 7–15. Permanently stopped June 15 with no new prescription from Dr. Reyes on June 17.',
+    schedule: [],
+    dailyTablets: 0, stockRemaining: 0, stockAsOf: '2026-06-15', stockMax: 18,
     source: 'Mercury Drug', unitPrice: 23.75, buyQty: 'No refill needed', restockId: null,
-    windingDown: true, stopDate: '2026-06-15',
+    completed: true, completedDate: '2026-06-15',
   },
   {
     id: 'citicoline', name: 'Citicoline', brand: 'Zynapse · Final month', dose: '500mg',
     cat: 'neuro', doctors: ['neuro'],
     purpose: 'Brain recovery support. Dr. Dela Cruz prescribed final 60 tabs on June 2 — last month of recovery meds. 20 additional tabs start July 5. Permanently stops July 14.',
     schedule: [{ time: '08:00', note: '1st dose' }, { time: '20:00', note: '2nd dose' }],
-    dailyTablets: 2, stockRemaining: 54, stockAsOf: '2026-06-07', stockMax: 60,
+    dailyTablets: 2, stockRemaining: 34, stockAsOf: '2026-06-17', stockMax: 60,
     source: 'Hospital Pharmacy + Mercury Drug', unitPrice: 73.25, buyQty: 'No refill needed', restockId: null,
     windingDown: true, stopDate: '2026-07-14',
   },
   {
-    id: 'amlodipine', name: 'Amlodipine', brand: 'Norvasc · Replaced by Lercanidipine', dose: '10mg',
+    id: 'amlodipine', name: 'Amlodipine', brand: 'Norvasc · Restarted Jun 17 (8 PM)', dose: '10mg',
     cat: 'cardio', doctors: ['cardio'],
-    purpose: 'Calcium channel blocker for BP. Discontinued June 6 — was causing ankle swelling. Permanently replaced by Lercanidipine (Zanidip) starting June 7.',
-    schedule: [],
-    dailyTablets: 1, stockRemaining: 0, stockAsOf: '2026-06-06', stockMax: 12,
-    source: 'Mercury Drug', unitPrice: 38.25, buyQty: 'No refill needed', restockId: null,
-    discontinued: true, discontinuedDate: '2026-06-06',
+    purpose: 'Calcium channel blocker for BP. Was stopped June 6 due to ankle swelling. Lercanidipine was trialed but Dr. Reyes switched back to Amlodipine on June 17. Now taken at 8 PM (evening) instead of morning. 13 tabs bought June 17, runs out June 29.',
+    schedule: [{ time: '20:00', note: 'evening dose — restarted Jun 17' }],
+    dailyTablets: 1, stockRemaining: 13, stockAsOf: '2026-06-17', stockMax: 13,
+    source: 'Asian Hosp. Pharmacy', unitPrice: 38.50, buyQty: '13 tabs (until Jun 29)', restockId: 'june27',
   },
   {
     id: 'clopidogrel', name: 'Clopidogrel', brand: 'Plotron', dose: '75mg',
     cat: 'both', doctors: ['cardio', 'neuro'],
     purpose: 'Anti-platelet blood thinner. Prevents new clots forming — critical for both stroke prevention and heart protection. Prescribed by both doctors.',
     schedule: [{ time: '12:30', note: 'after lunch' }],
-    dailyTablets: 1, stockRemaining: 29, stockAsOf: '2026-06-07', stockMax: 30,
-    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 22.46, buyQty: '30-day supply', restockId: 'july6',
+    dailyTablets: 1, stockRemaining: 19, stockAsOf: '2026-06-17', stockMax: 30,
+    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 22.46, buyQty: '30-day supply', restockId: 'june27',
   },
   {
     id: 'atorvastatin', name: 'Atorvastatin', brand: 'Atorvast-Natrapharm', dose: '80mg',
     cat: 'both', doctors: ['cardio', 'neuro'],
     purpose: 'Lowers high cholesterol. Small arteries are 99% blocked; the major ascending artery is less than 15% blocked — prevents further buildup and reduces clot risk. Prescribed by both doctors.',
     schedule: [{ time: '20:00', note: 'after dinner' }],
-    dailyTablets: 1, stockRemaining: 30, stockAsOf: '2026-06-07', stockMax: 30,
-    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 26.29, buyQty: '30-day supply', restockId: 'july6',
+    dailyTablets: 1, stockRemaining: 20, stockAsOf: '2026-06-17', stockMax: 30,
+    source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 26.29, buyQty: '30-day supply', restockId: 'june27',
   },
   {
-    id: 'lercanidipine', name: 'Lercanidipine', brand: 'Zanidip · Dose upped to 20mg Jun 16', dose: '20mg (2×10mg)',
+    id: 'lercanidipine', name: 'Lercanidipine', brand: 'Zanidip · Stopped Jun 17', dose: '20mg (2×10mg)',
     cat: 'cardio', doctors: ['cardio'],
-    purpose: 'Calcium channel blocker replacing Amlodipine. Switched by Dr. Reyes on May 26 because Amlodipine was causing ankle swelling. Dose increased from 10mg to 20mg/day on June 16 due to elevated BP readings.',
-    schedule: [{ time: '13:00', note: 'midday dose · started Jun 16' }, { time: '20:00', note: 'evening dose' }],
-    dailyTablets: 2, stockRemaining: 19, stockAsOf: '2026-06-16', stockMax: 30,
-    source: 'Asian Hosp. Pharmacy', unitPrice: 27.50, buyQty: '30-day supply', restockId: 'july6',
+    purpose: 'Calcium channel blocker that replaced Amlodipine. Trialed May 26–June 17. Dr. Reyes switched back to Amlodipine on June 17. Permanently discontinued.',
+    schedule: [],
+    dailyTablets: 0, stockRemaining: 0, stockAsOf: '2026-06-17', stockMax: 30,
+    source: 'Asian Hosp. Pharmacy', unitPrice: 27.50, buyQty: 'No refill needed', restockId: null,
+    discontinued: true, discontinuedDate: '2026-06-17',
+  },
+  {
+    id: 'spironolactone', name: 'Spironolactone', brand: 'Aldactone 25mg · Added Jun 17', dose: '25mg',
+    cat: 'cardio', doctors: ['cardio'],
+    purpose: 'Diuretic (water pill) added by Dr. Reyes on June 17 to help control BP by reducing fluid retention. ⚠ Dr. Reyes required baseline labs (BUN, Creatinine, Na, K) before starting — done June 17. Recheck labs June 26 after 1 week of use, then Dr. Reyes follow-up June 27.',
+    schedule: [{ time: '07:30', note: 'with breakfast (new Jun 17)' }],
+    dailyTablets: 1, stockRemaining: 13, stockAsOf: '2026-06-17', stockMax: 13,
+    source: 'Asian Hosp. Pharmacy', unitPrice: 21.70, buyQty: '13 tabs (until Jun 29)', restockId: 'june27',
   },
   {
     id: 'paracetamol_orphenadrine', name: 'Paracetamol + Orphenadrine', brand: 'Norgesic 650/50mg · Added June 2', dose: '650/50mg',
@@ -682,21 +690,24 @@ const MEDICINES = [
 
 const SCHEDULE_SLOTS = [
   { time: '07:00', label: 'Before Breakfast', meds: [{ id: 'pantoprazole', note: '30 min before eating (as needed)' }] },
+  { time: '07:30', label: 'With Breakfast (Early)', meds: [
+    { id: 'spironolactone', note: '1 tab · new Jun 17 · check labs Jun 26' },
+  ]},
   { time: '08:00', label: 'With or After Breakfast', meds: [
-    { id: 'nebivolol', note: '1 tab' },
+    { id: 'nebivolol', note: '1st tab · ⚠ only if BPM >65' },
     { id: 'telmisartan', note: '' },
-    { id: 'cilostazol', note: '1st dose · until Jun 15' },
     { id: 'citicoline', note: '1st dose' },
   ]},
   { time: '12:30', label: 'After Lunch', meds: [
     { id: 'clopidogrel', note: '' },
-    { id: 'lercanidipine', note: '1st dose · started Jun 16' },
   ]},
   { time: '20:00', label: 'After Dinner / Evening', meds: [
-    { id: 'cilostazol', note: '2nd dose · until Jun 15' },
     { id: 'citicoline', note: '2nd dose' },
     { id: 'atorvastatin', note: 'after dinner' },
-    { id: 'lercanidipine', note: '2nd dose · 20mg/day total' },
+    { id: 'amlodipine', note: 'evening dose · restarted Jun 17' },
+  ]},
+  { time: '20:30', label: 'Evening (After Dinner)', meds: [
+    { id: 'nebivolol', note: '2nd tab · ⚠ only if BPM >65' },
   ]},
 ];
 
@@ -726,15 +737,29 @@ const APPOINTMENTS = [
     id: 'june17', date: '2026-06-17',
     doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #2',
     location: 'MOB Rm 101', time: '9:30 AM', contact: 'Clarisse 09854109679',
-    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. Meds run out ~July 6 — get new Rx at this appointment.',
-    notes: 'Moved to June 17 (was June 18). BP elevated — Dr. Reyes upped Lercanidipine to 20mg/day (Jun 16). Discuss BP trend and confirm new cardio Rx.',
+    buy: null,
+    notes: '✓ Done — Lercanidipine stopped; Amlodipine restarted at 8 PM. Nebivolol back to 2×5mg/day (check BPM >65 before each dose). Spironolactone 25mg added at breakfast. Labs ordered (BUN/Creatinine/Na/K) — done today ₱500. Recheck labs Jun 26. Referred to Dr. Sam Gozman (Ortho Spine). Next follow-up Jun 27.',
   },
   {
-    id: 'july6', date: '2026-07-06',
-    doctor: 'Cardio meds restock', specialty: 'All cardio meds run out',
-    location: 'Mercury Drug (any branch)', time: 'Before this date', contact: null,
-    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine. Use new Rx from June 17 Dr. Reyes appointment.',
-    notes: 'Present OSCA Senior Citizen ID — 20% discount applies.',
+    id: 'june22', date: '2026-06-22',
+    doctor: 'Dr. Sam Gozman', specialty: 'Orthopedic Spine — Follow-up #1',
+    location: 'TBD (referral from Dr. Reyes)', time: '8:00 AM', contact: null,
+    buy: null,
+    notes: '4th in line. Referral from Dr. Michael Reyes — June 17. Bring spine X-ray results (cervical + lumbar spondylosis, L5 over S1, compression deformity T12).',
+  },
+  {
+    id: 'june26', date: '2026-06-26',
+    doctor: 'Lab Recheck', specialty: 'BUN · Creatinine · Sodium · Potassium',
+    location: 'Alviar Medical Laboratories', time: 'Any time', contact: null,
+    buy: null,
+    notes: '1-week recheck after starting Spironolactone (diuretic). Dr. Reyes requires monitoring of kidney function and electrolytes. Results to be brought to June 27 follow-up. Estimated cost ~₱500.',
+  },
+  {
+    id: 'june27', date: '2026-06-27',
+    doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #3',
+    location: 'MOB Rm 101', time: 'TBD', contact: 'Clarisse 09854109679',
+    buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Amlodipine · Spironolactone. All meds run out ~June 29.',
+    notes: 'Bring June 26 lab results (BUN/Creatinine/Na/K) — Dr. Reyes will review before deciding on continuing Spironolactone. New Rx needed: all cardio meds run out June 29.',
   },
   {
     id: 'july8', date: '2026-07-08',
@@ -759,9 +784,12 @@ const TIMELINE = [
   { date: '2026-06-07', title: '🟢 New Rx begins · Lercanidipine first dose · Store opened', desc: 'All new 30-tab cardio supplies active. Lercanidipine replaces Amlodipine. Nebivolol 1×5mg. First ever Lercanidipine dose at 8PM. 🛍️ Store opened — 6AM–12NN and 4PM–7PM daily.' },
   { date: '2026-06-15', title: 'Cilostazol — final stop', desc: 'Last of the 18 tabs taken. 60 tabs total across full course. Permanently stopped.' },
   { date: '2026-06-16', title: '⚠ Lercanidipine dose upped to 20mg · Appointment moved to Jun 17', desc: 'Called Clarisse — Dr. Reyes advised increasing Lercanidipine from 10mg to 20mg/day due to elevated BP readings. Follow-up appointment moved from June 18 to June 17 at 9:30 AM.' },
-  { date: '2026-06-17', title: 'Dr. Reyes — Cardiology Follow-up #2', desc: 'MOB Rm 101 · 9:30 AM. BP review — discuss elevated June readings and Lercanidipine dose increase to 20mg. Get new Rx for cardio meds running out July 6. May extend to 4–6 month intervals if BP and heart rate stable.' },
+  { date: '2026-06-17', title: '✓ Dr. Reyes — Cardiology Follow-up #2', desc: 'Lercanidipine stopped; Amlodipine restarted at 8 PM (13t). Nebivolol back to 2×5mg/day — check BPM >65 before each dose. Spironolactone 25mg added at breakfast (13t). Baseline labs done ₱500 (BUN/Creatinine/Na/K). Lab recheck June 26. Ortho referral: Dr. Sam Gozman June 22. Pharmacy spend ₱626.08. Next follow-up June 27.' },
+  { date: '2026-06-22', title: 'Dr. Sam Gozman — Ortho Spine (Referral from Dr. Reyes)', desc: '8:00 AM · 4th in line. Bring cervical + lumbar spine X-ray results. Referred for cervical spondylosis, lumbar spondylosis, L5/S1 spondylolisthesis, and compression deformity T12.' },
+  { date: '2026-06-26', title: 'Lab recheck — BUN · Creatinine · Na · K', desc: 'Alviar Medical Laboratories. 1-week monitoring after starting Spironolactone. Results to be brought to Dr. Reyes on June 27. ~₱500.' },
+  { date: '2026-06-27', title: 'Dr. Reyes — Cardiology Follow-up #3', desc: 'MOB Rm 101. Bring June 26 labs. New Rx needed — all cardio meds run out ~June 29 (13-tab supply from Jun 17). Dr. Reyes will assess Spironolactone continuation.' },
   { date: '2026-07-05', title: 'Citicoline — final 20 tabs begin', desc: '20 tabs bought June 6 start today. 10 days × 2/day. Last ever Citicoline doses — ends July 14.' },
-  { date: '2026-07-06', title: '⚠ All cardio meds run out — restock needed', desc: 'Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Lercanidipine all run out. Use new Rx from June 18 appointment.' },
+  { date: '2026-06-29', title: '⚠ Amlodipine · Spironolactone run out', desc: 'Both 13-tab supplies from June 17 run out. Use new Rx from June 27 Dr. Reyes appointment.' },
   { date: '2026-07-08', title: 'Dr. Dela Cruz — Neurology Follow-up #2', desc: 'South City Hospital, Bacoor · 9AM. Clarify Pantoprazole: daily vs as-needed. Ask about Citicoline end. Next neuro assessment.' },
   { date: '2026-07-14', title: '✅ Citicoline done — all recovery meds complete', desc: 'From July 15: 5 permanent maintenance meds only. Monthly cost drops to ~₱4,190/month.' },
 ];
@@ -777,14 +805,17 @@ const COSTS_SPENT = [
   { label: 'Generic pharmacy June 4 — Cilostazol emergency', amount: 114.00 },
   { label: 'Asian Hosp. Pharmacy June 6 — Lercanidipine + Citicoline', amount: 1552.00 },
   { label: 'Asian Hosp. Pharmacy June 6 — Cilostazol + Pantoprazole', amount: 1490.64 },
+  { label: 'Alviar Medical Lab June 17 — BUN/Creatinine/Na/K (Tita Annie)', amount: 500.00 },
+  { label: 'Asian Hosp. Pharmacy June 17 — Amlodipine 13t + Spironolactone 13t', amount: 626.08 },
 ];
 
 const COSTS_WEEKLY = [
   { label: 'Clopidogrel 75mg (1/day · permanent)', amount: 157.22, unitPrice: 22.46 },
   { label: 'Atorvastatin 80mg (1/day · permanent)', amount: 184.03, unitPrice: 26.29 },
   { label: 'Telmisartan 80mg (1/day · permanent)', amount: 286.86, unitPrice: 40.98 },
-  { label: 'Nebivolol 5mg (1/day · permanent)', amount: 134.05, unitPrice: 19.15 },
-  { label: 'Lercanidipine 20mg (2/day · dose upped Jun 16)', amount: 431.20, unitPrice: 30.80 },
+  { label: 'Nebivolol 5mg (2/day · restored Jun 17)', amount: 268.10, unitPrice: 19.15 },
+  { label: 'Amlodipine 10mg (1/day · restarted Jun 17)', amount: 269.50, unitPrice: 38.50 },
+  { label: 'Spironolactone 25mg (1/day · added Jun 17)', amount: 151.90, unitPrice: 21.70 },
 ];
 
 const BP_READINGS = [
@@ -962,7 +993,7 @@ const BP_READINGS = [
   { date: '2026-06-17', readings: [
     { time: '04:30', sys: 162, dia: 72, bpm: 66, note: 'body feels heavy' },
     { time: '06:20', sys: 173, dia: 78, bpm: 67, note: 'body feels heavy · head feels heavy · face feels hot' },
-  ]},
+  ], events: [{ label: '✓ Dr. Reyes Follow-up #2 · Lercanidipine stopped · Amlodipine restarted PM · Spironolactone added · Nebivolol 2×/day', cls: 'ev-green' }]},
 ];
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
@@ -1192,7 +1223,7 @@ function renderMedicines() {
         <span class="med-stock-count" style="color:var(--ink-faint)">0 tabs — stopped</span>`;
       pillCls = 'spill-done';
       pillTxt = `⛔ Discontinued ${fmtShort(parseDate(med.discontinuedDate))}`;
-      runsOutHtml = `<span style="font-size:12px;color:var(--ink-faint)">Replaced by Lercanidipine</span>`;
+      runsOutHtml = `<span style="font-size:12px;color:var(--ink-faint)">No longer prescribed</span>`;
     } else if (med.asNeeded) {
       const pct = Math.round((med.stockRemaining / med.stockMax) * 100);
       stockLabel = 'As-needed supply';
@@ -1390,14 +1421,14 @@ function renderCosts() {
       </div>
       <div class="cost-note">
         Permanent maintenance after July 14<br>
-        Winding down: Citicoline until July 14 (+₱1,034/wk) · Cilostazol until June 15 (+₱332/wk)<br>
-        ⚠ Present OSCA Senior Citizen ID at all pharmacies — 20% senior discount applies.
+        Winding down: Citicoline until July 14 (+₱1,034/wk)<br>
+        ⚠ Spironolactone subject to change after June 27 lab review. ⚠ Present OSCA Senior Citizen ID at all pharmacies — 20% senior discount applies.
       </div>
     </div>
     <div class="grand-total-card">
       <div>
         <div class="gt-label">Hospital + All Medicines</div>
-        <div class="gt-sub">Admission May 7 through June 7, 2026</div>
+        <div class="gt-sub">Admission May 7 through June 17, 2026</div>
       </div>
       <div class="gt-right">
         <div class="gt-amount">${fmtMoney(totalSpent)}</div>
