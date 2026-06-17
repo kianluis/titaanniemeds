@@ -522,7 +522,7 @@
     </div>
     <div class="med-grid" id="med-grid"></div>
     <p style="margin-top:12px;font-size:12px;color:var(--ink-faint);">
-      ⚠ Pantoprazole prescribed as-needed — but consider taking daily since she's on Clopidogrel (blood thinner). Clarify with Dr. Dela Cruz at July 8 appointment. · Spironolactone (Aldactone): recheck labs (BUN/Creatinine/Na/K) June 26 after 1 week. Bring results to Dr. Reyes June 27. · Nebivolol: check BPM before EACH dose — only take if heart rate is MORE THAN 65 BPM.
+      ⚠ Pantoprazole prescribed as-needed — but consider taking daily since she's on Clopidogrel (blood thinner). Clarify with Dr. Dela Cruz at July 8 appointment. · Spironolactone (Aldactone): recheck labs (BUN/Creatinine/Na/K) June 26 after 1 week. Bring results to Dr. Reyes June 27. · Nebivolol: 1st dose (morning) always taken. ⚠ 2nd dose (evening): only take if BPM is MORE THAN 65 — hold if ≤65.
     </p>
   </div>
 </div>
@@ -585,10 +585,10 @@ const MEDICINES = [
     asNeeded: true,
   },
   {
-    id: 'nebivolol', name: 'Nebivolol', brand: 'Nebilet 5mg · Split to 2×/day Jun 17', dose: '5mg ×2/day',
+    id: 'nebivolol', name: 'Nebivolol', brand: 'Nebilet 5mg · Split to 2×/day Jun 17', dose: '5mg',
     cat: 'cardio', doctors: ['cardio'],
-    purpose: 'Beta-blocker for high blood pressure. Restored to 2×5mg/day on June 17 by Dr. Reyes. ⚠ Check BPM before each dose — only take if heart rate is MORE THAN 65 beats per minute. Hold dose if BPM ≤65.',
-    schedule: [{ time: '08:00', note: '1st tab (check BPM >65 first)' }, { time: '20:30', note: '2nd tab (check BPM >65 first)' }],
+    purpose: 'Beta-blocker for high blood pressure. Restored to 2×5mg/day on June 17 by Dr. Reyes. 1st dose (morning) always taken. ⚠ 2nd dose (evening): only take if heart rate is MORE THAN 65 BPM — hold dose if BPM ≤65.',
+    schedule: [{ time: '08:00', note: '1st tab · always take' }, { time: '20:30', note: '2nd tab · ⚠ only if BPM >65' }],
     dailyTablets: 2, stockRemaining: 19, stockAsOf: '2026-06-17', stockMax: 30,
     source: 'Mercury Drug + Hosp. Pharmacy', unitPrice: 19.15, buyQty: '30-day supply', restockId: 'june27',
   },
@@ -645,9 +645,9 @@ const MEDICINES = [
   {
     id: 'lercanidipine', name: 'Lercanidipine', brand: 'Zanidip · Stopped Jun 17', dose: '20mg (2×10mg)',
     cat: 'cardio', doctors: ['cardio'],
-    purpose: 'Calcium channel blocker that replaced Amlodipine. Trialed May 26–June 17. Dr. Reyes switched back to Amlodipine on June 17. Permanently discontinued.',
+    purpose: 'Calcium channel blocker that replaced Amlodipine. Trialed May 26–June 17. Dr. Reyes switched back to Amlodipine on June 17. Permanently discontinued. ~17 tabs remaining — no refill needed.',
     schedule: [],
-    dailyTablets: 0, stockRemaining: 0, stockAsOf: '2026-06-17', stockMax: 30,
+    dailyTablets: 0, stockRemaining: 17, stockAsOf: '2026-06-17', stockMax: 30,
     source: 'Asian Hosp. Pharmacy', unitPrice: 27.50, buyQty: 'No refill needed', restockId: null,
     discontinued: true, discontinuedDate: '2026-06-17',
   },
@@ -664,7 +664,7 @@ const MEDICINES = [
     cat: 'neuro', doctors: ['neuro'],
     purpose: 'Pain reliever for mild to moderate pain (Pain Score 1–6). For neck/back pain from cervical and lumbar spondylosis found on X-rays during hospitalization. Take as needed every 6 hours.',
     schedule: [{ time: '00:00', note: 'every 6hrs as needed · pain score 1–6' }],
-    dailyTablets: 0, stockRemaining: 10, stockAsOf: '2026-06-14', stockMax: 20,
+    dailyTablets: 0, stockRemaining: 9, stockAsOf: '2026-06-17', stockMax: 20,
     source: 'Mercury Drug', unitPrice: 41.50, buyQty: 'As needed', restockId: null,
     asNeeded: true,
   },
@@ -673,7 +673,7 @@ const MEDICINES = [
     cat: 'neuro', doctors: ['neuro'],
     purpose: 'Stronger pain reliever for severe pain (Pain Score 7–10). COX-2 inhibitor — safer on the stomach than regular NSAIDs. Take only when pain is severe, every 12 hours.',
     schedule: [{ time: '00:00', note: 'every 12hrs as needed · pain score 7–10' }],
-    dailyTablets: 0, stockRemaining: 15, stockAsOf: '2026-06-02', stockMax: 15,
+    dailyTablets: 0, stockRemaining: 14, stockAsOf: '2026-06-17', stockMax: 15,
     source: 'Mercury Drug', unitPrice: 42.75, buyQty: 'As needed', restockId: null,
     asNeeded: true,
   },
@@ -693,8 +693,8 @@ const SCHEDULE_SLOTS = [
   { time: '07:30', label: 'With Breakfast (Early)', meds: [
     { id: 'spironolactone', note: '1 tab · new Jun 17 · check labs Jun 26' },
   ]},
-  { time: '08:00', label: 'With or After Breakfast', meds: [
-    { id: 'nebivolol', note: '1st tab · ⚠ only if BPM >65' },
+  { time: '08:00', label: 'After Breakfast (7:30 AM)', meds: [
+    { id: 'nebivolol', note: '1st tab · always take' },
     { id: 'telmisartan', note: '' },
     { id: 'citicoline', note: '1st dose' },
   ]},
@@ -795,18 +795,21 @@ const TIMELINE = [
 ];
 
 const COSTS_SPENT = [
-  { label: 'Asian Hospital IPD (May 7–15)', amount: 253808.90 },
-  { label: 'Hospital Pharmacy — discharge meds', amount: 4161.50 },
-  { label: 'Mercury Drug May 18 — Linezolid + Cilostazol', amount: 11753.57 },
-  { label: 'Nebivolol 5mg × 20 tabs (separate purchase)', amount: 240.00 },
-  { label: 'Mercury Drug May 25 — Dr. Reyes restock', amount: 1752.09 },
-  { label: 'Asian Hosp. Pharmacy May 26 — new Dr. Reyes Rx', amount: 2943.21 },
-  { label: 'Mercury Drug June 2 — Dr. Dela Cruz restock', amount: 5809.75 },
-  { label: 'Generic pharmacy June 4 — Cilostazol emergency', amount: 114.00 },
-  { label: 'Asian Hosp. Pharmacy June 6 — Lercanidipine + Citicoline', amount: 1552.00 },
-  { label: 'Asian Hosp. Pharmacy June 6 — Cilostazol + Pantoprazole', amount: 1490.64 },
-  { label: 'Alviar Medical Lab June 17 — BUN/Creatinine/Na/K (Tita Annie)', amount: 500.00 },
-  { label: 'Asian Hosp. Pharmacy June 17 — Amlodipine 13t + Spironolactone 13t', amount: 626.08 },
+  { label: 'Asian Hospital IPD (May 7–15)', amount: 253808.90, cat: 'hospital' },
+  { label: 'Hospital Pharmacy — discharge meds', amount: 4161.50, cat: 'medicine' },
+  { label: 'Mercury Drug May 18 — Linezolid + Cilostazol', amount: 11753.57, cat: 'medicine' },
+  { label: 'Nebivolol 5mg × 20 tabs (separate purchase)', amount: 240.00, cat: 'medicine' },
+  { label: 'Mercury Drug May 25 — Dr. Reyes restock', amount: 1752.09, cat: 'medicine' },
+  { label: 'Dr. Reyes — Cardiology consult May 26', amount: 1200.00, cat: 'doctor' },
+  { label: 'Asian Hosp. Pharmacy May 26 — new Dr. Reyes Rx', amount: 2943.21, cat: 'medicine' },
+  { label: 'Dr. Dela Cruz — Neurology consult June 2', amount: 1500.00, cat: 'doctor' },
+  { label: 'Mercury Drug June 2 — Dr. Dela Cruz restock', amount: 5809.75, cat: 'medicine' },
+  { label: 'Generic pharmacy June 4 — Cilostazol emergency', amount: 114.00, cat: 'medicine' },
+  { label: 'Asian Hosp. Pharmacy June 6 — Lercanidipine + Citicoline', amount: 1552.00, cat: 'medicine' },
+  { label: 'Asian Hosp. Pharmacy June 6 — Cilostazol + Pantoprazole', amount: 1490.64, cat: 'medicine' },
+  { label: 'Alviar Medical Lab June 17 — BUN/Creatinine/Na/K', amount: 500.00, cat: 'medicine' },
+  { label: 'Dr. Reyes — Cardiology consult June 17', amount: 1200.00, cat: 'doctor' },
+  { label: 'Asian Hosp. Pharmacy June 17 — Amlodipine 13t + Spironolactone 13t', amount: 626.08, cat: 'medicine' },
 ];
 
 const COSTS_WEEKLY = [
@@ -993,6 +996,7 @@ const BP_READINGS = [
   { date: '2026-06-17', readings: [
     { time: '04:30', sys: 162, dia: 72, bpm: 66, note: 'body feels heavy' },
     { time: '06:20', sys: 173, dia: 78, bpm: 67, note: 'body feels heavy · head feels heavy · face feels hot' },
+    { time: '13:20', sys: 155, dia: 67, bpm: 67 },
   ], events: [{ label: '✓ Dr. Reyes Follow-up #2 · Lercanidipine stopped · Amlodipine restarted PM · Spironolactone added · Nebivolol 2×/day', cls: 'ev-green' }]},
 ];
 
@@ -1197,7 +1201,12 @@ function initMedFilter() {
 
 function renderMedicines() {
   const doctorName = { cardio: 'Dr. Reyes', neuro: 'Dr. Dela Cruz', infect: 'Dr. Garcia' };
-  const meds = activeFilter === 'all' ? MEDICINES : MEDICINES.filter(m => m.doctors.includes(activeFilter));
+  const meds = (activeFilter === 'all' ? MEDICINES : MEDICINES.filter(m => m.doctors.includes(activeFilter)))
+    .slice().sort((a, b) => {
+      const aOut = (a.completed || a.discontinued) ? 1 : 0;
+      const bOut = (b.completed || b.discontinued) ? 1 : 0;
+      return aOut - bOut;
+    });
   document.getElementById('med-grid').innerHTML = meds.map(med => {
     const dtags = med.doctors.map(d =>
       `<span class="dtag dtag-${d}"><span class="dtag-dot"></span>${doctorName[d]}</span>`).join('');
@@ -1219,8 +1228,10 @@ function renderMedicines() {
       runsOutHtml = `<span style="font-size:12px;color:var(--ink-faint)">No refill needed</span>`;
     } else if (med.discontinued) {
       stockLabel = `Discontinued ${fmtShort(parseDate(med.discontinuedDate))}`;
-      stockBarHtml = `<div class="med-stock-bg"><div class="med-stock-fill" style="width:0%;background:var(--border)"></div></div>
-        <span class="med-stock-count" style="color:var(--ink-faint)">0 tabs — stopped</span>`;
+      const leftover = med.stockRemaining;
+      const leftPct = leftover > 0 ? Math.round(leftover / med.stockMax * 100) : 0;
+      stockBarHtml = `<div class="med-stock-bg"><div class="med-stock-fill" style="width:${leftPct}%;background:var(--border)"></div></div>
+        <span class="med-stock-count" style="color:var(--ink-faint)">${leftover > 0 ? `${leftover} tabs remaining · stopped` : '0 tabs — stopped'}</span>`;
       pillCls = 'spill-done';
       pillTxt = `⛔ Discontinued ${fmtShort(parseDate(med.discontinuedDate))}`;
       runsOutHtml = `<span style="font-size:12px;color:var(--ink-faint)">No longer prescribed</span>`;
@@ -1298,7 +1309,7 @@ function renderRestockTable() {
       badgeCls = 'badge-gray';
       whenText = `✓ Done ${fmtShort(parseDate(med.completedDate))}`;
     } else if (med.discontinued) {
-      leftText = '0 tabs · stopped';
+      leftText = med.stockRemaining > 0 ? `${med.stockRemaining}t remaining · stopped` : '0 tabs · stopped';
       runsOutText = 'Discontinued';
       badgeCls = 'badge-gray';
       whenText = `⛔ Stopped ${fmtShort(parseDate(med.discontinuedDate))}`;
@@ -1385,6 +1396,9 @@ function renderCosts() {
   const totalSpent = COSTS_SPENT.reduce((s, c) => s + c.amount, 0);
   const weeklyTotal = COSTS_WEEKLY.reduce((s, c) => s + c.amount, 0);
   const monthlyEst = weeklyTotal * (30 / 7);
+  const hospitalTotal = COSTS_SPENT.filter(c => c.cat === 'hospital').reduce((s, c) => s + c.amount, 0);
+  const medicineTotal = COSTS_SPENT.filter(c => c.cat === 'medicine').reduce((s, c) => s + c.amount, 0);
+  const doctorTotal = COSTS_SPENT.filter(c => c.cat === 'doctor').reduce((s, c) => s + c.amount, 0);
 
   const spentRows = COSTS_SPENT.map(c =>
     `<div class="cost-line"><span class="cost-line-label">${c.label}</span><span class="cost-line-amount">${fmtMoney(c.amount)}</span></div>`
@@ -1425,9 +1439,28 @@ function renderCosts() {
         ⚠ Spironolactone subject to change after June 27 lab review. ⚠ Present OSCA Senior Citizen ID at all pharmacies — 20% senior discount applies.
       </div>
     </div>
+    <div class="cost-card">
+      <div class="cost-card-title">Breakdown by Category</div>
+      <div class="cost-line">
+        <span class="cost-line-label">🏥 Hospital admission (IPD)</span>
+        <span class="cost-line-amount">${fmtMoney(hospitalTotal)}</span>
+      </div>
+      <div class="cost-line">
+        <span class="cost-line-label">💊 Medicines, pharmacy &amp; labs</span>
+        <span class="cost-line-amount">${fmtMoney(medicineTotal)}</span>
+      </div>
+      <div class="cost-line">
+        <span class="cost-line-label">👨‍⚕️ Doctor consultations</span>
+        <span class="cost-line-amount">${fmtMoney(doctorTotal)}</span>
+      </div>
+      <div class="cost-total">
+        <span class="cost-total-label">Total</span>
+        <span class="cost-total-amount">${fmtMoney(totalSpent)}</span>
+      </div>
+    </div>
     <div class="grand-total-card">
       <div>
-        <div class="gt-label">Hospital + All Medicines</div>
+        <div class="gt-label">Hospital + Medicines + Doctors</div>
         <div class="gt-sub">Admission May 7 through June 17, 2026</div>
       </div>
       <div class="gt-right">
