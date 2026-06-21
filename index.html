@@ -466,6 +466,42 @@
     .bp-reading { grid-template-columns: 80px 1fr; }
     .bp-reading > .bp-badge { display: none; }
   }
+
+  /* ── DIAGNOSTICS ── */
+  .diag-section { margin-bottom: 28px; }
+  .diag-section-title {
+    font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint);
+    background: var(--surface-2); border: 1.5px solid var(--border);
+    padding: 8px 16px; margin-bottom: 0;
+  }
+  .diag-card {
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-top: none; overflow: hidden;
+  }
+  .diag-row {
+    display: grid; grid-template-columns: 160px 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .diag-row:last-child { border-bottom: none; }
+  .diag-label {
+    padding: 12px 16px; font-size: 12px; font-weight: 600;
+    color: var(--accent); background: var(--surface-2);
+    border-right: 1px solid var(--border);
+    display: flex; align-items: flex-start;
+  }
+  .diag-value {
+    padding: 12px 16px; font-size: 13.5px; color: var(--ink); line-height: 1.55;
+  }
+  .diag-value strong { font-weight: 600; }
+  .diag-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .diag-two-col .diag-card { border-top: none; }
+  .diag-two-col .diag-card:first-child { border-right: none; }
+  @media (max-width: 700px) {
+    .diag-two-col { grid-template-columns: 1fr; }
+    .diag-two-col .diag-card:first-child { border-right: 1.5px solid var(--border); border-bottom: none; }
+    .diag-row { grid-template-columns: 120px 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -491,6 +527,7 @@
     <button class="tab-btn" data-tab="restock">↻ Restock &amp; Appts</button>
     <button class="tab-btn" data-tab="costs">₱ Costs</button>
     <button class="tab-btn" data-tab="bp">♥ BP</button>
+    <button class="tab-btn" data-tab="diagnostics">⊕ Diagnostics</button>
   </div>
 </nav>
 
@@ -564,6 +601,95 @@
     <div class="section-label">Blood Pressure Log · May 16 – June 21, 2026</div>
     <div class="bp-summary-strip" id="bp-summary-strip"></div>
     <div class="bp-days" id="bp-days"></div>
+  </div>
+</div>
+
+<div id="tab-diagnostics" class="tab-panel">
+  <div class="panel-inner">
+    <div class="section-label">Key Diagnostic Results — May 2026</div>
+
+    <!-- Brain CT Scan -->
+    <div class="diag-section">
+      <div class="diag-section-title">Brain CT Scan — May 7, 2026</div>
+      <div class="diag-card">
+        <div class="diag-row">
+          <span class="diag-label">Impression</span>
+          <span class="diag-value"><strong>Small acute infarcts</strong>, cortical/subcortical region of the <strong>left frontal lobe</strong> at the level of corona radiata</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Additional</span>
+          <span class="diag-value">Atherosclerosis of both internal carotid and vertebrobasilar arteries. Tonsiloliths.</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Clinical Data</span>
+          <span class="diag-value">Numbness of right extremities</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Echo + Carotid Duplex side by side -->
+    <div class="diag-section">
+      <div class="diag-two-col">
+        <div>
+          <div class="diag-section-title">Echocardiography — May 14, 2026</div>
+          <div class="diag-card">
+            <div class="diag-row">
+              <span class="diag-label">Summary</span>
+              <span class="diag-value">Hypertrophic obstructive cardiomyopathy, concentric LV hypertrophy, preserved systolic function, Grade 1 diastolic dysfunction</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">LV EF</span>
+              <span class="diag-value">75% (preserved)</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">LV Mass Index</span>
+              <span class="diag-value">98 g/m² (elevated)</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Other</span>
+              <span class="diag-value">Mild mitral &amp; tricuspid regurgitation. Valve scleroses. Normal PA pressure.</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="diag-section-title">Carotid Duplex — May 14, 2026</div>
+          <div class="diag-card">
+            <div class="diag-row">
+              <span class="diag-label">Interpretation</span>
+              <span class="diag-value">Carotid artery disease &lt;50% stenosis (approx. 1–15%) bilateral ICA</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Plaque</span>
+              <span class="diag-value">Type III plaque, anterior &amp; posterior walls of bilateral ICA bulbs extending to proximal ICA</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Vertebral</span>
+              <span class="diag-value">Normal antegrade flow bilaterally</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spine & Chest X-Rays -->
+    <div class="diag-section">
+      <div class="diag-section-title">Spine &amp; Chest X-Rays — May 2026</div>
+      <div class="diag-card">
+        <div class="diag-row">
+          <span class="diag-label">Lumbar (May 7)</span>
+          <span class="diag-value">Spondylosis &amp; levoscoliosis. Grade I spondylolisthesis L5 over S1. Predisposition to lumbosacral instability. Osteopenia/porosis. Compression deformity T12.</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Cervical (May 7)</span>
+          <span class="diag-value">Straightened cervical lordosis. Cervical spondylosis. Osteopenia/porosis.</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Chest (May 10)</span>
+          <span class="diag-value">Magnified heart. Atherosclerotic aorta. Thoracic dextroscoliosis. Osteopenia/porosis. No active lung disease.</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
