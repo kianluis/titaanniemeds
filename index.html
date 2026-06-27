@@ -598,7 +598,7 @@
 
 <div id="tab-bp" class="tab-panel">
   <div class="panel-inner">
-    <div class="section-label">Blood Pressure Log · May 16 – June 21, 2026</div>
+    <div class="section-label">Blood Pressure Log · May 16 – June 27, 2026</div>
     <div class="bp-summary-strip" id="bp-summary-strip"></div>
     <div class="bp-days" id="bp-days"></div>
   </div>
@@ -883,7 +883,7 @@ const APPOINTMENTS = [
   {
     id: 'june27', date: '2026-06-27',
     doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #3',
-    location: 'MOB Rm 101', time: 'TBD', contact: 'Clarisse 09854109679',
+    location: 'MOB Rm 101', time: '11:00 AM', contact: 'Clarisse 09854109679',
     buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Amlodipine · Spironolactone. All meds run out ~June 29.',
     notes: 'Bring June 26 lab results (BUN/Creatinine/Na/K) — Dr. Reyes will review before deciding on continuing Spironolactone. New Rx needed: all cardio meds run out June 29.',
   },
@@ -1153,6 +1153,34 @@ const BP_READINGS = [
     { time: '13:12', sys: 124, dia: 62, bpm: 70 },
     { time: '20:30', sys: 125, dia: 61, bpm: 72 },
   ], events: [{ label: '🛍️ Store opened again', cls: 'ev-green' }]},
+  { date: '2026-06-22', readings: [
+    { time: '04:30', sys: 131, dia: 59, bpm: 61 },
+    { time: '13:40', sys: 123, dia: 55, bpm: 63 },
+    { time: '20:30', sys: 124, dia: 55, bpm: 63 },
+  ], events: [{ label: '🦴 Dr. Gozman — Ortho Spine #1', cls: 'ev-blue' }]},
+  { date: '2026-06-23', readings: [
+    { time: '04:30', sys: 139, dia: 61, bpm: 63 },
+    { time: '12:44', sys: 121, dia: 54, bpm: 64 },
+    { time: '20:25', sys: 133, dia: 60, bpm: 60 },
+  ]},
+  { date: '2026-06-24', readings: [
+    { time: '04:30', sys: 136, dia: 57, bpm: 63 },
+    { time: '12:40', sys: 121, dia: 57, bpm: 58 },
+    { time: '20:30', sys: 134, dia: 59, bpm: 61 },
+  ]},
+  { date: '2026-06-25', readings: [
+    { time: '04:30', sys: 141, dia: 63, bpm: 63 },
+    { time: '12:30', sys: 120, dia: 60, bpm: 59 },
+    { time: '20:30', sys: 135, dia: 62, bpm: 59 },
+  ]},
+  { date: '2026-06-26', readings: [
+    { time: '04:30', sys: 130, dia: 63, bpm: 71 },
+    { time: '13:00', sys: 128, dia: 59, bpm: 70 },
+    { time: '20:30', sys: 130, dia: 62, bpm: 66 },
+  ], events: [{ label: '🧪 Lab recheck — BUN/Creatinine/Na/K', cls: 'ev-amber' }]},
+  { date: '2026-06-27', readings: [
+    { time: '04:30', sys: 136, dia: 63, bpm: 64 },
+  ], events: [{ label: '❤️ Dr. Reyes — Cardiology #3 · 11 AM', cls: 'ev-blue' }]},
 ];
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
