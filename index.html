@@ -608,6 +608,85 @@
   <div class="panel-inner">
     <div class="section-label">Key Diagnostic Results — May 2026</div>
 
+    <!-- Blood Labs: Dr. Reyes -->
+    <div class="diag-section">
+      <div class="diag-two-col">
+        <div>
+          <div class="diag-section-title">Blood Labs — June 17, 2026 · Dr. Reyes (Alviar #2074)</div>
+          <div class="diag-card">
+            <div class="diag-row">
+              <span class="diag-label">Creatinine</span>
+              <span class="diag-value"><strong>0.7</strong> mg/dL &nbsp;<span style="color:var(--green)">✓ normal</span> &nbsp;<small style="color:var(--ink-faint)">(0.6–1.2 F)</small></span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">BUN</span>
+              <span class="diag-value"><strong>15</strong> mg/dL &nbsp;<span style="color:var(--green)">✓ normal</span> &nbsp;<small style="color:var(--ink-faint)">(6–20)</small></span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Potassium (K)</span>
+              <span class="diag-value"><strong>3.4</strong> mEq/L &nbsp;<span style="color:var(--accent)">⚠ low</span> &nbsp;<small style="color:var(--ink-faint)">(3.5–5.3)</small></span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Sodium (Na)</span>
+              <span class="diag-value"><strong>145.5</strong> mEq/L &nbsp;<span style="color:var(--green)">✓ normal</span> &nbsp;<small style="color:var(--ink-faint)">(135–148)</small></span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="diag-section-title">Blood Labs Recheck — June 24, 2026 · Dr. Reyes (Alviar #2069)</div>
+          <div class="diag-card">
+            <div class="diag-row">
+              <span class="diag-label">Creatinine</span>
+              <span class="diag-value"><strong>0.8</strong> mg/dL &nbsp;<span style="color:var(--green)">✓ normal</span> &nbsp;<small style="color:var(--ink-faint)">(0.6–1.2 F)</small></span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">BUN</span>
+              <span class="diag-value"><strong>14</strong> mg/dL &nbsp;<span style="color:var(--green)">✓ normal</span> &nbsp;<small style="color:var(--ink-faint)">(6–20)</small></span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Potassium (K)</span>
+              <span class="diag-value"><strong>3.6</strong> mEq/L &nbsp;<span style="color:var(--green)">✓ normal</span> &nbsp;<small style="color:var(--ink-faint)">(3.5–5.3) · improved from 3.4 Jun 17</small></span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Sodium (Na)</span>
+              <span class="diag-value"><strong>144.3</strong> mEq/L &nbsp;<span style="color:var(--green)">✓ normal</span> &nbsp;<small style="color:var(--ink-faint)">(135–148)</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dr. Gozman Ortho Spine -->
+    <div class="diag-section">
+      <div class="diag-section-title">Orthopaedic Spine — Dr. Gozman · June 22, 2026</div>
+      <div class="diag-card">
+        <div class="diag-row">
+          <span class="diag-label">Diagnosis</span>
+          <span class="diag-value"><strong>Spondylitis, L5-S1 spondylolisthesis</strong> (Grade I — confirmed on prior imaging)</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Management</span>
+          <span class="diag-value">Referred for Physical Therapy — goals: ↓ pain, improve range of motion, advise on home exercise program</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Labs ordered</span>
+          <span class="diag-value">CBC, ESR, CRP (quantitative) — done same day at Asian Hospital (₱5,530). Results received June 24.</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">X-Rays ordered</span>
+          <span class="diag-value">Pelvis AP/Inlet/Outlet · Thoraco-Lumbar AP-lateral · Lumbo-Sacral AP-lat Flex/Extension — done same day at Asian Hospital (₱8,590). "Provide films."</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Total June 22</span>
+          <span class="diag-value">₱11,296 paid (gross ₱14,120 · senior citizen discount ₱2,824)</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Rx given</span>
+          <span class="diag-value">Tramadol/Paracetamol 37.5/325mg × 20 tabs (½ tab 2×/day × 2 days → 1 tab 2×/day). Alt: Celecoxib 200mg × 10, 1 cap 2×/day with meals.</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Brain CT Scan -->
     <div class="diag-section">
       <div class="diag-section-title">Brain CT Scan — May 7, 2026</div>
@@ -871,21 +950,21 @@ const APPOINTMENTS = [
     doctor: 'Dr. Sam Gozman', specialty: 'Orthopedic Spine — Follow-up #1',
     location: 'TBD (referral from Dr. Reyes)', time: '8:00 AM', contact: null,
     buy: null,
-    notes: '4th in line. Referral from Dr. Michael Reyes — June 17. Bring spine X-ray results (cervical + lumbar spondylosis, L5 over S1, compression deformity T12).',
+    notes: '✓ Done — Diagnosis: Spondylitis, L5-S1 spondylolisthesis. Ordered CBC/ESR/CRP + spine X-rays (Pelvis AP/Inlet/Outlet, Thoraco-Lumbar AP-lat, Lumbo-Sacral AP-lat Flex/Ext) — done same day at Asian Hospital, ₱11,296 after senior discount (gross ₱14,120). Referred for Physical Therapy: goals ↓ pain, improve ROM, home exercise. Rx: Tramadol/Paracetamol 37.5/325mg × 20 tabs (½ tab 2x/day × 2 days → 1 tab 2x/day). Alt: Celecoxib 200mg × 10, 1 cap 2x/day with meals. Lab results received June 24.',
   },
   {
     id: 'june26', date: '2026-06-26',
     doctor: 'Lab Recheck', specialty: 'BUN · Creatinine · Sodium · Potassium',
     location: 'Alviar Medical Laboratories', time: 'Any time', contact: null,
     buy: null,
-    notes: '1-week recheck after starting Spironolactone (diuretic). Dr. Reyes requires monitoring of kidney function and electrolytes. Results to be brought to June 27 follow-up. Estimated cost ~₱500.',
+    notes: '✓ Done June 24 — BUN 14 ✓ · Creatinine 0.8 ✓ · Na 144.3 ✓ · K 3.6 ✓ (all within normal range). Potassium improved from 3.4* (low on June 17) to 3.6 — kidney function stable on Spironolactone. Results brought to June 27 Dr. Reyes follow-up. Cost ₱500 (Alviar Medical Lab).',
   },
   {
     id: 'june27', date: '2026-06-27',
     doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #3',
     location: 'MOB Rm 101', time: '11:00 AM', contact: 'Clarisse 09854109679',
     buy: '30-day supply: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Amlodipine · Spironolactone. All meds run out ~June 29.',
-    notes: 'Bring June 26 lab results (BUN/Creatinine/Na/K) — Dr. Reyes will review before deciding on continuing Spironolactone. New Rx needed: all cardio meds run out June 29.',
+    notes: 'Bring June 24 lab results (BUN 14, Creatinine 0.8, Na 144.3, K 3.6 — all normal, K improved from 3.4 on June 17). Dr. Reyes will decide on continuing Spironolactone. New Rx needed: all cardio meds run out June 29.',
   },
   {
     id: 'july8', date: '2026-07-08',
@@ -936,6 +1015,8 @@ const COSTS_SPENT = [
   { label: 'Alviar Medical Lab June 17 — BUN/Creatinine/Na/K', amount: 500.00, cat: 'medicine' },
   { label: 'Dr. Reyes — Cardiology consult June 17', amount: 1200.00, cat: 'doctor' },
   { label: 'Asian Hosp. Pharmacy June 17 — Amlodipine 13t + Spironolactone 13t', amount: 626.08, cat: 'medicine' },
+  { label: 'Asian Hospital June 22 — Gozman labs (CBC/ESR/CRP) + spine X-rays · after senior discount', amount: 11296.00, cat: 'medicine' },
+  { label: 'Alviar Medical Lab June 24 — BUN/Creatinine/Na/K recheck (Dr. Reyes)', amount: 500.00, cat: 'medicine' },
 ];
 
 const COSTS_WEEKLY = [
@@ -1157,7 +1238,7 @@ const BP_READINGS = [
     { time: '04:30', sys: 131, dia: 59, bpm: 61 },
     { time: '13:40', sys: 123, dia: 55, bpm: 63 },
     { time: '20:30', sys: 124, dia: 55, bpm: 63 },
-  ], events: [{ label: '🦴 Dr. Gozman — Ortho Spine #1', cls: 'ev-blue' }]},
+  ], events: [{ label: '🦴 Dr. Gozman — Ortho Spine #1 · labs + X-rays done same day (₱11,296)', cls: 'ev-blue' }]},
   { date: '2026-06-23', readings: [
     { time: '04:30', sys: 139, dia: 61, bpm: 63 },
     { time: '12:44', sys: 121, dia: 54, bpm: 64 },
@@ -1167,7 +1248,7 @@ const BP_READINGS = [
     { time: '04:30', sys: 136, dia: 57, bpm: 63 },
     { time: '12:40', sys: 121, dia: 57, bpm: 58 },
     { time: '20:30', sys: 134, dia: 59, bpm: 61 },
-  ]},
+  ], events: [{ label: '🧪 Alviar lab recheck (Reyes) — K 3.6 ✓ Na 144.3 ✓ BUN 14 ✓ Creatinine 0.8 ✓', cls: 'ev-amber' }]},
   { date: '2026-06-25', readings: [
     { time: '04:30', sys: 141, dia: 63, bpm: 63 },
     { time: '12:30', sys: 120, dia: 60, bpm: 59 },
@@ -1177,7 +1258,7 @@ const BP_READINGS = [
     { time: '04:30', sys: 130, dia: 63, bpm: 71 },
     { time: '13:00', sys: 128, dia: 59, bpm: 70 },
     { time: '20:30', sys: 130, dia: 62, bpm: 66 },
-  ], events: [{ label: '🧪 Lab recheck — BUN/Creatinine/Na/K', cls: 'ev-amber' }]},
+  ]},
   { date: '2026-06-27', readings: [
     { time: '04:30', sys: 136, dia: 63, bpm: 64 },
   ], events: [{ label: '❤️ Dr. Reyes — Cardiology #3 · 11 AM', cls: 'ev-blue' }]},
