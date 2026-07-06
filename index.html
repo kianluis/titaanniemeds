@@ -890,7 +890,15 @@
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
 const MEDICINES = [
-  { id: 'pantoprazole', completed: true, completedDate: '2026-07-03', dailyTablets: 0 },
+  {
+    id: 'pantoprazole', name: 'Pantoprazole', brand: 'Pantopraz · Stopped Jul 3', dose: '40mg',
+    cat: 'neuro', doctors: ['neuro'],
+    purpose: 'Stomach acid reducer. Prescribed as-needed by Dr. Dela Cruz. Stopped July 3, 2026.',
+    schedule: [],
+    dailyTablets: 0, stockRemaining: 14, stockAsOf: '2026-07-03', stockMax: 40,
+    source: 'Hospital Pharmacy + Mercury Drug', unitPrice: 58.00, buyQty: 'No refill needed', restockId: null,
+    completed: true, completedDate: '2026-07-03',
+  },
   {
     id: 'nebivolol', name: 'Nebivolol', brand: 'Nebilet 5mg · Split to 2×/day Jun 17', dose: '5mg',
     cat: 'cardio', doctors: ['cardio'],
