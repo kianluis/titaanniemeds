@@ -24,6 +24,7 @@
     --cardio: #3A5A8C;
     --neuro: #6B3A8C;
     --infect: #5C7A3A;
+    --ortho: #7A5C3A;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; min-height: 100vh; }
@@ -208,6 +209,7 @@
   .dtag-cardio { color: var(--cardio); }
   .dtag-neuro { color: var(--neuro); }
   .dtag-infect { color: var(--infect); }
+  .dtag-ortho { color: var(--ortho); }
   .dtag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
   .med-purpose {
@@ -378,10 +380,12 @@
   .filter-btn.active.f-cardio { background: var(--cardio); border-color: var(--cardio); }
   .filter-btn.active.f-neuro { background: var(--neuro); border-color: var(--neuro); }
   .filter-btn.active.f-infect { background: var(--infect); border-color: var(--infect); }
+  .filter-btn.active.f-ortho { background: var(--ortho); border-color: var(--ortho); }
   .filter-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
   .filter-dot.cardio { background: var(--cardio); }
   .filter-dot.neuro { background: var(--neuro); }
   .filter-dot.infect { background: var(--infect); }
+  .filter-dot.ortho { background: var(--ortho); }
   .spill-done { color: var(--ink-faint); background: var(--surface-2); }
   .filter-btn.active .filter-dot { background: rgba(255,255,255,0.8); }
   .filter-count {
@@ -560,11 +564,12 @@
 
 <div id="tab-medicines" class="tab-panel">
   <div class="panel-inner">
-    <div class="section-label">Medicines · 13 total · Across 3 doctors · Updated June 17, 2026</div>
+    <div class="section-label">Medicines · Across 4 doctors</div>
     <div class="med-filter-row">
       <button class="filter-btn active" data-filter="all">All medicines <span class="filter-count" id="fc-all"></span></button>
       <button class="filter-btn f-cardio" data-filter="cardio"><span class="filter-dot cardio"></span>Dr. Reyes <span class="filter-count" id="fc-cardio"></span></button>
       <button class="filter-btn f-neuro" data-filter="neuro"><span class="filter-dot neuro"></span>Dr. Dela Cruz <span class="filter-count" id="fc-neuro"></span></button>
+      <button class="filter-btn f-ortho" data-filter="ortho"><span class="filter-dot ortho"></span>Dr. Gozman <span class="filter-count" id="fc-ortho"></span></button>
       <button class="filter-btn f-infect" data-filter="infect"><span class="filter-dot infect"></span>Dr. Garcia <span class="filter-count" id="fc-infect"></span></button>
     </div>
     <div class="med-grid" id="med-grid"></div>
@@ -975,17 +980,17 @@ const MEDICINES = [
     source: 'Asian Hosp. Pharmacy', unitPrice: 17.36, buyQty: '2-week supply · runs out Jul 12', restockId: 'july18',
   },
   {
-    id: 'paracetamol_orphenadrine', name: 'Paracetamol + Orphenadrine', brand: 'Norgesic 650/50mg · Added June 2', dose: '650/50mg',
+    id: 'paracetamol_orphenadrine', name: 'Paracetamol + Orphenadrine', brand: 'Norgesic 650/50mg · Stopped June 22', dose: '650/50mg',
     cat: 'neuro', doctors: ['neuro'],
-    purpose: 'Pain reliever for mild to moderate pain (Pain Score 1–6). For neck/back pain from cervical and lumbar spondylosis found on X-rays during hospitalization. Take as needed every 6 hours.',
-    schedule: [{ time: '00:00', note: 'every 6hrs as needed · pain score 1–6' }],
+    purpose: 'Pain reliever for mild to moderate pain (Pain Score 1–6). For neck/back pain from cervical and lumbar spondylosis found on X-rays during hospitalization. Dr. Gozman instructed to stop June 22 — switched to Celecoxib for back/spine pain.',
+    schedule: [],
     dailyTablets: 0, stockRemaining: 9, stockAsOf: '2026-06-22', stockMax: 20,
-    source: 'Mercury Drug', unitPrice: 41.50, buyQty: 'As needed', restockId: null,
-    asNeeded: true,
+    source: 'Mercury Drug', unitPrice: 41.50, buyQty: 'No refill needed', restockId: null,
+    discontinued: true, discontinuedDate: '2026-06-22',
   },
   {
     id: 'celecoxib', name: 'Celecoxib', brand: 'Celcoxx', dose: '200mg',
-    cat: 'neuro', doctors: ['neuro'],
+    cat: 'neuro', doctors: ['neuro', 'ortho'],
     purpose: 'Pain reliever. Prescribed by Dr. Dela Cruz (June 2) for general pain, and also by Dr. Gozman (June 22) for back/spine pain while waiting for PT. COX-2 inhibitor — easier on the stomach than regular NSAIDs. Take as needed when waist/back pain is severe (1 cap every 12hrs with meals). 2 tabs taken since June 22. Tramadol/Paracetamol (also prescribed by Gozman) was not purchased.',
     schedule: [{ time: '00:00', note: 'as needed · waist/back pain · 1 cap every 12hrs with meals' }],
     dailyTablets: 0, stockRemaining: 8, stockAsOf: '2026-07-06', stockMax: 15,
@@ -994,7 +999,7 @@ const MEDICINES = [
   },
   {
     id: 'tramadol_paracetamol', name: 'Tramadol + Paracetamol', brand: 'Rx by Dr. Gozman · Not purchased', dose: '37.5/325mg',
-    cat: 'neuro', doctors: [],
+    cat: 'ortho', doctors: ['ortho'],
     purpose: 'Prescribed by Dr. Gozman (June 22) for spine/back pain while waiting for PT. Not purchased — opted to use existing Celecoxib supply instead. Dose: ½ tab 2×/day for 2 days, then 1 tab 2×/day.',
     schedule: [],
     dailyTablets: 0, stockRemaining: 0, stockAsOf: '2026-06-22', stockMax: 20,
@@ -1625,6 +1630,7 @@ function updateFilterCounts() {
   document.getElementById('fc-all').textContent = `(${MEDICINES.length})`;
   document.getElementById('fc-cardio').textContent = `(${MEDICINES.filter(m => m.doctors.includes('cardio')).length})`;
   document.getElementById('fc-neuro').textContent = `(${MEDICINES.filter(m => m.doctors.includes('neuro')).length})`;
+  document.getElementById('fc-ortho').textContent = `(${MEDICINES.filter(m => m.doctors.includes('ortho')).length})`;
   document.getElementById('fc-infect').textContent = `(${MEDICINES.filter(m => m.doctors.includes('infect')).length})`;
 }
 
@@ -1641,7 +1647,7 @@ function initMedFilter() {
 }
 
 function renderMedicines() {
-  const doctorName = { cardio: 'Dr. Reyes', neuro: 'Dr. Dela Cruz', infect: 'Dr. Garcia' };
+  const doctorName = { cardio: 'Dr. Reyes', neuro: 'Dr. Dela Cruz', infect: 'Dr. Garcia', ortho: 'Dr. Gozman' };
   const meds = (activeFilter === 'all' ? MEDICINES : MEDICINES.filter(m => m.doctors.includes(activeFilter)))
     .slice().sort((a, b) => {
       const aOut = (a.completed || a.discontinued) ? 1 : 0;
