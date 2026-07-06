@@ -774,7 +774,7 @@
         </div>
         <div class="diag-row">
           <span class="diag-label">Rx given</span>
-          <span class="diag-value">Tramadol/Paracetamol 37.5/325mg × 20 tabs (½ tab 2×/day × 2 days → 1 tab 2×/day). Alt: Celecoxib 200mg × 10, 1 cap 2×/day with meals.</span>
+          <span class="diag-value">Tramadol/Paracetamol 37.5/325mg × 20 tabs (½ tab 2×/day × 2 days → 1 tab 2×/day) — <em>not purchased</em>. Alt: Celecoxib 200mg × 10, 1 cap 2×/day with meals — using existing supply (already prescribed by Dr. Dela Cruz). 2 tabs taken since June 22.</span>
         </div>
         <div class="diag-row">
           <span class="diag-label">Total June 22</span>
@@ -891,13 +891,13 @@
 
 const MEDICINES = [
   {
-    id: 'pantoprazole', name: 'Pantoprazole', brand: 'Pantopraz · Stopped Jul 3', dose: '40mg',
+    id: 'pantoprazole', name: 'Pantoprazole', brand: 'Pantopraz · Last taken Jul 2', dose: '40mg',
     cat: 'neuro', doctors: ['neuro'],
-    purpose: 'Stomach acid reducer. Prescribed as-needed by Dr. Dela Cruz. Stopped July 3, 2026.',
+    purpose: 'Stomach acid reducer. Prescribed as-needed by Dr. Dela Cruz. Last taken July 2, 2026. 14 tabs remaining, not continuing.',
     schedule: [],
-    dailyTablets: 0, stockRemaining: 14, stockAsOf: '2026-07-03', stockMax: 40,
+    dailyTablets: 0, stockRemaining: 14, stockAsOf: '2026-07-02', stockMax: 40,
     source: 'Hospital Pharmacy + Mercury Drug', unitPrice: 58.00, buyQty: 'No refill needed', restockId: null,
-    completed: true, completedDate: '2026-07-03',
+    completed: true, completedDate: '2026-07-02',
   },
   {
     id: 'nebivolol', name: 'Nebivolol', brand: 'Nebilet 5mg · Split to 2×/day Jun 17', dose: '5mg',
@@ -984,10 +984,10 @@ const MEDICINES = [
     asNeeded: true,
   },
   {
-    id: 'celecoxib', name: 'Celecoxib', brand: 'Celcoxx · Added June 2', dose: '200mg',
+    id: 'celecoxib', name: 'Celecoxib', brand: 'Celcoxx', dose: '200mg',
     cat: 'neuro', doctors: ['neuro'],
-    purpose: 'Stronger pain reliever for severe pain (Pain Score 7–10). COX-2 inhibitor — safer on the stomach than regular NSAIDs. Take only when pain is severe, every 12 hours.',
-    schedule: [{ time: '00:00', note: 'every 12hrs as needed · pain score 7–10' }],
+    purpose: 'Pain reliever. Prescribed by Dr. Dela Cruz (June 2) for general pain, and also by Dr. Gozman (June 22) for back/spine pain while waiting for PT. COX-2 inhibitor — easier on the stomach than regular NSAIDs. Take as needed when waist/back pain is severe (1 cap every 12hrs with meals). 2 tabs taken since June 22. Tramadol/Paracetamol (also prescribed by Gozman) was not purchased.',
+    schedule: [{ time: '00:00', note: 'as needed · waist/back pain · 1 cap every 12hrs with meals' }],
     dailyTablets: 0, stockRemaining: 8, stockAsOf: '2026-07-06', stockMax: 15,
     source: 'Mercury Drug', unitPrice: 42.75, buyQty: 'As needed', restockId: null,
     asNeeded: true,
@@ -1004,7 +1004,6 @@ const MEDICINES = [
 ];
 
 const SCHEDULE_SLOTS = [
-  { time: '07:00', label: 'Before Breakfast', meds: [] },
   { time: '07:30', label: 'With Breakfast (Early)', meds: [
     { id: 'spironolactone', note: '1 tab · added Jun 17 · labs Jun 24 ✓' },
   ]},
