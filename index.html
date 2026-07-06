@@ -891,13 +891,13 @@
 
 const MEDICINES = [
   {
-    id: 'pantoprazole', name: 'Pantoprazole', brand: 'Pantopraz · Last taken Jul 2', dose: '40mg',
+    id: 'pantoprazole', name: 'Pantoprazole', brand: 'Pantopraz · Stopped Jul 2', dose: '40mg',
     cat: 'neuro', doctors: ['neuro'],
-    purpose: 'Stomach acid reducer. Prescribed as-needed by Dr. Dela Cruz. Last taken July 2, 2026. 14 tabs remaining, not continuing.',
+    purpose: 'Stomach acid reducer. Prescribed as-needed by Dr. Dela Cruz. Last taken July 2, 2026. 14 tabs remaining — stopped voluntarily.',
     schedule: [],
     dailyTablets: 0, stockRemaining: 14, stockAsOf: '2026-07-02', stockMax: 40,
     source: 'Hospital Pharmacy + Mercury Drug', unitPrice: 58.00, buyQty: 'No refill needed', restockId: null,
-    completed: true, completedDate: '2026-07-02',
+    discontinued: true, discontinuedDate: '2026-07-02',
   },
   {
     id: 'nebivolol', name: 'Nebivolol', brand: 'Nebilet 5mg · Split to 2×/day Jun 17', dose: '5mg',
@@ -991,6 +991,15 @@ const MEDICINES = [
     dailyTablets: 0, stockRemaining: 8, stockAsOf: '2026-07-06', stockMax: 15,
     source: 'Mercury Drug', unitPrice: 42.75, buyQty: 'As needed', restockId: null,
     asNeeded: true,
+  },
+  {
+    id: 'tramadol_paracetamol', name: 'Tramadol + Paracetamol', brand: 'Rx by Dr. Gozman · Not purchased', dose: '37.5/325mg',
+    cat: 'neuro', doctors: [],
+    purpose: 'Prescribed by Dr. Gozman (June 22) for spine/back pain while waiting for PT. Not purchased — opted to use existing Celecoxib supply instead. Dose: ½ tab 2×/day for 2 days, then 1 tab 2×/day.',
+    schedule: [],
+    dailyTablets: 0, stockRemaining: 0, stockAsOf: '2026-06-22', stockMax: 20,
+    source: 'Not purchased', unitPrice: 0, buyQty: 'Not purchased', restockId: null,
+    discontinued: true, discontinuedDate: '2026-06-22',
   },
   {
     id: 'linezolid', name: 'Linezolid', brand: 'Nizolec-600', dose: '600mg',
