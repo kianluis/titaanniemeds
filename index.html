@@ -468,6 +468,16 @@
   }
 
   /* ── DIAGNOSTICS ── */
+  .diag-category {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-muted);
+    padding: 22px 0 10px;
+    border-top: 2px solid var(--border);
+    margin-top: 4px;
+  }
+  .diag-category:first-of-type { border-top: none; padding-top: 0; }
   .diag-section { margin-bottom: 28px; }
   .diag-section-title {
     font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
@@ -559,7 +569,7 @@
     </div>
     <div class="med-grid" id="med-grid"></div>
     <p style="margin-top:12px;font-size:12px;color:var(--ink-faint);">
-      ⚠ Pantoprazole prescribed as-needed — but consider taking daily since she's on Clopidogrel (blood thinner). Clarify with Dr. Dela Cruz at July 8 appointment. · Spironolactone (Aldactone): recheck labs (BUN/Creatinine/Na/K) June 26 after 1 week. Bring results to Dr. Reyes June 27. · Nebivolol: 1st dose (morning) always taken. ⚠ 2nd dose (evening): only take if BPM is MORE THAN 65 — hold if ≤65.
+      ⚠ Pantoprazole prescribed as-needed — but consider taking daily since she's on Clopidogrel (blood thinner). Clarify with Dr. Dela Cruz at July 7 appointment. · Spironolactone (Aldactone): recheck labs (BUN/Creatinine/Na/K) June 24 — all normal, Spironolactone continued. Next labs July 13. · Nebivolol: 1st dose (morning) always taken. ⚠ 2nd dose (evening): only take if BPM is MORE THAN 65 — hold if ≤65.
     </p>
   </div>
 </div>
@@ -606,9 +616,100 @@
 
 <div id="tab-diagnostics" class="tab-panel">
   <div class="panel-inner">
-    <div class="section-label">Key Diagnostic Results — May 2026</div>
+    <div class="section-label">Diagnostic Results — May–June 2026</div>
 
-    <!-- Blood Labs: Dr. Reyes -->
+    <!-- ── CATEGORY 1: Stroke & Neurology ── -->
+    <div class="diag-category">Stroke &amp; Neurology — Admission Workup · May 2026</div>
+
+    <!-- Brain CT Scan -->
+    <div class="diag-section">
+      <div class="diag-section-title">Brain CT Scan — May 7, 2026</div>
+      <div class="diag-card">
+        <div class="diag-row">
+          <span class="diag-label">Impression</span>
+          <span class="diag-value"><strong>Small acute infarcts</strong>, cortical/subcortical region of the <strong>left frontal lobe</strong> at the level of corona radiata</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Additional</span>
+          <span class="diag-value">Atherosclerosis of both internal carotid and vertebrobasilar arteries. Tonsiloliths.</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Clinical Data</span>
+          <span class="diag-value">Numbness of right extremities</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Echo + Carotid Duplex side by side -->
+    <div class="diag-section">
+      <div class="diag-two-col">
+        <div>
+          <div class="diag-section-title">Echocardiography — May 14, 2026</div>
+          <div class="diag-card">
+            <div class="diag-row">
+              <span class="diag-label">Summary</span>
+              <span class="diag-value">Hypertrophic obstructive cardiomyopathy, concentric LV hypertrophy, preserved systolic function, Grade 1 diastolic dysfunction</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">LV EF</span>
+              <span class="diag-value">75% (preserved)</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">LV Mass Index</span>
+              <span class="diag-value">98 g/m² (elevated)</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Other</span>
+              <span class="diag-value">Mild mitral &amp; tricuspid regurgitation. Valve scleroses. Normal PA pressure.</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="diag-section-title">Carotid Duplex — May 14, 2026</div>
+          <div class="diag-card">
+            <div class="diag-row">
+              <span class="diag-label">Interpretation</span>
+              <span class="diag-value">Carotid artery disease &lt;50% stenosis (approx. 1–15%) bilateral ICA</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Plaque</span>
+              <span class="diag-value">Type III plaque, anterior &amp; posterior walls of bilateral ICA bulbs extending to proximal ICA</span>
+            </div>
+            <div class="diag-row">
+              <span class="diag-label">Vertebral</span>
+              <span class="diag-value">Normal antegrade flow bilaterally</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CATEGORY 2: Baseline Imaging ── -->
+    <div class="diag-category">Baseline Imaging — May 2026</div>
+
+    <!-- Spine & Chest X-Rays -->
+    <div class="diag-section">
+      <div class="diag-section-title">Spine &amp; Chest X-Rays — May 2026</div>
+      <div class="diag-card">
+        <div class="diag-row">
+          <span class="diag-label">Lumbar (May 7)</span>
+          <span class="diag-value">Spondylosis &amp; levoscoliosis. Grade I spondylolisthesis L5 over S1. Predisposition to lumbosacral instability. Osteopenia/porosis. Compression deformity T12.</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Cervical (May 7)</span>
+          <span class="diag-value">Straightened cervical lordosis. Cervical spondylosis. Osteopenia/porosis.</span>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">Chest (May 10)</span>
+          <span class="diag-value">Magnified heart. Atherosclerotic aorta. Thoracic dextroscoliosis. Osteopenia/porosis. No active lung disease.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CATEGORY 3: Cardiology / Kidney Labs ── -->
+    <div class="diag-category">Cardiology / Kidney — Dr. Reyes Blood Labs · June 2026</div>
+
+    <!-- Blood Labs: Dr. Reyes June 17 + June 24 -->
     <div class="diag-section">
       <div class="diag-two-col">
         <div>
@@ -656,9 +757,12 @@
       </div>
     </div>
 
+    <!-- ── CATEGORY 4: Orthopaedic Spine ── -->
+    <div class="diag-category">Orthopaedic Spine — Dr. Gozman · June 22, 2026</div>
+
     <!-- Dr. Gozman Ortho Spine -->
     <div class="diag-section">
-      <div class="diag-section-title">Orthopaedic Spine — Dr. Gozman · June 22, 2026</div>
+      <div class="diag-section-title">Consultation &amp; Diagnosis — Dr. Sam Gozman · June 22, 2026</div>
       <div class="diag-card">
         <div class="diag-row">
           <span class="diag-label">Diagnosis</span>
@@ -666,7 +770,7 @@
         </div>
         <div class="diag-row">
           <span class="diag-label">Management</span>
-          <span class="diag-value">Referred for Physical Therapy — goals: ↓ pain, improve range of motion, advise on home exercise program</span>
+          <span class="diag-value">Referred for Physical Therapy — goals: ↓ pain, improve range of motion, advise on home exercise program. PT schedule obtained June 27: Dr. Estrella Estabillo, July 6 at 2 PM.</span>
         </div>
         <div class="diag-row">
           <span class="diag-label">Rx given</span>
@@ -676,6 +780,10 @@
           <span class="diag-label">Total June 22</span>
           <span class="diag-value">₱11,296 paid (gross ₱14,120 · senior citizen discount ₱2,824)</span>
         </div>
+        <div class="diag-row">
+          <span class="diag-label">Results</span>
+          <span class="diag-value">Labs &amp; X-ray results received June 24.</span>
+        </div>
       </div>
     </div>
 
@@ -683,7 +791,7 @@
     <div class="diag-section">
       <div class="diag-two-col">
         <div>
-          <div class="diag-section-title">CRP &amp; ESR — June 22, 2026 · Asian Hospital (Dr. Gozman)</div>
+          <div class="diag-section-title">CRP &amp; ESR — June 22, 2026 · Asian Hospital</div>
           <div class="diag-card">
             <div class="diag-row">
               <span class="diag-label">CRP (Quanti)</span>
@@ -696,7 +804,7 @@
           </div>
         </div>
         <div>
-          <div class="diag-section-title">CBC — June 22, 2026 · Asian Hospital (Dr. Gozman)</div>
+          <div class="diag-section-title">CBC — June 22, 2026 · Asian Hospital</div>
           <div class="diag-card">
             <div class="diag-row">
               <span class="diag-label">WBC</span>
@@ -771,88 +879,6 @@
       </div>
     </div>
 
-    <!-- Brain CT Scan -->
-    <div class="diag-section">
-      <div class="diag-section-title">Brain CT Scan — May 7, 2026</div>
-      <div class="diag-card">
-        <div class="diag-row">
-          <span class="diag-label">Impression</span>
-          <span class="diag-value"><strong>Small acute infarcts</strong>, cortical/subcortical region of the <strong>left frontal lobe</strong> at the level of corona radiata</span>
-        </div>
-        <div class="diag-row">
-          <span class="diag-label">Additional</span>
-          <span class="diag-value">Atherosclerosis of both internal carotid and vertebrobasilar arteries. Tonsiloliths.</span>
-        </div>
-        <div class="diag-row">
-          <span class="diag-label">Clinical Data</span>
-          <span class="diag-value">Numbness of right extremities</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Echo + Carotid Duplex side by side -->
-    <div class="diag-section">
-      <div class="diag-two-col">
-        <div>
-          <div class="diag-section-title">Echocardiography — May 14, 2026</div>
-          <div class="diag-card">
-            <div class="diag-row">
-              <span class="diag-label">Summary</span>
-              <span class="diag-value">Hypertrophic obstructive cardiomyopathy, concentric LV hypertrophy, preserved systolic function, Grade 1 diastolic dysfunction</span>
-            </div>
-            <div class="diag-row">
-              <span class="diag-label">LV EF</span>
-              <span class="diag-value">75% (preserved)</span>
-            </div>
-            <div class="diag-row">
-              <span class="diag-label">LV Mass Index</span>
-              <span class="diag-value">98 g/m² (elevated)</span>
-            </div>
-            <div class="diag-row">
-              <span class="diag-label">Other</span>
-              <span class="diag-value">Mild mitral &amp; tricuspid regurgitation. Valve scleroses. Normal PA pressure.</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="diag-section-title">Carotid Duplex — May 14, 2026</div>
-          <div class="diag-card">
-            <div class="diag-row">
-              <span class="diag-label">Interpretation</span>
-              <span class="diag-value">Carotid artery disease &lt;50% stenosis (approx. 1–15%) bilateral ICA</span>
-            </div>
-            <div class="diag-row">
-              <span class="diag-label">Plaque</span>
-              <span class="diag-value">Type III plaque, anterior &amp; posterior walls of bilateral ICA bulbs extending to proximal ICA</span>
-            </div>
-            <div class="diag-row">
-              <span class="diag-label">Vertebral</span>
-              <span class="diag-value">Normal antegrade flow bilaterally</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Spine & Chest X-Rays -->
-    <div class="diag-section">
-      <div class="diag-section-title">Spine &amp; Chest X-Rays — May 2026</div>
-      <div class="diag-card">
-        <div class="diag-row">
-          <span class="diag-label">Lumbar (May 7)</span>
-          <span class="diag-value">Spondylosis &amp; levoscoliosis. Grade I spondylolisthesis L5 over S1. Predisposition to lumbosacral instability. Osteopenia/porosis. Compression deformity T12.</span>
-        </div>
-        <div class="diag-row">
-          <span class="diag-label">Cervical (May 7)</span>
-          <span class="diag-value">Straightened cervical lordosis. Cervical spondylosis. Osteopenia/porosis.</span>
-        </div>
-        <div class="diag-row">
-          <span class="diag-label">Chest (May 10)</span>
-          <span class="diag-value">Magnified heart. Atherosclerotic aorta. Thoracic dextroscoliosis. Osteopenia/porosis. No active lung disease.</span>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -867,7 +893,7 @@ const MEDICINES = [
   {
     id: 'pantoprazole', name: 'Pantoprazole', brand: 'Pantopraz · As needed',
     dose: '40mg', cat: 'neuro', doctors: ['neuro'],
-    purpose: 'Stomach acid reducer. Protects the stomach lining from blood thinners. Prescribed as-needed by Dr. Dela Cruz — but consider taking daily since she\'s on Clopidogrel and other blood thinners. Clarify at July 8 appointment.',
+    purpose: 'Stomach acid reducer. Protects the stomach lining from blood thinners. Prescribed as-needed by Dr. Dela Cruz — but consider taking daily since she\'s on Clopidogrel and other blood thinners. Clarify at July 7 appointment.',
     schedule: [{ time: '07:00', note: '30 min before eating · as needed' }],
     dailyTablets: 1, stockRemaining: 14, stockAsOf: '2026-07-06', stockMax: 40,
     source: 'Hospital Pharmacy + Mercury Drug', unitPrice: 58.00, buyQty: 'As needed', restockId: null,
@@ -1048,24 +1074,31 @@ const APPOINTMENTS = [
     doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #3',
     location: 'MOB Rm 101', time: '11:00 AM', contact: 'Clarisse 09854109679',
     buy: null,
-    notes: '✓ Done — Reviewed June 24 labs (all normal, K 3.6 improved from 3.4). Spironolactone continued. Ordered new labs in 2 weeks (~July 11): CBC + BUN/Creatinine/Na/K + Serum Renin + Aldosterone + ARR (Aldosterone-Renin Ratio) — to assess primary hyperaldosteronism and Spironolactone response. Bought 2-week supply at Asian Hospital Pharmacy ₱1,502.96 (after senior discount from ₱1,878.70): Clopidogrel ×6, Telmisartan ×6, Amlodipine ×13, Atorvastatin ×6, Nebivolol ×24, Spironolactone ×12. ⚠ All meds run out ~July 13 — before July 18 next appt.',
+    notes: '✓ Done — Reviewed June 24 labs (all normal, K 3.6 improved from 3.4). Spironolactone continued. Ordered new labs July 13 (Monday): CBC + BUN/Creatinine/Na/K + Serum Renin + Aldosterone + ARR (Aldosterone-Renin Ratio) — to assess primary hyperaldosteronism and Spironolactone response. Bought 2-week supply at Asian Hospital Pharmacy ₱1,502.96 (after senior discount from ₱1,878.70): Clopidogrel ×6, Telmisartan ×6, Amlodipine ×13, Atorvastatin ×6, Nebivolol ×24, Spironolactone ×12. ⚠ All meds run out ~July 13. Also visited PT Department — obtained schedule for Dr. Estrella Estabillo, July 6 at 2 PM.',
   },
   {
-    id: 'july11', date: '2026-07-11',
+    id: 'july6pt', date: '2026-07-06',
+    doctor: 'Dr. Estrella Estabillo', specialty: 'Physical Therapy — Session #1',
+    location: 'PT Department', time: '2:00 PM', contact: null,
+    buy: null,
+    notes: 'Referred by Dr. Sam Gozman on June 22. PT schedule obtained at PT Department on June 27. Goals: ↓ back pain, improve range of motion, advise on home exercise program.',
+  },
+  {
+    id: 'july13', date: '2026-07-13',
     doctor: 'Lab Recheck', specialty: 'CBC · BUN/Creatinine · Na/K · Serum Renin · Aldosterone · ARR',
     location: 'Alviar Medical Laboratories', time: 'Any time', contact: null,
     buy: null,
-    notes: '2-week recheck ordered by Dr. Reyes on June 27. New additions: Serum Renin, Aldosterone, and Aldosterone-Renin Ratio (ARR) — to check for primary hyperaldosteronism and assess Spironolactone response. Bring results to Dr. Reyes July 18. ⚠ Also plan med restock — all cardio meds run out ~July 13, before July 18 appointment.',
+    notes: '3rd lab recheck ordered by Dr. Reyes on June 27. Includes Serum Renin, Aldosterone, and Aldosterone-Renin Ratio (ARR) — to check for primary hyperaldosteronism and assess Spironolactone response. Bring results to Dr. Reyes July 18. ⚠ Plan med restock same day — all cardio meds run out ~July 13.',
   },
   {
     id: 'july18', date: '2026-07-18',
     doctor: 'Dr. Michael Reyes', specialty: 'Cardiology Follow-up #4',
     location: 'MOB Rm 101', time: 'TBD', contact: 'Clarisse 09854109679',
     buy: 'Restock all cardio meds — runs out ~July 13. Buy before appointment or get Rx here: Clopidogrel · Atorvastatin · Telmisartan · Nebivolol · Amlodipine · Spironolactone.',
-    notes: 'Bring July 11 lab results (CBC, BUN/Creatinine, Na/K, Renin, Aldosterone, ARR). Dr. Reyes will review Renin/Aldosterone/ARR to determine if primary hyperaldosteronism is contributing to BP — may affect Spironolactone dose or plan.',
+    notes: 'Bring July 13 lab results (CBC, BUN/Creatinine, Na/K, Renin, Aldosterone, ARR). Dr. Reyes will review Renin/Aldosterone/ARR to determine if primary hyperaldosteronism is contributing to BP — may affect Spironolactone dose or plan.',
   },
   {
-    id: 'july8', date: '2026-07-08',
+    id: 'july7', date: '2026-07-07',
     doctor: 'Dr. Fionna Karisse Dela Cruz-Decena', specialty: 'Adult Neurology Follow-up #2',
     location: 'South City Hospital, Bacoor', time: '9:00 AM', contact: '09163400873',
     buy: null,
@@ -1080,7 +1113,7 @@ const TIMELINE = [
   { date: '2026-05-24', title: '✓ Med check · 11:40 AM', desc: 'Identified 5 critically low meds. Confirmed restock plan for May 25.' },
   { date: '2026-05-25', title: '✓ Cardio meds restocked — Mercury Drug Alabang', desc: 'Atorvastatin · Nebivolol 24t · Telmisartan · Amlodipine · Clopidogrel. Paid ₱1,752.09 after senior discount.' },
   { date: '2026-05-26', title: '✓ Dr. Reyes — Cardiology Follow-up #1', desc: 'Amlodipine → Lercanidipine (ankle swelling). Nebivolol reduced to 1×5mg (heart rate 50s–60s bpm). Bought new 30-day Rx ₱2,943.21. 15 Lercanidipine tabs bought; restock June 6.' },
-  { date: '2026-06-02', title: '✓ Dr. Dela Cruz — Neurology Follow-up #1', desc: 'Cilostazol dropped from Rx. Citicoline final 60-tab course prescribed. Pain meds added: Norgesic + Celecoxib. Mercury Drug restock ₱5,809.75. Next appt July 8.' },
+  { date: '2026-06-02', title: '✓ Dr. Dela Cruz — Neurology Follow-up #1', desc: 'Cilostazol dropped from Rx. Citicoline final 60-tab course prescribed. Pain meds added: Norgesic + Celecoxib. Mercury Drug restock ₱5,809.75. Next appt July 7.' },
   { date: '2026-06-03', title: '✓ Cilostazol gap · Started Paracetamol + Orphenadrine daily', desc: 'No Cilostazol in stock — only missed day of the full course. Started taking Paracetamol + Orphenadrine daily.' },
   { date: '2026-06-04', title: '✓ Cilostazol emergency buy', desc: 'BP spiked — bought 6 emergency tabs at local pharmacy. Cost ₱114.00.' },
   { date: '2026-06-06', title: '✓ All remaining Rx filled · Amlodipine last day', desc: 'Lercanidipine 15t + Citicoline 20t = ₱1,552.00 · Cilostazol 18t + Pantoprazole 10t = ₱1,490.64 · Last dose of Amlodipine.' },
@@ -1093,7 +1126,8 @@ const TIMELINE = [
   { date: '2026-06-27', title: 'Dr. Reyes — Cardiology Follow-up #3', desc: 'MOB Rm 101. Bring June 26 labs. New Rx needed — all cardio meds run out ~June 29 (13-tab supply from Jun 17). Dr. Reyes will assess Spironolactone continuation.' },
   { date: '2026-07-05', title: 'Citicoline — final 20 tabs begin', desc: '20 tabs bought June 6 start today. 10 days × 2/day. Last ever Citicoline doses — ends July 14.' },
   { date: '2026-06-29', title: '⚠ Amlodipine · Spironolactone run out', desc: 'Both 13-tab supplies from June 17 run out. Use new Rx from June 27 Dr. Reyes appointment.' },
-  { date: '2026-07-08', title: 'Dr. Dela Cruz — Neurology Follow-up #2', desc: 'South City Hospital, Bacoor · 9AM. Clarify Pantoprazole: daily vs as-needed. Ask about Citicoline end. Next neuro assessment.' },
+  { date: '2026-07-06', title: 'Dr. Estabillo — Physical Therapy Session #1', desc: '2:00 PM · PT Department. Referred by Dr. Gozman June 22. Schedule obtained at PT Dept June 27.' },
+  { date: '2026-07-07', title: 'Dr. Dela Cruz — Neurology Follow-up #2', desc: 'South City Hospital, Bacoor · 9AM. Clarify Pantoprazole: daily vs as-needed. Ask about Citicoline end. Next neuro assessment.' },
   { date: '2026-07-14', title: '✅ Citicoline done — all recovery meds complete', desc: 'From July 15: 5 permanent maintenance meds only. Monthly cost drops to ~₱4,190/month.' },
 ];
 
@@ -1110,11 +1144,11 @@ const COSTS_SPENT = [
   { label: 'Generic pharmacy June 4 — Cilostazol emergency', amount: 114.00, cat: 'medicine' },
   { label: 'Asian Hosp. Pharmacy June 6 — Lercanidipine + Citicoline', amount: 1552.00, cat: 'medicine' },
   { label: 'Asian Hosp. Pharmacy June 6 — Cilostazol + Pantoprazole', amount: 1490.64, cat: 'medicine' },
-  { label: 'Alviar Medical Lab June 17 — BUN/Creatinine/Na/K', amount: 500.00, cat: 'medicine' },
+  { label: 'Alviar Medical Lab June 17 — BUN/Creatinine/Na/K', amount: 500.00, cat: 'lab' },
   { label: 'Dr. Reyes — Cardiology consult June 17', amount: 1200.00, cat: 'doctor' },
   { label: 'Asian Hosp. Pharmacy June 17 — Amlodipine 13t + Spironolactone 13t', amount: 626.08, cat: 'medicine' },
-  { label: 'Asian Hospital June 22 — Gozman labs (CBC/ESR/CRP) + spine X-rays · after senior discount', amount: 11296.00, cat: 'medicine' },
-  { label: 'Alviar Medical Lab June 24 — BUN/Creatinine/Na/K recheck (Dr. Reyes)', amount: 500.00, cat: 'medicine' },
+  { label: 'Asian Hospital June 22 — Gozman labs (CBC/ESR/CRP) + spine X-rays · after senior discount', amount: 11296.00, cat: 'lab' },
+  { label: 'Alviar Medical Lab June 24 — BUN/Creatinine/Na/K recheck (Dr. Reyes)', amount: 500.00, cat: 'lab' },
   { label: 'Dr. Reyes — Cardiology consult June 27', amount: 1200.00, cat: 'doctor' },
   { label: 'Asian Hosp. Pharmacy June 27 — Clopidogrel ×6, Telmisartan ×6, Amlodipine ×13, Atorvastatin ×6, Nebivolol ×24, Spironolactone ×12', amount: 1502.96, cat: 'medicine' },
 ];
@@ -1396,7 +1430,7 @@ const BP_READINGS = [
   ]},
   { date: '2026-07-06', readings: [
     { time: '04:30', sys: 136, dia: 60, bpm: 72 },
-  ]},
+  ], events: [{ label: '🦴 Dr. Estabillo — PT Session #1 · 2 PM', cls: 'ev-blue' }]},
 ];
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
@@ -1797,6 +1831,7 @@ function renderCosts() {
   const monthlyEst = weeklyTotal * (30 / 7);
   const hospitalTotal = COSTS_SPENT.filter(c => c.cat === 'hospital').reduce((s, c) => s + c.amount, 0);
   const medicineTotal = COSTS_SPENT.filter(c => c.cat === 'medicine').reduce((s, c) => s + c.amount, 0);
+  const labTotal = COSTS_SPENT.filter(c => c.cat === 'lab').reduce((s, c) => s + c.amount, 0);
   const doctorTotal = COSTS_SPENT.filter(c => c.cat === 'doctor').reduce((s, c) => s + c.amount, 0);
 
   const spentRows = COSTS_SPENT.map(c =>
@@ -1845,7 +1880,11 @@ function renderCosts() {
         <span class="cost-line-amount">${fmtMoney(hospitalTotal)}</span>
       </div>
       <div class="cost-line">
-        <span class="cost-line-label">💊 Medicines, pharmacy &amp; labs</span>
+        <span class="cost-line-label">🧪 Labs &amp; diagnostics</span>
+        <span class="cost-line-amount">${fmtMoney(labTotal)}</span>
+      </div>
+      <div class="cost-line">
+        <span class="cost-line-label">💊 Medicines &amp; pharmacy</span>
         <span class="cost-line-amount">${fmtMoney(medicineTotal)}</span>
       </div>
       <div class="cost-line">
@@ -1859,8 +1898,8 @@ function renderCosts() {
     </div>
     <div class="grand-total-card">
       <div>
-        <div class="gt-label">Hospital + Medicines + Doctors</div>
-        <div class="gt-sub">Admission May 7 through June 17, 2026</div>
+        <div class="gt-label">Hospital + Labs + Medicines + Doctors</div>
+        <div class="gt-sub">Admission May 7, 2026 through present</div>
       </div>
       <div class="gt-right">
         <div class="gt-amount">${fmtMoney(totalSpent)}</div>
